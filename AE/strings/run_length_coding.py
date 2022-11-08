@@ -21,7 +21,6 @@ Run-Length Coding
   Output:
     "9A4A2B4C2D"
 
-
 """
 
 # Hashmap wont work as the input can be "aAaAbbbbddd" and hashmap method will give wrong result.
