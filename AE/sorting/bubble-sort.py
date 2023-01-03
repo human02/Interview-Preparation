@@ -21,6 +21,7 @@ def bubbleSort(array):
             if array[i] > array[i+1]:
                 swap(i, i+1, array)
                 isSorted = False
+    return array
 
 # As on each iteration, last number is on its correct place hence no need go till there
 
@@ -36,7 +37,8 @@ def bubbleSortOptimised(array):
             if array[i] > array[i+1]:
                 swap(i, i+1, array)
                 isSorted = False
-    counter += 1
+        counter += 1
+    return array
 
 
 def swap(i, j, array):
