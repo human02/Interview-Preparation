@@ -30,29 +30,40 @@ Write a Min Max Stack class for a Min Max Stack. The class should support:
   pop(): 7
   getMin(): 5
   getMax(): 5
-  peek(): 5  
+  peek(): 5
 
 """
 # Feel free to add new properties and methods to the class.
 
 
 class MinMaxStack:
+
+    def __init__(self):
+        # creating a min-max stack to have min and max vaue at every step
+        self.minMaxStack = []
+    # normal stack for push etc
+        self.stack = []
+
     def peek(self):
-        # Write your code here.
-        pass
+        return self.stack[len(self.stack)-1]
+       # this also works -> return self.stack[-1]
 
     def pop(self):
-        # Write your code here.
-        pass
+        self.minMaxStack.pop()
+        return self.stack.pop()
 
     def push(self, number):
-        # Write your code here.
-        pass
+        # for first element push min and max will be same at that step.
+        nextMinMax = {"min": number, "max": number}
+        if (len(self.stack)):
+            nextMinMax["min"] = min(self.minMaxStack[-1]["min"], number)
+            nextMinMax["max"] = max(self.minMaxStack[-1]["max"], number)
+        self.minMaxStack.append(nextMinMax)
+        self.stack.append(number)
+        # return number
 
     def getMin(self):
-        # Write your code here.
-        pass
+        return self.minMaxStack[-1]["min"]
 
     def getMax(self):
-        # Write your code here.
-        pass
+        return self.minMaxStack[-1]["max"]
