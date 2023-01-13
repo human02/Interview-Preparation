@@ -18,7 +18,7 @@ def getNthfib2(n, memoize={1: 0, 2: 1}):
         memoize[n] = getNthfib2(n-1, memoize) + getNthfib2(n-2, memoize)
         return memoize[n]
 
-    # O(n) time | O(1) space
+ # O(n) time | O(1) space
 
 
 def getNthfib3(n):
