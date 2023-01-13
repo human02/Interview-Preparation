@@ -18,7 +18,7 @@ Caesar Cipher Encryptor
     
 """
 
-# O(n) - space | O(n) - time
+# O(n) - time | O(n) - space
 
 
 def caesarCipherEncryptor(string, key):
