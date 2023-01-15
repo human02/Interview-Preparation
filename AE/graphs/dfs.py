@@ -8,7 +8,8 @@
   it.
 
   Input:
-    graph  = A
+    graph = 
+             A
           /  |  \ 
          B   C   D
         / \     / \ 
