@@ -18,10 +18,10 @@
 
   Output:
     ["A", "B", "E", "F", "I", "J", "C", "D", "G", "K", "H"]
-    
+
 """
 
-# time - O(v+e) space - O(v), in worst case where one branch has all the nodes,
+# time - O(v+e) | space - O(v), in worst case where one branch has all the nodes,
 # space - O(v) + O(v) for the call stack
 
 
