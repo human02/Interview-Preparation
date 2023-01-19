@@ -26,6 +26,7 @@ def caesarCipherEncryptor(string, key):
     for i in range(len(string)):
         # key%26 is necessary because the key inputs can be > than 26 and there are only 26 alphabets.
         tmp = ord(string[i]) + key % 26
+  # if value crosses 122 then it passes lowercase alpha limit of ASCII
         if tmp > 122:
             tmp -= 26
         res += chr(tmp)
