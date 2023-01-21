@@ -16,6 +16,7 @@ def minNumberOfCoinsForChange(n, denoms):
 
     # taking 1 denomination at a time
     for denom in denoms:
+        # creating change from 0 to the amount value
         for amount in range(len(numsOfCoins)):
             # denom can only be used to make amount if its <= amount
             if denom <= amount:
