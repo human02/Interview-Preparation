@@ -18,8 +18,9 @@ def maxSubsetSumNoAdjacent(array):
     # edge case - array with one element
     elif len(array) == 1:
         return array[0]
-    # copy array as we also want 1st 2 numbers
+    # copy array as we also want 1st number to be same
     maxSum = array[:]
+    # put 2nd number which is bigger of the 2 values
     maxSum[1] = max(array[0], array[1])
     for i in range(2, len(array)):
         maxSum[i] = max(maxSum[i-1], maxSum[i-2]+array[i])
