@@ -25,6 +25,8 @@ Run-Length Coding
 
 # Hashmap wont work as the input can be "aAaAbbbbddd" and hashmap method will give wrong result.
 
+# O(n) time | O(2n) space (inp - abcdef)
+
 
 def runLengthEncoding(string):
     # Write your code here.
