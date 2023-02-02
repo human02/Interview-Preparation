@@ -13,7 +13,6 @@ def minimumCharactersForWords(words):
     for key, val in resultDict.items():
         for idx in range(val):
             result.append(key)
-    # print(result)
     return result
 
 
@@ -29,7 +28,7 @@ def helperCount(str, res):
     # Compare current word reqs and add necessary in result dict
     for key, value in currReqDict.items():
         if key in res:
-            if currReqDict[key] > res[key]:
-                res[key] = currReqDict[key]
+            if value > res[key]:
+                res[key] = value
         else:
-            res[key] = currReqDict[key]
+            res[key] = value
