@@ -48,6 +48,7 @@ def oneEditOptimized(stringOne, stringTwo):
     while indexOne < len1 and indexTwo < len2:
         # case when character is not same
         if stringOne[indexOne] != stringTwo[indexTwo]:
+            # If made edit already set that means its second edit and return false
             if madeEdit:
                 return False
             else:
