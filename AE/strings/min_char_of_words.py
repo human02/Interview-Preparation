@@ -27,8 +27,9 @@ def helperCount(str, res):
 
     # Compare current word reqs and add necessary in result dict
     for key, value in currReqDict.items():
-        if key in res:
-            if value > res[key]:
-                res[key] = value
-        else:
-            res[key] = value
+        res[key] = max(res.get(key, 0), value)
+        # if key in res:
+        #     if value > res[key]:
+        #         res[key] = value
+        # else:
+        #     res[key] = value
