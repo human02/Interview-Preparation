@@ -11,7 +11,7 @@ def minimumCharactersForWords(words):
 
     # create list using freq dict - resultDict
     for key, val in resultDict.items():
-        for idx in range(val):
+        for _ in range(val):
             result.append(key)
     return result
 
