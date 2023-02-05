@@ -37,34 +37,122 @@ class DoublyLinkedList:
         self.head = None
         self.tail = None
 
+    # 7th method to implement --> O(1) time | O(1) space
     def setHead(self, node):
-        # Write your code here.
-        pass
+        # if LL is empty
+        if self.head is None:
+            self.head = node
+            self.tail = node
+            return
+        # else just insert node before current head
+        self.insertBefore(self.head, node)
 
+    # 8th method to implement --> O(1) time | O(1) space
     def setTail(self, node):
-        # Write your code here.
-        pass
+        # if LL is empty
+        if self.tail is None:
+            self.setHead(node)
+            return
+        # else just insert node after current tail
+        self.insertAfter(self.tail, node)
 
+    # 5th method to implement --> O(1) time | O(1) space where
     def insertBefore(self, node, nodeToInsert):
-        # Write your code here.
-        pass
+        # Check if we are inserting a node in a list with only one node, just return in such case
+        if nodeToInsert == self.head and nodeToInsert == self.tail:
+            return
 
+        # remove the node if already in the LL:
+        self.remove(nodeToInsert)
+
+        nodeToInsert.prev = node.prev
+        nodeToInsert.next = node
+
+        # Now the other node bindings:
+        # incase prev is none, meaning its head and we should update the head
+        if node.prev is None:
+            self.head = nodeToInsert
+        else:
+            node.prev.next = nodeToInsert
+        node.prev = nodeToInsert
+
+    # 6th method to implement --> O(1) time | O(1) space
     def insertAfter(self, node, nodeToInsert):
-        # Write your code here.
-        pass
+        # Check if we are inserting a node in a list with only one node, just return in such case
+        if nodeToInsert == self.head and nodeToInsert == self.tail:
+            return
 
+        self.remove(nodeToInsert)
+        nodeToInsert.next = node.next
+        nodeToInsert.prev = node
+
+        # Now the other bindings:
+        # If next is None, then update the tail:
+        if node.next is None:
+            self.tail = nodeToInsert
+        else:
+            node.next.prev = nodeToInsert
+        node.next = nodeToInsert
+
+    # 9th method to implement --> O(p) time | O(1) space where p is the position and it can be > n
     def insertAtPosition(self, position, nodeToInsert):
-        # Write your code here.
-        pass
+        #
+        if position == 1:
+            self.setHead(nodeToInsert)
+            return
+        node = self.head
+        count = 1
+        while node is not None and count != position:
+            node = node.next
+            count += 1
 
+        # now either we got None or reached the position
+        if node is not None:
+            self.insertBefore(node, nodeToInsert)
+        else:
+            self.setTail(nodeToInsert)
+
+    # 4th method to implement --> O(n) time | O(1) space
     def removeNodesWithValue(self, value):
-        # Write your code here.
-        pass
+        node = self.head
+        # traverse the ll
+        while node is not None:
+            #  create to keep track as remove function will remove th node bindings
+            nodeToRemove = node
+            node = node.next
+            if nodeToRemove.value == value:
+                self.remove(nodeToRemove)
 
+    # 2nd method to implement --> O(1) time | O(1) space
     def remove(self, node):
-        # Write your code here.
-        pass
+        # there can be 3 cases:
+        # node we want to remove is head, just iterate the head to next node
+        if node == self.head:
+            self.head = self.head.next
+        # node we want to remove is tail, just iterate back to the previous node
+        if node == self.tail:
+            self.tail = self.tail.prev
+        # node we want to remove is in the middle, use helper and remmove the bidings
+        self.removeNodeBindings(node)
 
+    # 1st method to implement --> O(n) time | O(1) space
     def containsNodeWithValue(self, value):
-        # Write your code here.
-        pass
+        node = self.head
+        # we traverse either until we either find value or None
+        while node is not None and node.value is not value:
+            node = node.next
+
+        # necessary to check if we found none or a node with value
+        return node is not None
+
+    # 3rd method to implement --> O(1) time | O(1) space
+    def removeNodeBindings(self, node):
+        # if prev is not None, then change prev binding:
+        if node.prev is not None:
+            node.prev.next = node.next
+        # if next is not None, then change next binding:
+        if node.next is not None:
+            node.next.prev = node.prev
+        # Also remove nodes nother bindings:
+        node.prev = None
+        node.next = None
