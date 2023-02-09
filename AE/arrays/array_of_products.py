@@ -11,12 +11,12 @@ def arrayOfProducts_brute(array):
     for i in range(len(array)):
         prod = 1
         for j in range(len(array)):
-            if (i != j):
+            if i != j:
                 prod *= array[j]
         prods.append(prod)
 
     print(prods)
-    return (prods)
+    return prods
 
 
 # O(n) time | O(n) space
@@ -29,27 +29,27 @@ def arrayOfProducts(array):
     # calculate prod till left of index
     i = 0
     prod = 1
-    while (i < len(array)):
+    while i < len(array):
         left[i] = prod
         prod *= array[i]
         i += 1
 
-    # calculate prod till right of index
+    # calculate prod from end till right of index
     i = len(array) - 1
     prod = 1
-    while (i >= 0):
+    while i >= 0:
         right[i] = prod
         prod *= array[i]
         i -= 1
 
     #  calculate sum of the final
     i = 0
-    while (i < len(array)):
+    while i < len(array):
         result[i] = left[i] * right[i]
         i += 1
 
     print(result)
-    return (result)
+    return result
     print(left, "\n", right)
 
 
@@ -61,21 +61,21 @@ def arrayOfProducts_optimised(array):
     # calculate prod till left of index
     i = 0
     prod = 1
-    while (i < len(array)):
+    while i < len(array):
         result[i] = prod
         prod *= array[i]
         i += 1
 
-    # calculate prod till right of index
+    # calculate prod from end till right of index
     i = len(array) - 1
     prod = 1
-    while (i >= 0):
+    while i >= 0:
         result[i] *= prod
         prod *= array[i]
         i -= 1
 
     print(result)
-    return (result)
+    return result
     print(left, "\n", right)
 
 
