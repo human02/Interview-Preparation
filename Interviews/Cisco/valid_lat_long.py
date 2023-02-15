@@ -38,3 +38,46 @@ In the given string, substrings {'(90,180)','(+90,+180)'} are valid as they meet
 (90.,180) (90.0,180.1) (85S.95W) are invalid as substring (90.,180) has an extra decimal point after 90,
 substring (90.0,180.1) contains 180.1 which is out of bound and substring (855,95W) contains characters in it.
 """
+
+import re
+
+
+def funcValidPairs(inputStr):
+    # Write your code here
+    n = int(inputStr.strip())
+    res = []
+    for i in range(n):
+        text = inputStr.strip()
+        textToMatch = text[1:-1]
+        print(textToMatch)
+        coordinates = helper(text[1:-1])
+        if coordinates:
+            # print (*coordinates)
+            res.append("Valid")
+        else:
+            res.append("Invalid")
+    return res
+
+
+def helper(text):
+    pattern = r"^\(((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)\)$"
+    match = re.search(pattern, text)
+    if match:
+        latitude = float(match.group(1))
+        longitude = float(match.group(2))
+    if -90 <= latitude <= 90 and -180 < -longitude <= 180:
+        return (latitude, longitude)
+    return None
+
+
+def main():
+    # input for inputStr
+    inputStr = []
+    inputStr_size = int(input())
+    inputStr = list(map(str, input().split()))
+    result = funcValidPairs(inputStr)
+    print(" ".join([str(res) for res in result]))
+
+
+if __name__ == "__main__":
+    main()
