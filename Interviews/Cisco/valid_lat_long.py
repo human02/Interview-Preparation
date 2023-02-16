@@ -5,7 +5,7 @@ A string (X.Y) is considered valid if the following criteria are met:
 *   The string starts with a bracket, has a comma after X and ends with a bracket.
 *   There is no space between the opening parenthesis and the first character of X.
 *   There is no space between the comma and the last character of X.
-*   There is no space between the comma and the first character of
+*   There is no space between the comma and the first character of Y.
 *   There is no space between Y and the closing parenthesis.
 *   X and Y are decimal numbers and may be preceded by a sign.
 *   There are no leading zeros.
@@ -44,15 +44,13 @@ import re
 
 def funcValidPairs(inputStr):
     # Write your code here
-    n = int(inputStr.strip())
+    # n = int(inputStr.strip())
     res = []
-    for i in range(n):
-        text = inputStr.strip()
-        textToMatch = text[1:-1]
-        print(textToMatch)
-        coordinates = helper(text[1:-1])
+    for i in inputStr:
+        # print(i)
+        coordinates = helper(i[1:-1])
         if coordinates:
-            # print (*coordinates)
+            # print(*coordinates)
             res.append("Valid")
         else:
             res.append("Invalid")
@@ -60,24 +58,35 @@ def funcValidPairs(inputStr):
 
 
 def helper(text):
-    pattern = r"^\(((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)\)$"
+    # print(text)
+    pattern = r"^([-+]?\d+(\.\d+)?),\s*([-+]?\d+(\.\d+)?)$"
+    # pattern = r"^\(((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)\)$"   - this is also same
     match = re.search(pattern, text)
     if match:
+        print(match.groups())
+        if match.group(2):
+            latitude = float(match.group(1)) + float(match.group(2))
         latitude = float(match.group(1))
-        longitude = float(match.group(2))
-    if -90 <= latitude <= 90 and -180 < -longitude <= 180:
-        return (latitude, longitude)
+        if match.group(4):
+            longitude = float(match.group(3)) + float(match.group(4))
+        longitude = float(match.group(3))
+        # print(latitude, longitude)
+        if -90 <= latitude <= 90 and -180 <= longitude <= 180:
+            return (latitude, longitude)
     return None
 
 
 def main():
     # input for inputStr
     inputStr = []
-    inputStr_size = int(input())
-    inputStr = list(map(str, input().split()))
-    result = funcValidPairs(inputStr)
+    # inputStr_size = int(input)
+    # inputStr = list(map(str, input().split()))
+    result = funcValidPairs(
+        ["(90,100)", "(+90,+100)", "(90.,180)", "(90.0,180.1)", "(85S,95W)", "(75,180)"]
+    )
     print(" ".join([str(res) for res in result]))
 
 
+#
 if __name__ == "__main__":
     main()
