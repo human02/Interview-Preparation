@@ -66,10 +66,12 @@ def helper(text):
         print(match.groups())
         if match.group(2):
             latitude = float(match.group(1)) + float(match.group(2))
-        latitude = float(match.group(1))
+        else:
+            latitude = float(match.group(1))
         if match.group(4):
             longitude = float(match.group(3)) + float(match.group(4))
-        longitude = float(match.group(3))
+        else:
+            longitude = float(match.group(3))
         # print(latitude, longitude)
         if -90 <= latitude <= 90 and -180 <= longitude <= 180:
             return (latitude, longitude)
