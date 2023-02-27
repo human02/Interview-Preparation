@@ -38,8 +38,9 @@ def fourNumberSum(array, targetSum):
                 for pair in allPairSums[compliment]:
                     resultQuadruplets.append(pair + [array[i], array[j]])
         # find 'q' by iterating over each element before ith idx and creating pair.
+        # part where we add the pair(s)
         for k in range(0, i):
-            currSum = array[i] + array[k]
+            currSum = array[k] + array[i]
             if currSum not in allPairSums:
                 allPairSums[currSum] = [[array[i], array[k]]]
             else:
