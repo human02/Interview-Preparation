@@ -32,6 +32,51 @@ def largestRange(array):
     return result
 
 
+# O(n) time | O(n) space
+def largestRangeOptimized(array):
+    bestRange = []
+    # store the longest range length.
+    bestLen = 0
+    # Stores the nums of the array and has visited criteria as well
+    nums = {}
+
+    # traverse and initialize the hashmap
+    for i in array:
+        nums[i] = True
+
+    for i in array:
+
+        # Skipping this value if already the value is checked for range
+        if not nums[i]:
+            continue
+
+        # Keep count if val already checked
+        nums[i] = False
+        currLen = 1
+
+        # checking the left-most range value for i value
+        left = i - 1
+        while left in nums:
+            nums[left] = False
+            currLen += 1
+            left -= 1
+
+        # checking the right-most range value for i value
+        right = i + 1
+        while right in nums:
+            nums[right] = False
+            currLen += 1
+            right += 1
+
+        # Add the range if greater than existing best length
+        if currLen > bestLen:
+            # +1 and -1 as values changes before the while condition is false
+            bestRange = [left + 1, right - 1]
+            bestLen = currLen
+
+    return bestRange
+
+
 print(largestRange([1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]))
 print(
     largestRange(
