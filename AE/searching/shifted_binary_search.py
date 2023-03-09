@@ -14,3 +14,34 @@
   target = 33
 
 """
+
+# O(log(n)) time | O(1) space
+def shiftedBinarySearch(array, target):
+    left = 0
+    right = len(array) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        leftEle = array[left]
+        rightEle = array[right]
+        midEle = array[mid]
+        if midEle == target:
+            return mid
+
+        # CHECKING WHERE ORDER IS CORRECT:
+        # means the left to mid are in sorted order
+        # [45,61,71,72,73,0,1,21,33,44] example for this case
+        elif leftEle < midEle:
+            # explore left part
+            if target < midEle and target >= leftEle:
+                right = mid - 1
+            # explore left part
+            else:
+                left = mid + 1
+        # means the right to end are in sorted order
+        # [61,71,72,73,0,1,21,33,44,45] example for this case
+        else:
+            if target > midEle and target <= rightEle:
+                left = mid + 1
+            else:
+                right = mid - 1
+    return -1
