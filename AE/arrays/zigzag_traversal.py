@@ -35,6 +35,7 @@ def zigzagTraverse(array):
     # direction tracking
     goingDown = True
 
+    # creating a looping condition to keep it runing until within Bounds
     while not isOutOfBounds(currRow, currCol, height, width):
         # append current value
         result.append(array[currRow][currCol])
@@ -44,13 +45,13 @@ def zigzagTraverse(array):
             # turning case - last row or first col
             if currRow == height or currCol == 0:
                 goingDown = False
-                # last row
+                # last row - move right
                 if currRow == height:
                     currCol += 1
-                # last column
+                # last column - move down
                 else:
                     currRow += 1
-            # if its normal
+            # if its normal scenario
             else:
                 currCol -= 1
                 currRow += 1
@@ -60,11 +61,13 @@ def zigzagTraverse(array):
             # turning case - last col or first row
             if currRow == 0 or currCol == width:
                 goingDown = True
+                # last col - move down
                 if currCol == width:
                     currRow += 1
+                # first row - move right
                 else:
                     currCol += 1
-            # normal
+            # if its normal scenario
             else:
                 currRow -= 1
                 currCol += 1
