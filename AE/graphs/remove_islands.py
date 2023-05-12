@@ -12,23 +12,25 @@
 
 # O(w*h) time | O(w*h) space
 def removeIslands1(matrix):
-    # aux ds
+    # aux ds to store border connected 1s
     onesConnectedToBorder = [[False for col in matrix[0]]for row in matrix]
 
+    # find border+connected 1s
     for row in range(len(matrix)):
         for col in range(len(matrix[row])):
             rowIsBorder = row == 0 or row == len(matrix)-1
             colIsBorder = col == 0 or col == len(matrix[row])-1
+            # check if either is a border
             isBorder = rowIsBorder or colIsBorder
             if matrix[row][col] == 1 and isBorder:
-                # do dfs
+                # do dfs and mark 1s in aux ds
                 findOnesConnectedToBorder1(
                     matrix, row, col, onesConnectedToBorder)
 
+    # traverse inner matrix & mark all as 0 accept index in aux ds
     for row in range(1, len(matrix)-1):
         for col in range(1, len(matrix[row]-1)):
             if onesConnectedToBorder[row][col]:
-                print()
                 continue
             matrix[row][col] = 0
     return (matrix)
@@ -40,10 +42,10 @@ def findOnesConnectedToBorder1(matrix, i, j, oCTB):
         return
 
     oCTB[i][j] = True
-    findOnesConnectedToBorder1(matrix, i+1, j, oCTB)
-    findOnesConnectedToBorder1(matrix, i-1, j, oCTB)
-    findOnesConnectedToBorder1(matrix, i, j+1, oCTB)
-    findOnesConnectedToBorder1(matrix, i, j-1, oCTB)
+    findOnesConnectedToBorder1(matrix, i+1, j, oCTB)  # down
+    findOnesConnectedToBorder1(matrix, i-1, j, oCTB)  # up
+    findOnesConnectedToBorder1(matrix, i, j+1, oCTB)  # right
+    findOnesConnectedToBorder1(matrix, i, j-1, oCTB)  # left
 
 
 # final solution prevents use of aux data and instead change border connected 1s to 2 in the input matrix.
