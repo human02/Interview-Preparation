@@ -12,3 +12,6 @@ def transposeMatrix(matrix):
 
 
 print(transposeMatrix([[1, 2]]))
+
+
+# the other way of doing it is to tranverse col outer loop and rows inner loop and adding each element
