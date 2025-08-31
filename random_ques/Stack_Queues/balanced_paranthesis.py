@@ -1,14 +1,14 @@
 """
 Balanced Paranthesis
 
-Given string str containing just the characters '(', ')', '{', '}', '[' and ']', check if the input string is valid 
+Given string str containing just the characters '(', ')', '{', '}', '[' and ']', check if the input string is valid
 and return true if the string is balanced otherwise return false.
 
 Example 1:
 Input: str = “()[{}()]”
 
 Output: True
-Explanation: As every open bracket has its corresponding close bracket. Match parentheses are in correct order 
+Explanation: As every open bracket has its corresponding close bracket. Match parentheses are in correct order
 hence they are balanced.
 
 Example 2:
@@ -25,16 +25,21 @@ Constraints:
 - str consists of parentheses only '()[]{}'.
 """
 
+
 class Solution:
-    def helper(self,closed,st_top):
-        if((closed==')' and st_top=='(') or (closed=='}' and st_top=='{') or (closed==']' and st_top=='[')):
+    def helper(self, closed, st_top):
+        if (
+            (closed == ")" and st_top == "(")
+            or (closed == "}" and st_top == "{")
+            or (closed == "]" and st_top == "[")
+        ):
             return True
         return False
 
     def isValid(self, str: str) -> bool:
-        st=[]
+        st = []
         for i in str:
-            if (i == '('or i=='{' or i =='['):
+            if i == "(" or i == "{" or i == "[":
                 st.append(i)
             else:
                 if not st:
@@ -44,15 +49,11 @@ class Solution:
                 if not self.helper(i, ch):
                     return False
         return not st
-    
+
+
 if __name__ == "__main__":
     sol = Solution()
-    test_cases = [
-        ("()[{}()]", True),
-        ("[()", False),
-        ("{[()]}", True)
-    ]
+    test_cases = [("()[{}()]", True), ("[()", False), ("{[()]}", True)]
     for s, expected in test_cases:
         result = sol.isValid(s)
         print(f"\nInput: {s}\nOutput: {result}\nExpected: {expected}\n")
-        
