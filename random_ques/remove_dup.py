@@ -21,27 +21,45 @@ Constraints:
 - nums is sorted in non-decreasing order.
 """
 
-def remove_duplicates(nums):
+def removeDuplicates(nums):
     """
     Removes duplicates in-place from sorted array nums.
     Returns the length of the array after duplicates are removed.
     """
-    pass  # Implement your solution here
+    # Edge case: if the input list is empty, return an empty list
+    if not nums:
+        return []
+
+    # i is the "slow pointer" — it marks the position of the last unique element found
+    i = 0  
+
+    # j is the "fast pointer" — it scans through the array
+    for j in range(1, len(nums)):
+        # If the current element nums[j] is different from the last unique nums[i],
+        # we have found a new unique element
+        if nums[j] != nums[i]:
+            i += 1                  # move slow pointer forward
+            nums[i] = nums[j]       # place the unique element at position i
+
+    # At this point, all unique elements are in nums[0..i]
+    # Return only the unique portion of the array
+    return nums[:i+1]
+
 
 # Test cases
 if __name__ == "__main__":
     nums1 = [1,1,2]
-    k1 = remove_duplicates(nums1)
+    k1 = removeDuplicates(nums1)
     print(k1, nums1[:k1])  # Output: 2 [1, 2]
 
     nums2 = [0,0,1,1,1,2,2,3,3,4]
-    k2 = remove_duplicates(nums2)
+    k2 = removeDuplicates(nums2)
     print(k2, nums2[:k2])  # Output: 5 [0, 1, 2, 3, 4]
 
     nums3 = [1]
-    k3 = remove_duplicates(nums3)
+    k3 = removeDuplicates(nums3)
     print(k3, nums3[:k3])  # Output: 1 [1]
 
     nums4 = []
-    k4 = remove_duplicates(nums4)
+    k4 = removeDuplicates(nums4)
     print(k4, nums4[:k4])  # Output: 0 []
