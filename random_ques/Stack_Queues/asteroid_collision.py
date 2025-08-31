@@ -27,3 +27,30 @@ Constraints:
 ·  asteroids[i] != 0
 
 """
+
+class Solution:
+    def asteroidCollision(self, asteroids):
+        st = []
+        n = len(asteroids)
+        for i in asteroids:
+            # only push right moving 
+            if i>0:
+                st.append(i)
+            else:
+                # Delete smaller right moving asteroids when left moving is encountered
+                while (st and st[-1] > 0 and st[-1]<abs(i)): 
+                    st.pop()
+                # when right and left moving have same size
+                if st and st[-1]==abs(i):
+                    st.pop()
+                # finally when st has no right moving asteroids/already left moving in st 
+                elif not st or st[-1]<0:
+                    st.append(i)
+        return st
+    
+if __name__ == "__main__":
+    sol = Solution()
+    test_cases = [([2, -2], []), ([10, 20, -10],[10, 20]), ([10, 2, -5],[10])]
+    for s, expected in test_cases:
+        result = sol.asteroidCollision(s)
+        print(f"\nInput: {s}\nOutput: {result}\nExpected: {expected}\n")
