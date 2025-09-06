@@ -24,5 +24,34 @@ You can use shared memory if you want by creating a global variable and just ass
 
 '''
 
+def validation_fn(element) -> bool:
+    return True
 
+# Example usage of parallel function to clean a dataset
+def parallel_clean(data):
+    if len(data) == 0:
+        return []
+    if len(data) == 1:
+        return [data[0]] if validation_fn(data[0]) else []
+    mid = len(data) // 2
+    left, right = parallel(parallel_clean, data[:mid], parallel_clean, data[mid:])
+    return left + right
+
+# Usage:
+cleaned = parallel_clean(data)
+def clean_dataset(data: list) -> list:
+    n = len(data)
+    solution =[]
+    for i in data:
+        # performing  a validation check
+        if validation_fn(i):
+            solution.append(i)
+    return solution 
+
+
+
+# Maybe useful later. Maybe not. Depends
+
+def parallel(foo, x, bar, y):
+    return foo(x), bar(y)
 
