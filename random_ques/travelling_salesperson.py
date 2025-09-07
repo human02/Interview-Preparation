@@ -24,3 +24,58 @@ Constraints:
 - 1 <= road_nodes <= 1000
 - 1 <= m <= 1000
 """
+
+import heapq
+
+def getMinimumLength(road_nodes, roads_from, roads_to, roads_weight):
+    n = road_nodes
+    # adjacency list for forward graph: edges of the form (u -> v, w)
+    adj = [[] for _ in range(n + 1)]
+    # adjacency list for reverse graph: store incoming edges (v <- u, w)
+    # This is needed so when we run Dijkstra from s, we can easily check
+    # all nodes v that connect back into s by a direct edge (v -> s).
+    rev = [[] for _ in range(n + 1)]
+
+    # Build the graph
+    for u, v, w in zip(roads_from, roads_to, roads_weight):
+        adj[u].append((v, w))   # forward edge (used in Dijkstra relaxations)
+        rev[v].append((u, w))   # reverse edge (used to detect cycles ending at v)
+
+    INF = 10**30  # a large number representing infinity
+
+    # Standard Dijkstra’s algorithm (min-heap) to compute shortest paths from src
+    def dijkstra(src):
+        dist = [INF] * (n + 1)   # initialize distances
+        dist[src] = 0
+        pq = [(0, src)]          # (distance, node)
+        while pq:
+            d, u = heapq.heappop(pq)
+            if d != dist[u]:     # skip if this is a stale entry
+                continue
+            # relax outgoing edges from u
+            for v, w in adj[u]:
+                nd = d + w
+                if nd < dist[v]:
+                    dist[v] = nd
+                    heapq.heappush(pq, (nd, v))
+        return dist
+
+    ans = [0] * n
+    # For each house s, compute the shortest cycle starting and ending at s
+    for s in range(1, n + 1):
+        dist = dijkstra(s)   # shortest paths from s to all other nodes
+        best = INF
+        # Why check incoming edges via rev[s]?
+        # Because any cycle through s must:
+        #   (1) leave s by some path s -> ... -> v
+        #   (2) then return to s by a direct edge (v -> s, w)
+        # So, for every incoming edge (v -> s, w),
+        # if dist[v] is finite, we have a cycle:
+        #   s -> ... -> v -> s  with length dist[v] + w.
+        for v, w in rev[s]:
+            if dist[v] < INF:   # there is a path s -> v
+                best = min(best, dist[v] + w)
+        # If no valid cycle found, answer is 0
+        ans[s - 1] = 0 if best == INF else best
+
+    return ans
