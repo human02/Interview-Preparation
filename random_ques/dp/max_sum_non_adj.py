@@ -11,28 +11,44 @@ Constraints:
 """
 
 class Solution:
-    """ Function to calculate the maximum
-    sum of nonAdjacent elements """
-    def nonAdjacent(self, nums):
-        n = len(nums)
-        dp = [0] * n
+    # """ Function to calculate the maximum
+    # sum of nonAdjacent elements """
+    # def nonAdjacent(self, nums):
+    #     n = len(nums)
+    #     dp = [0] * n
         
-        # Base case
-        dp[0] = nums[0]
+    #     # Base case
+    #     dp[0] = nums[0]
 
-        # Iterate through the elements of the array
-        for i in range(1, n):
+    #     # Iterate through the elements of the array
+    #     for i in range(1, n):
             
-            """ Calculate maximum value by either picking
-            the current element or not picking it"""
-            pick = nums[i]
-            if i > 1:
-                pick += dp[i - 2]
-            nonPick = dp[i - 1]
+    #         """ Calculate maximum value by either picking
+    #         the current element or not picking it"""
+    #         pick = nums[i]
+    #         if i > 1:
+    #             pick += dp[i - 2]
+    #         nonPick = dp[i - 1]
 
-            # Store the maximum value in dp array
-            dp[i] = max(pick, nonPick)
+    #         # Store the maximum value in dp array
+    #         dp[i] = max(pick, nonPick)
 
-        """ The last element of the dp array
-        will contain the maximum sum"""
-        return dp[-1]
+    #     """ The last element of the dp array
+    #     will contain the maximum sum"""
+    #     return dp[-1]
+
+    def nonAdjacent_spaceOP(self, nums):
+        n = len(nums)
+        prev, prev2 = nums[0],0
+        curr_i = 0
+        for i in range(1,n):
+            pick=nums[i]
+            if i>1:
+                pick+=prev2
+            notpick = 0+prev
+            curr_i = max(pick,notpick)
+            prev2 = prev
+            prev =curr_i
+
+        return prev
+
