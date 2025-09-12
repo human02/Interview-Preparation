@@ -36,4 +36,8 @@ def nonAdjacent_spaceOP(self, nums):
 
 def recur(nums):
     n=len(nums)
-    
+    # two option either pick first element or last element.
+    if n==1:
+        return nums[0]
+    return max(nonAdjacent_spaceOP(nums[1:]),nonAdjacent_spaceOP(nums[:-1]))
+
