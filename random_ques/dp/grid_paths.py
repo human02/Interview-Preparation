@@ -24,3 +24,14 @@ Constraints:
 1 <= n, m <= 100
 The answer will not exceed 109
 """
+def soln(m,n):
+    grid_paths_recur(m-1,n-1)
+
+def grid_paths_recur(i,j):
+    if i==0 or j==0:
+        return 1
+    if i<0 or j<0:
+        return 0
+    up=grid_paths_recur(i-1,j)
+    left=grid_paths_recur(i,j-1)
+    return up+left
