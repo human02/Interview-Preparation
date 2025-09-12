@@ -25,8 +25,10 @@ Constraints:
 The answer will not exceed 109
 """
 
+
 def soln_recur(m, n):
     grid_paths_recur(m - 1, n - 1)
+
 
 def grid_paths_recur(i, j):
     if i == 0 or j == 0:
@@ -42,6 +44,7 @@ def soln_memo(m, n):
     dp = [[-1 for j in range(n)] for i in range(m)]
     grid_paths_memo(m - 1, n - 1, dp)
 
+
 def grid_paths_memo(i, j, dp):
     if i == 0 or j == 0:
         return 1
@@ -53,3 +56,23 @@ def grid_paths_memo(i, j, dp):
     left = grid_paths_memo(i, j - 1)
     dp[i][j] = up + left
     return dp[i][j]
+
+
+def soln_tabu(m, n):
+    """Initialize a memoization table (dp)
+    to store the results of subproblems"""
+    dp = [[0 for _ in range(n)] for _ in range(m)]
+    grid_path_tabulation(m, n, dp)
+
+
+def grid_path_tabulation(m, n, dp):
+    for i in range(m):
+        for j in range(n):
+            if i == 0 and j == 0:
+                dp[i][j] = 1
+            if i > 1:
+                up = dp(i - 1, j)
+            if j > 1:
+                left = dp(i, j - 1)
+            dp[i][j] = up + left
+        return dp[m - 1][n - 1]
