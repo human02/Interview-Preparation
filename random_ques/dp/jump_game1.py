@@ -33,3 +33,8 @@ def canJump(nums):
             return False
         maxReach = max(maxReach, i + nums[i])
     return True
+
+
+assert canJump([2, 3, 1, 1, 4]) == True
+assert canJump([3, 2, 1, 0, 4]) == False
+
