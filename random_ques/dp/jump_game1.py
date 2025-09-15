@@ -21,3 +21,15 @@ Constraints:
 1 <= nums.length <= 104
 0 <= nums[i] <= 105
 """
+
+
+# We can use greedy approach here. We want to check at each index that what is the max reachabele index.
+# If at any index the max reachable index is less than or equal to that index, we cannot reach the end.
+def canJump(nums):
+    n = len(nums)
+    maxReach = 0
+    for i in range(n):
+        if i > maxReach:
+            return False
+        maxReach = max(maxReach, i + nums[i])
+    return True
