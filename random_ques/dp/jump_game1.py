@@ -38,3 +38,16 @@ def canJump(nums):
 assert canJump([2, 3, 1, 1, 4]) == True
 assert canJump([3, 2, 1, 0, 4]) == False
 
+import unittest
+
+
+class TestCanJump(unittest.TestCase):
+    def test_reachable(self):
+        self.assertTrue(canJump([2, 3, 1, 1, 4]))
+
+    def test_unreachable(self):
+        self.assertFalse(canJump([3, 2, 1, 0, 4]))
+
+
+if __name__ == "__main__":
+    unittest.main()
