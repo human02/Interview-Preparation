@@ -14,3 +14,23 @@ Output: 2
 Explanation: The longest common subsequence is "mn", which has a length of 2.
 
 """
+
+
+class Solution:
+    def lcs_recur(self, str1, str2):
+        n1 = len(str1)
+        n2 = len(str2)
+        return self.helper(n1 - 1, n2 - 1, str1, str2)
+
+    def helper_recur(self, idx1, idx2, s1, s2):
+        # Base case:
+        if idx1 < 0 or idx2 < 0:
+            return 0
+        # When characters in both strs are same
+        if s1[idx1] == s2[idx2]:
+            return 1 + self.helper(idx1 - 1, idx2 - 1, s1, s2)
+        # We check both cases by reducing each char in each case
+        else:
+            return max(
+                self.helper(idx1 - 1, idx2, s1, s2), self.helper(idx1, idx2 - 1, s1, s2)
+            )
