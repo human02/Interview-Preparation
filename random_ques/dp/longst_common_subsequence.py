@@ -62,3 +62,27 @@ class Solution:
                 self.func(s1, s2, ind1 - 1, ind2, dp),
             )
         return dp[ind1][ind2]
+
+    def lcs_tabu(self, str1, str2):
+        n = len(str1)
+        m = len(str2)
+
+        # necessary for shifting technique as dp[-1] cannot be used in tabulation
+        dp = [[0] * (m + 1) for _ in range(n + 1)]
+
+        # Initialize base cases, as any string with empty string has LCS length 0
+        for i in range(n + 1):
+            dp[i][0] = 0
+        for i in range(m + 1):
+            dp[0][i] = 0
+
+        # Fill in the DP table to calculate length of LCS
+        for ind1 in range(1, n + 1):
+            for ind2 in range(1, m + 1):
+                # Characters match, increment LCS length
+                if str1[ind1 - 1] == str2[ind2 - 1]:
+                    dp[ind1][ind2] = 1 + dp[ind1 - 1][ind2 - 1]
+                else:
+                    dp[ind1][ind2] = max(dp[ind1 - 1][ind2], dp[ind1][ind2 - 1])
+
+        return dp[n][m]
