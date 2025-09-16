@@ -34,3 +34,31 @@ class Solution:
             return max(
                 self.helper(idx1 - 1, idx2, s1, s2), self.helper(idx1, idx2 - 1, s1, s2)
             )
+
+    def lcs_memo(self, str1, str2):
+        n = len(str1)
+        m = len(str2)
+
+        dp = [[-1] * m for _ in range(n)]
+        return self.func(str1, str2, n - 1, m - 1, dp)
+
+    def helper_memo(self, s1, s2, ind1, ind2, dp):
+        # Base case
+        if ind1 < 0 or ind2 < 0:
+            return 0
+
+        """ If the result for this pair of indices
+        is already calculated, return it"""
+        if dp[ind1][ind2] != -1:
+            return dp[ind1][ind2]
+
+        """ If the characters at the current 
+        indices match, increment the LCS length"""
+        if s1[ind1] == s2[ind2]:
+            dp[ind1][ind2] = 1 + self.func(s1, s2, ind1 - 1, ind2 - 1, dp)
+        else:
+            dp[ind1][ind2] = max(
+                self.func(s1, s2, ind1, ind2 - 1, dp),
+                self.func(s1, s2, ind1 - 1, ind2, dp),
+            )
+        return dp[ind1][ind2]
