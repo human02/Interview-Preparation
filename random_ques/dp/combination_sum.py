@@ -23,3 +23,27 @@ Input : candidates = [2], target = 1
 Output : []
 Explanation : There is no way we can choose the candidates to sum up to target.
 """
+
+
+class Solution:
+    def combinationSum(self, candidates, target):
+        ans = []
+        self.helper(0, [], target, len(candidates), candidates, ans)
+        return ans
+
+    def helper(self, ind, curr_list, target, n, arr, ans):
+        # Base Case
+        if target == 0:
+            ans.append(curr_list[:])  # store a copy
+            return
+        # Base case - negative index or negative target value
+        if ind == n or target < 0:
+            return
+
+        # Pick current element
+        curr_list.append(arr[ind])
+        self.helper(ind, curr_list, target - arr[ind], n, arr, ans)
+        curr_list.pop()  # delete req for not-pick step
+
+        # Skip current element
+        self.helper(ind + 1, curr_list, target, n, arr, ans)
