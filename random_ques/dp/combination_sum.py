@@ -47,3 +47,35 @@ class Solution:
 
         # Skip current element
         self.helper(ind + 1, curr_list, target, n, arr, ans)
+
+    def combinationSum_memo(self, candidates, target):
+        n = len(candidates)
+        # dp[(ind, target)] will store list of combinations
+        dp = {}
+
+        def helper(ind, target):
+            # base case: exact match
+            if target == 0:
+                return [[]]
+            # invalid cases
+            if ind == n or target < 0:
+                return []
+
+            # If already computed → return
+            if (ind, target) in dp:
+                return dp[(ind, target)]
+
+            # ---- CHOICE 1: Pick current number ----
+            pick = []
+            if target >= candidates[ind]:
+                for comb in helper(ind, target - candidates[ind]):
+                    pick.append([candidates[ind]] + comb)
+
+            # ---- CHOICE 2: Skip current number ----
+            skip = helper(ind + 1, target)
+
+            # Save in dp and return
+            dp[(ind, target)] = pick + skip
+            return dp[(ind, target)]
+
+        return helper(0, target)
