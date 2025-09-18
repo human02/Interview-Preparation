@@ -24,3 +24,37 @@ Input: heights = [[1],[1]]
 Output: [[0,0],[0,1]]
 
 """
+
+
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        rows, cols = len(heights), len(heights[0])
+        pac, atl = set(), set()
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+        def dfs(r, c, vis, prevheight):
+            if (
+                r < 0
+                or r >= rows
+                or c < 0
+                or c >= cols
+                or (r, c) in vis
+                or heights[r][c] < prevheight
+            ):
+                return
+            vis.add((r, c))
+            for dx, dy in directions:
+                dfs(r + dx, c + dy, vis, heights[r][c])
+
+        for i in range(cols):
+            dfs(0, i, pac, heights[0][i])
+            dfs(rows - 1, i, atl, heights[rows - 1][i])
+        for i in range(rows):
+            dfs(i, 0, pac, heights[i][0])
+            dfs(i, cols - 1, atl, heights[i][cols - 1])
+        res = []
+        for i in range(rows):
+            for j in range(cols):
+                if (i, j) in pac and (i, j) in atl:
+                    res.append([i, j])
+        return res
