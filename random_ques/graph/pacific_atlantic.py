@@ -27,7 +27,7 @@ Output: [[0,0],[0,1]]
 
 
 class Solution:
-    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+    def pacificAtlantic(self, heights):
         rows, cols = len(heights), len(heights[0])
         pac, atl = set(), set()
         directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
