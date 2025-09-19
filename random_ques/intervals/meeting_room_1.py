@@ -19,3 +19,21 @@ Constraints:
 0 <= intervals.length <= 500
 0 <= intervals[i].start < intervals[i].end <= 1,000,000
 """
+
+
+# Definition of Interval:
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+
+class Solution:
+    def canAttendMeetings(self, intervals):
+        intervals.sort(key=lambda x: x.start)
+        for i in range(1, len(intervals)):
+            i1 = intervals[i - 1]
+            i2 = intervals[i]
+            if i1.end > i2.start:
+                return False
+        return True
