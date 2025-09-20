@@ -22,3 +22,15 @@ Constraints:
 1 <= n<= 105
 0 <= arr[i] <= 106
 """
+
+
+class Solution:
+    def maxProfit(self, arr):
+        min_price = arr[0]
+        max_profit = 0
+
+        for sell in arr:
+            max_profit = max(max_profit, sell - min_price)
+            min_price = min(min_price, sell)
+
+        return max_profit
