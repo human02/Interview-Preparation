@@ -14,3 +14,22 @@ Constraints:
 2 <= height.length <= 1000
 0 <= height[i] <= 1000
 """
+
+# Brute force is to use 2 loops to calculate area of all possible pairs and return max area.
+# Optimal approach is to use 2 pointers, one at start and one at end. Calculate area and move the pointer with smaller height towards center.
+
+
+class Solution:
+    def maxWater(self, height):
+        n = len(height)
+        l = 0
+        r = n - 1
+        maxArea = 0
+        while l < r:
+            waterArea = (r - l) * min(height[l], height[r])
+            maxArea = max(maxArea, waterArea)
+            if height[l] < height[r]:
+                l += 1
+            else:
+                r -= 1
+        return maxArea
