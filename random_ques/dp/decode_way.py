@@ -82,3 +82,24 @@ class Solution:
                 dp[i] = pick1 + pick2
 
         return dp[0]
+
+    def max_ways_space_opt(self, s):
+        n = len(s)
+
+        # dp[i+1] = next1, dp[i+2] = next2
+        prev, prev2 = 1, 0  # dp[n] = 1, dp[n+1] = 0
+
+        for i in range(n - 1, -1, -1):
+            if s[i] == "0":
+                curr = 0
+            else:
+                pick1 = prev
+                pick2 = 0
+                if i + 1 < n and 10 <= int(s[i : i + 2]) <= 26:
+                    pick2 = prev2
+                curr = pick1 + pick2
+
+            # shift
+            next2, next1 = next1, curr
+
+        return next1
