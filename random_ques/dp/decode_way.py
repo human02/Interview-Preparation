@@ -43,3 +43,23 @@ class Solution:
             return pick1 + pick2
 
         return helper(0)
+
+    def max_ways_memo(self, s):
+        n = len(s)
+        dp = [-1] * n
+
+        def helper(i):
+            if dp[i] != -1:
+                return dp[i]
+            if i == n:
+                return 1
+            if s[i] == "0":
+                return 0
+            pick1, pick2 = 0, 0
+            pick1 = helper(i + 1)
+            if i + 1 < n and 10 <= int(s[i : i + 2]) <= 26:
+                pick2 = helper(i + 2)
+            dp[i] = pick1 + pick2
+            return dp[i]
+
+        return helper(0)
