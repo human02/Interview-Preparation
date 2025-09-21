@@ -63,3 +63,22 @@ class Solution:
             return dp[i]
 
         return helper(0)
+
+    def max_ways_tab(self, s):
+        n = len(s)
+        dp = [0] * (n + 1)
+
+        # base case: empty string has 1 way
+        dp[n] = 1
+
+        for i in range(n - 1, -1, -1):
+            if s[i] != "0":
+                pick1 = dp[i + 1]
+
+                pick2 = 0
+                if i + 1 < n and 10 <= int(s[i : i + 2]) <= 26:
+                    pick2 = dp[i + 2]
+
+                dp[i] = pick1 + pick2
+
+        return dp[0]
