@@ -25,3 +25,21 @@ Explanation: "12" could be decoded as "AB" (1 2) or "L" (12).
 
 Example 2:
 """
+
+
+class Solution:
+    def max_ways_recursive(self, s):
+        n = len(s)
+
+        def helper(i):
+            if i == n:
+                return 1
+            if s[i] == "0":
+                return 0
+            pick1, pick2 = 0, 0
+            pick1 = helper(i + 1)
+            if i + 1 < n and 10 <= int(s[i : i + 2]) <= 26:
+                pick2 = helper(i + 2)
+            return pick1 + pick2
+
+        return helper(0)
