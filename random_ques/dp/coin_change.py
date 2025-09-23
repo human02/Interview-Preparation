@@ -37,3 +37,22 @@ class Solution:
 
         ans = helper(0, amount)
         return -1 if ans == float("inf") else ans
+
+    def coinChange_memo(self, coins, amount):
+        n = len(coins)
+        dp = {}
+
+        def helper(i, target):
+            if target == 0:
+                return 0
+            if i == n or target < 0:
+                return float("inf")
+            if (i, target) in dp:
+                return dp[(i, target)]
+            pick = 1 + helper(i, target - coins[i])
+            not_pick = helper(i + 1, target)
+            dp[(i, target)] = min(pick, not_pick)
+            return dp[(i, target)]
+
+        ans = helper(0, amount)
+        return -1 if ans == float("inf") else ans
