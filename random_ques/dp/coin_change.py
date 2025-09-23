@@ -18,3 +18,22 @@ Constraints:
 1 <= coins[i] <= 2^31 - 1
 0 <= amount <= 10^4
 """
+
+
+class Solution:
+    def coinChange_recursive(self, coins, amount):
+        n = len(coins)
+
+        def helper(i, target):
+            if target == 0:
+                return 0
+            if i == n or target < 0:
+                return float("inf")
+
+            pick = 1 + helper(i, target - coins[i])
+            not_pick = helper(i + 1, target)
+
+            return min(pick, not_pick)
+
+        ans = helper(0, amount)
+        return -1 if ans == float("inf") else ans
