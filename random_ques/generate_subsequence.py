@@ -17,3 +17,22 @@ Constraints:
 1 <= s.length <= 16
 s consists of lowercase English letters.
 """
+
+
+class Solution:
+    def generateSubsequences(self, s):
+        n = len(s)
+        result = []
+
+        def helper(ind, res):
+            if ind == n:
+                if len(res):
+                    result.append(res)
+                return
+            # pick
+            helper(ind + 1, res + s[ind])
+            # not pick
+            helper(ind + 1, res)
+
+        helper(0, [])
+        return result.sort()
