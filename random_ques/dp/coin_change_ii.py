@@ -44,3 +44,21 @@ class Solution:
             return pick + not_pick
 
         return helper(0, amount) % (10**9 + 7)
+
+    def change_memo(self, coins, amount):
+        n = len(coins)
+        dp = {}
+
+        def helper(i, target):
+            if target == 0:
+                return 1
+            if i == n or target < 0:
+                return 0
+            if (i, target) in dp:
+                return dp[(i, target)]
+            pick = helper(i, target - coins[i])
+            not_pick = helper(i + 1, target)
+            dp[(i, target)] = pick + not_pick
+            return dp[(i, target)]
+
+        return helper(0, amount) % (10**9 + 7)
