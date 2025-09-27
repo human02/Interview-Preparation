@@ -26,3 +26,21 @@ Constraints:
 1 <= n, coins[i], amount <= 103
 All the values of coins are unique.
 """
+
+
+class Solution:
+    def change_recursive(self, coins, amount):
+        n = len(coins)
+
+        def helper(i, target):
+            if target == 0:
+                return 1
+            if i == n or target < 0:
+                return 0
+
+            pick = helper(i, target - coins[i])
+            not_pick = helper(i + 1, target)
+
+            return pick + not_pick
+
+        return helper(0, amount) % (10**9 + 7)
