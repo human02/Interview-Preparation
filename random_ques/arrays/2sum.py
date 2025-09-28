@@ -23,3 +23,14 @@ Constraints:
 -10,000,000 <= nums[i] <= 10,000,000
 -10,000,000 <= target <= 10,000,000
 """
+
+
+class Solution:
+    def twoSum(self, nums, target):
+        mp = {}
+        for i, num in enumerate(nums):
+            compliment = target - num
+            if compliment in mp:
+                return [mp[compliment], i]
+            mp[num] = i
+        return [-1, -1]
