@@ -34,3 +34,13 @@ class Solution:
                 return [mp[compliment], i]
             mp[num] = i
         return [-1, -1]
+
+
+if __name__ == "__main__":
+    nums = [3, 4, 5, 6]
+    target = 7
+    obj = Solution()
+    result = obj.twoSum(nums, target)
+    print(f"\nInput Array: {nums}, Target: {target}")
+    print(f"Output Indices: {result}\n")
+    assert result == [0, 1], "Test case failed!"
