@@ -33,3 +33,13 @@ class Solution:
             res.append(s[start : start + length])
             i = start + length
         return res
+
+
+if __name__ == "__main__":
+    strs = ["leet", "code", "love", "you"]
+    obj = Solution()
+    encoded_str = obj.encode(strs)
+    print(f"\nEncoded --> {encoded_str}")
+    decoded_strs = obj.decode(encoded_str)
+    print(f"Decoded --> {decoded_strs}\n")
+    assert strs == decoded_strs, "Decoded strings do not match original input"
