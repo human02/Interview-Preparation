@@ -19,3 +19,24 @@ Constraints:
 1 <= prices.length <= 100
 0 <= prices[i] <= 100
 """
+
+
+class Solution:
+    def maxProfit(self, prices):
+        # Choose first day as selling day initially.
+        sell_price = prices[0]
+        max_profit = 0
+        for i in range(1, len(prices)):
+            profit = prices[i] - sell_price
+            max_profit = max(max_profit, profit)
+            # Update sell price if current price is lower than chosen sell price
+            if prices[i] < sell_price:
+                sell_price = prices[i]
+        return max_profit
+
+
+if __name__ == "__main__":
+    prices = [10, 1, 5, 6, 7, 1]
+    print(Solution().maxProfit(prices))  # 6
+    prices = [10, 8, 7, 5, 2]
+    print(Solution().maxProfit(prices))  # 0
