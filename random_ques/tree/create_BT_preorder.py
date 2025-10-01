@@ -18,3 +18,31 @@ Input: preorder = [1], inorder = [1]
 Output: [1]
 
 """
+
+
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class Solution:
+    def buildTree(self, preorder, inorder):
+        # inorder = left, root, right
+        # preorder = root left right
+        inorder_mp = {val: idx for idx, val in enumerate(inorder)}
+
+        def helper(prestart, preend, instart, inend):
+            if prestart > preend or instart > inend:
+                return None
+            root_val = preorder[prestart]
+            root = TreeNode(root_val)
+            inroot = inorder_mp[root_val]
+            numleft = inroot - instart
+            root.left = helper(prestart + 1, prestart + numleft, instart, inroot - 1)
+            root.right = helper(prestart + numleft + 1, preend, inroot + 1, inend)
+            return root
+
+        return helper(0, len(preorder) - 1, 0, len(inorder) - 1)
