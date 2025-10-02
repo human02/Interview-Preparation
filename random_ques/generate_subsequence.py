@@ -34,5 +34,6 @@ class Solution:
             # not pick
             helper(ind + 1, res)
 
-        helper(0, [])
-        return result.sort()
+        helper(0, "")
+        result.sort()
+        return result
