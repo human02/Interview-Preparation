@@ -36,3 +36,23 @@ Constraints:
 2 <= base <= 36
 
 """
+
+
+class Solution:
+    def int_to_base(self, num, base):
+        res = ""
+        # necessary for conversion to str
+        digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        if num == 0:
+            return "0"
+        if num < 0:
+            isNegative = True
+        else:
+            isNegative = False
+
+        tmp = abs(num)
+        while tmp != 0:
+            rem = tmp % base
+            res = digits[rem] + res
+            tmp //= base
+        return res if not isNegative else "-" + res
