@@ -19,3 +19,28 @@ Constraints:
 1 <= s.length <= 1000
 s is made up of only printable ASCII characters.
 """
+
+
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        # remove non-alphanumeric chars, store in lowercase
+        s = "".join([c.lower() for c in s if c.isalnum()])
+
+        if len(s) and len(s) < 2:
+            return True
+
+        l, r = 0, len(s) - 1
+        while l < r:
+            if s[l] != s[r]:
+                return False
+            l += 1
+            r -= 1
+        return True
+
+
+if __name__ == "__main__":
+    s = "Was it a car or a cat I saw?"
+    obj = Solution()
+    result = obj.isPalindrome(s)
+    print(f"\nInput String: {s}")
+    print(f"Is Palindrome: {result}\n")
