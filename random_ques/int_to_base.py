@@ -56,3 +56,16 @@ class Solution:
             res = digits[rem] + res
             tmp //= base
         return res if not isNegative else "-" + res
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.int_to_base(25, 5))
+    print(f"\nTesting Now, If any test case fails then Assertion Error will be raised.")
+    assert obj.int_to_base(0, 10) == "0"
+    assert obj.int_to_base(25, 5) == "100"
+    assert obj.int_to_base(10, 2) == "1010"
+    assert obj.int_to_base(255, 16) == "FF"
+    assert obj.int_to_base(-42, 10) == "-42"
+    assert obj.int_to_base(123, 8) == "173"
+    print(f"Congratulations, All Test Cases Passed!\n")
