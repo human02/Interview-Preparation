@@ -21,3 +21,15 @@ Constraints:
 -10 <= nums[i] <= 10
 -109 <= product of any prefix or suffix of nums <= 109
 """
+
+
+class Solution:
+    def maxProduct_brute(self, nums):
+        maxi = float("-inf")
+        for i in range(len(nums)):
+            for j in range(i, len(nums)):
+                prod = 1
+                for k in range(i, j + 1):
+                    prod = nums[k] * prod
+                    maxi = max(maxi, prod)
+        return maxi
