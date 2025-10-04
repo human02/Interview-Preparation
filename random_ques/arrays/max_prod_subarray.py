@@ -33,3 +33,12 @@ class Solution:
                     prod = nums[k] * prod
                     maxi = max(maxi, prod)
         return maxi
+
+    def maxProduct_better(self, nums):
+        maxi = float("-inf")
+        for i in range(len(nums)):
+            prod = 1
+            for j in range(i, len(nums)):
+                prod = nums[j] * prod
+                maxi = max(maxi, prod)
+        return maxi
