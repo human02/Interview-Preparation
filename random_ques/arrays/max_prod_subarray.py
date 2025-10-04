@@ -42,3 +42,17 @@ class Solution:
                 prod = nums[j] * prod
                 maxi = max(maxi, prod)
         return maxi
+
+    def maxProduct_optimal(self, nums):
+        prefix, suffix, maxi = 1, 1, float("-inf")
+        for i in range(len(nums)):
+            if prefix == 0:
+                prefix = 1
+            prefix *= nums[i]
+            maxi = max(maxi, prefix)
+        for i in range(len(nums) - 1, -1, -1):
+            if suffix == 0:
+                suffix = 1
+            suffix *= nums[i]
+            maxi = max(maxi, suffix)
+        return maxi
