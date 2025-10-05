@@ -27,3 +27,30 @@ newInterval.length == intervals[i].length == 2
 0 <= start <= end <= 1000
 
 """
+
+
+class Solution:
+    def insert(self, intervals, newInterval):
+        # Sorting incase the list is not sorted
+        intervals.sort(key=lambda x: x[0])
+        res = []
+        n = len(intervals)
+        i = 0
+        # Find & Add the intervals before the newInterval
+        #
+        while i < n and intervals[i][1] < newInterval[0]:
+            res.append(intervals[i])
+            i += 1
+
+        # Check if current interval start before newInterval ends
+        # Overlapping check newInterface with curr interval
+        while i < n and intervals[i][0] <= newInterval[1]:
+            newInterval[0] = min(intervals[i][0], newInterval[0])
+            newInterval[1] = max(intervals[i][1], newInterval[1])
+            i += 1
+        res.append(newInterval)
+
+        while i < n:
+            res.append(intervals[i])
+            i += 1
+        return res
