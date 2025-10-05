@@ -54,3 +54,9 @@ class Solution:
             res.append(intervals[i])
             i += 1
         return res
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    assert obj.insert([[1, 3], [4, 6]], [2, 5]) == [[1, 6]]
+    print(obj.insert([[1, 3], [4, 6]], [2, 5]))
