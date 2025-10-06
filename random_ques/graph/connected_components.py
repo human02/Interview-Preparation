@@ -17,3 +17,31 @@ Constraints:
 1 <= n <= 100
 0 <= edges.length <= n * (n - 1) / 2
 """
+
+from collections import deque
+
+
+class Solution:
+    def connected_components(self, n, edges):
+        adjL = [[] for i in range(n)]
+        vis = [0] * n
+        for u, v in edges:
+            adjL[u].append(v)
+            adjL[v].append(u)
+
+        def bfs(root):
+            q = deque([root])
+            while q:
+                node = q.popleft()
+                vis[node] = 1
+                for neighbor in adjL[node]:
+                    if not vis[neighbor]:
+                        q.append(neighbor)
+                        vis[neighbor] = 1
+
+        res = 0
+        for i in range(n):
+            if not vis[i]:
+                bfs(i)
+                res += 1
+        return res
