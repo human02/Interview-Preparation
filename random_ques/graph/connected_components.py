@@ -45,3 +45,9 @@ class Solution:
                 bfs(i)
                 res += 1
         return res
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    assert obj.connected_components(3, [[0, 1], [0, 2]]) == 1
+    print(obj.connected_components(3, [[0, 1], [0, 2]]))
