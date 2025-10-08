@@ -18,3 +18,13 @@ Output: 1
 Constraints:
 1 <= nums.length <= 1000
 """
+
+
+class Solution:
+    def missingNumber(self, nums):
+        n = len(nums)
+        sum_n = n * (n + 1) // 2
+        sum_list = 0
+        for num in nums:
+            sum_list += num
+        return sum_n - sum_list
