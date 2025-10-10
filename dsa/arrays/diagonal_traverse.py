@@ -34,11 +34,11 @@ class Solution:
 
             # Calculate starting point for each diagonal
             if d < cols:
-                row = 0
-                col = d
+                r = 0
+                c = d
             else:
-                row = d - cols + 1
-                col = cols - 1
+                r = d - cols + 1
+                c = cols - 1
 
             # top right to bottom left travesrsal of diagonal
             while r < rows and c >= 0:
