@@ -52,3 +52,20 @@ class Solution:
             else:
                 result.extend(intermediate)
         return result
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.traverse_diag([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
+    assert obj.traverse_diag([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [
+        1,
+        2,
+        4,
+        7,
+        5,
+        3,
+        6,
+        8,
+        9,
+    ]
+    print("\nTest Passed!\n")
