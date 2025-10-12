@@ -28,3 +28,41 @@ Constraints:
 0 <= nums[i] <= 100
 
 """
+
+# No need to find all permutation and code it. Its N * N! - Bad Solution
+
+
+# Find Breaking point (ascending from right)
+class Solution:
+    def find_next(self, s: str) -> str:
+        s_list = list(s)
+        brk_pt = -1
+
+        # find break point from right
+        for i in range(len(s_list) - 2, -1, -1):
+            if s_list[i] < s_list[i + 1]:
+                brk_pt = i
+                break
+
+        # return Descending order if no breakpoint found
+        if brk_pt == -1:
+            return "".join(reversed(s_list))
+
+        # Find the element just greater than brk_pt element
+        for i in range(len(s_list) - 1, brk_pt, -1):
+            if s_list[i] > s_list[brk_pt]:
+                s_list[i], s_list[brk_pt] = s_list[brk_pt], s_list[i]
+                break
+
+        # Reverse the right half to get the next smallest permutation
+        s_list[brk_pt + 1 :] = reversed(s_list[brk_pt + 1 :])
+        return "".join(s_list)
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.find_next(""))
+    print(obj.find_next("123"))
+    print(obj.find_next("321"))
+    print(obj.find_next("151"))
+    print(obj.find_next("abdc"))
