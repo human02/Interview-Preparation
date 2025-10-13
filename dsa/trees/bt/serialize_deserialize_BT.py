@@ -101,34 +101,3 @@ class Solution:
 
         # Return the reconstructed root of the tree
         return root
-
-
-if __name__ == "__main__":
-    # Create the binary tree
-    root = Binary_TreeNode(1)
-    root.left = Binary_TreeNode(2)
-    root.right = Binary_TreeNode(3)
-    root.right.left = Binary_TreeNode(4)
-    root.right.right = Binary_TreeNode(5)
-
-    obj = Solution()
-
-    print("Original Tree: ", end="")
-
-    def inorder(root):
-        if root is None:
-            return
-        inorder(root.left)
-        print(root.data, end=" ")
-        inorder(root.right)
-
-    inorder(root)
-    print()
-
-    serialized = obj.serialize(root)
-    print("Serialized:", serialized)
-
-    deserialized = obj.deserialize(serialized)
-    print("Tree after deserialization: ", end="")
-    inorder(deserialized)
-    print()
