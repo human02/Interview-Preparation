@@ -14,3 +14,14 @@ Constraints:
 0 <= The length of the list <= 1000.
 -1000 <= Node.val <= 1000
 """
+
+
+class Solution:
+    def reverseLL(self, head):
+        curr, prev = head, None
+        while curr:
+            temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp
+        return prev
