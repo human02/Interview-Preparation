@@ -40,8 +40,33 @@ class Solution:
             water += min(prefixMax[i], suffixMax[i]) - height[i]
         return water
 
+    def find_trapped_rainwater_optimal(self, height):
+        water = 0
+        n = len(height)
+        l, r = 0, n - 1
+        leftMax, rightMax = -1, -1
+        while l < r:
+            if height[l] < height[r]:
+                if leftMax > height[l]:
+                    water += leftMax - height[l]
+                else:
+                    leftMax = height[l]
+                l += 1
+            else:
+                if rightMax > height[r]:
+                    water += rightMax - height[r]
+                else:
+                    rightMax = height[r]
+                r -= 1
+        return water
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.find_trapped_rainwater([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
     print(obj.find_trapped_rainwater([4, 2, 0, 3, 2, 5]))
     print(obj.find_trapped_rainwater([7, 4, 0, 9]))
+    print(f"{"-"*20}")
+    print(obj.find_trapped_rainwater_optimal([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
+    print(obj.find_trapped_rainwater_optimal([4, 2, 0, 3, 2, 5]))
+    print(obj.find_trapped_rainwater_optimal([7, 4, 0, 9]))
