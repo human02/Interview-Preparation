@@ -24,3 +24,44 @@ Constraints:
   1 ≤ n ≤ 105
   0 ≤ arr[i] ≤ 109
 """
+
+
+class Solution:
+    # TC - O(n^2); SC - O(n)
+    def find_next_greater_brute(self, arr):
+        n = len(arr)
+        ans = [-1] * n
+        for i in range(n):
+            for j in range(i, n):
+                if arr[j] > arr[i]:
+                    ans[i] = arr[j]
+                    break
+        return ans
+
+    # TC - O(n) + O(n) = O(n); SC - O(n)
+    def find_next_greater_optimal(self, arr):
+        n = len(arr)
+        ans = [-1] * n
+        # to store the next last greater element
+        st = []
+        # traverse from the back
+        for i in range(n - 1, -1, -1):
+            while st:
+                if st[-1] > arr[i]:
+                    ans[i] = st[-1]
+                    break
+                else:
+                    st.pop()
+            st.append(arr[i])
+        return ans
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.find_next_greater_brute([1, 3, 2, 4]))
+    print(obj.find_next_greater_brute([6, 8, 0, 1, 3]))
+    print(obj.find_next_greater_brute([1, 3, 2]))
+    print(f"{"-"*20}")
+    print(obj.find_next_greater_optimal([1, 3, 2, 4]))
+    print(obj.find_next_greater_optimal([6, 8, 0, 1, 3]))
+    print(obj.find_next_greater_optimal([1, 3, 2]))
