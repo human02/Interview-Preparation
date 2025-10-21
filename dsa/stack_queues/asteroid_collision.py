@@ -2,10 +2,10 @@
 Asteroid Collision
 
 We are given an array asteroids of integers representing asteroids in a row.
-For each asteroid, the absolute value represents its size, and the sign represents its direction 
+For each asteroid, the absolute value represents its size, and the sign represents its direction
 (positive meaning right, negative meaning left). Each asteroid moves at the same speed.
 
-When two asteroids meet, the smaller one will explode. If they are the same size, both will explode. 
+When two asteroids meet, the smaller one will explode. If they are the same size, both will explode.
 Asteroids moving in the same direction will never meet.
 
 Input: asteroids = [2, -2]
@@ -14,7 +14,7 @@ Explanation: The asteroid with size 2 and the one with size -2 collide, explodin
 
 Input: asteroids = [10, 20, -10]
 Output: [10, 20]
-Explanation: The asteroid with size 20 and the one with size -10 collide, resulting in the remaining asteroid with size 20. 
+Explanation: The asteroid with size 20 and the one with size -10 collide, resulting in the remaining asteroid with size 20.
 The asteroids with sizes 10 and 20 never collide.
 
 Input: asteroids = [10, 2, -5]
@@ -28,29 +28,30 @@ Constraints:
 
 """
 
+
 class Solution:
     def asteroidCollision(self, asteroids):
         st = []
-        n = len(asteroids)
         for i in asteroids:
-            # only push right moving 
-            if i>0:
+            # only push right moving
+            if i > 0:
                 st.append(i)
             else:
                 # Delete smaller right moving asteroids when left moving is encountered
-                while (st and st[-1] > 0 and st[-1]<abs(i)): 
+                while st and st[-1] > 0 and st[-1] < abs(i):
                     st.pop()
                 # when right and left moving have same size
-                if st and st[-1]==abs(i):
+                if st and st[-1] == abs(i):
                     st.pop()
-                # finally when st has no right moving asteroids/already left moving in st 
-                elif not st or st[-1]<0:
+                # finally when st has no right moving asteroids/already left moving in st
+                elif not st or st[-1] < 0:
                     st.append(i)
         return st
-    
+
+
 if __name__ == "__main__":
     sol = Solution()
-    test_cases = [([2, -2], []), ([10, 20, -10],[10, 20]), ([10, 2, -5],[10])]
+    test_cases = [([2, -2], []), ([10, 20, -10], [10, 20]), ([10, 2, -5], [10])]
     for s, expected in test_cases:
         result = sol.asteroidCollision(s)
         print(f"\nInput: {s}\nOutput: {result}\nExpected: {expected}\n")
