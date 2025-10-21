@@ -62,3 +62,127 @@ Constraints:
 0 <= value <= 105
 At most 105 calls will be made to get and put.
 """
+
+
+class Node:
+
+    # DLL Node will have key and val also. -1 is used due to question constraint
+    def __init__(self, key=-1, val=-1):
+        self.key = key
+        self.val = val
+        self.prev = None
+        self.next = None
+
+
+class LRUCache:
+    def __init__(self, capacity):
+        self.cap = capacity
+        self.mpp = {}
+        self.head = Node()
+        self.tail = Node()
+        # Dummy head and tail connected to each other
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def deleteNode(self, node):
+        prevNode = node.prev
+        nextNode = node.next
+        prevNode.next = nextNode
+        nextNode.prev = prevNode
+
+    def insertAtHead(self, node):
+        temp = self.head.next
+        node.prev = self.head
+        self.head.next = node
+        node.next = temp
+        temp.prev = node
+
+    def get(self, key_):
+        if key_ in self.mpp:
+            node = self.mpp[key_]
+            value = node.val
+            self.deleteNode(node)
+            self.insertAtHead(node)
+            return value
+        return -1
+
+    def put(self, key_, value):
+        # if key_ is already in Cache
+        if key_ in self.mpp:
+            node = self.mpp[key_]
+            node.val = value
+            self.deleteNode(node)
+            self.insertAtHead(node)
+            return
+
+        # When key_ is not in cache and insert is needed, check cache capacity first
+        if self.cap == len(self.mpp):
+            # find last node to delete
+            node = self.tail.prev
+            self.deleteNode(node)
+            del self.mpp[node.key]
+
+        # Insert this key_ and val as a node in cache
+        newNode = Node(key_, value)
+        self.insertAtHead(newNode)
+        self.mpp[key_] = newNode
+
+
+if __name__ == "__main__":
+    # Test Case 1
+    print("Test Case 1:")
+    obj = LRUCache(2)
+    operations = [
+        "LRUCache",
+        "put",
+        "put",
+        "get",
+        "put",
+        "get",
+        "put",
+        "get",
+        "get",
+        "get",
+    ]
+    values = [[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
+
+    results = []
+    for op, val in zip(
+        operations[1:], values[1:]
+    ):  # Skip first operation as it's constructor
+        if op == "put":
+            results.append(obj.put(val[0], val[1]))
+        else:
+            results.append(obj.get(val[0]))
+    print(f"Expected: [null, null, 1, null, -1, null, -1, 3, 4]")
+    print(f"Output: {[None] + results}\n")
+
+    # Test Case 2
+    print("Test Case 2:")
+    obj = LRUCache(1)
+    operations = ["LRUCache", "put", "put", "get"]
+    values = [[1], [1, 1], [2, 2], [1]]
+
+    results = []
+    for op, val in zip(operations[1:], values[1:]):
+        if op == "put":
+            results.append(obj.put(val[0], val[1]))
+        else:
+            results.append(obj.get(val[0]))
+    print(f"Expected: [null, null, null, -1]")
+    print(f"Output: {[None] + results}\n")
+
+    # Test Case 3
+    print("Test Case 3:")
+    obj = LRUCache(2)
+    operations = ["LRUCache", "put", "put", "get", "put", "put", "get", "get"]
+    values = [[2], [1, 1], [2, 2], [1], [3, 3], [4, 4], [2], [4]]
+
+    results = []
+    for op, val in zip(operations[1:], values[1:]):
+        if op == "put":
+            results.append(obj.put(val[0], val[1]))
+        else:
+            results.append(obj.get(val[0]))
+    print(f"Expected: [null, null, null, 1, null, null, -1, 4]")
+    print(f"Output: {[None] + results}")
