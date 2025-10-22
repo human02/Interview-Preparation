@@ -33,3 +33,37 @@ Constraints:
 0 ≤ S < V
 
 """
+
+import heapq
+
+
+class Solution:
+    def distance_using_djikstra(self, V, adj, src):
+        distances = [int(1e9)] * V
+        distances[src] = 0
+        pq = []
+        heapq.heappush(pq, [0, src])
+        while pq:
+            dist, node = heapq.heappop(pq)
+            for neighbor, weight in adj[node]:
+                if dist + weight < distances[neighbor]:
+                    distances[neighbor] = dist + weight
+                    heapq.heappush(pq, [distances[neighbor], neighbor])
+        return distances
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.distance_using_djikstra(4, [[[1, 9]], [[0, 9]]], 0))
+    print(
+        obj.distance_using_djikstra(
+            3, [[[1, 1], [2, 6]], [[2, 3], [0, 1]], [[1, 3], [0, 6]]], 2
+        )
+    )
+    print(
+        obj.distance_using_djikstra(
+            4,
+            [[[1, 1], [3, 2]], [[0, 1], [2, 4]], [[1, 4], [3, 3]], [[0, 2], [2, 3]]],
+            0,
+        )
+    )
