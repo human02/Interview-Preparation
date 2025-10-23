@@ -30,3 +30,41 @@ Constraints:
   0 <= src, dst, k < n
 
 """
+
+from collections import deque
+
+
+class Solution:
+    def cheapest_flight_within_k_stop(self, n, flights, src, dst, K):
+        adjL = [[] for i in range(n)]
+        for flight in flights:
+            adjL[flight[0]].append((flight[1], flight[2]))
+
+        distances = [float("inf")] * n
+        distances[src] = 0
+        q = deque([(0, src, 0)])
+
+        while q:
+            stops, node, distance = q.popleft()
+            if stops > K:
+                continue
+            for neighbor, cost in adjL[node]:
+                if cost + distance < distances[neighbor] and stops <= K:
+                    distances[neighbor] = cost + distance
+                    q.append((stops + 1, neighbor, distances[neighbor]))
+        if distances[dst] == float("inf"):
+            return -1
+        return distances[dst]
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(
+        obj.cheapest_flight_within_k_stop(
+            4,
+            [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]],
+            0,
+            3,
+            1,
+        )
+    )
