@@ -29,3 +29,43 @@ Constraints:
 -1000 ≤ edges[i][3] ≤ 1000
 0 ≤ S < V
 """
+
+
+# Idea - All nodes will be visited in at max n-1 times of relaxation.
+# TC - O(V*E), O(V)
+class Solution:
+    def distance_using_bellman(self, V, edges, S):
+        distances = [int(1e9)] * V
+        distances[S] = 0
+
+        # n-1 times, all need to be relaxed.
+        for _ in range(V - 1):
+            for u, v, weight in edges:
+                if distances[u] + weight < distances[v] and distances[u] != int(1e9):
+                    distances[v] = distances[u] + weight
+
+        # To check negative cycle,
+        for u, v, weight in edges:
+            if distances[u] + weight < distances[v] and distances[u] != int(1e9):
+                return [-1]
+
+        return distances
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(
+        obj.distance_using_bellman(
+            6,
+            [
+                [3, 2, 6],
+                [5, 3, 1],
+                [0, 1, 5],
+                [1, 5, -3],
+                [1, 2, -2],
+                [3, 4, -2],
+                [2, 4, 3],
+            ],
+            0,
+        )
+    )
