@@ -19,3 +19,40 @@ Constraints:
 1 <= n <= 100
 -1 <= matrix[ i ][ j ] <= 1000
 """
+
+
+# Idea - visit VIA each node
+# TC - O(n^3), SC - O(n^2)
+class Solution:
+    def distances_using_floyd(self, matrix):
+        n = len(matrix)
+        for k in range(n):
+            for i in range(n):
+                for j in range(n):
+                    # skip k if its not in matrix
+                    if matrix[i][k] == -1 or matrix[k][j] == -1:
+                        continue
+
+                    if matrix[i][j] == -1:
+                        matrix[i][j] = matrix[i][k] + matrix[k][j]
+                    else:
+                        matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j])
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    matrix = [[0, 2, -1, -1], [1, 0, 3, -1], [-1, -1, 0, 1], [3, 5, 4, 0]]
+    obj.distances_using_floyd(matrix)
+    for row in matrix:
+        print(row)
+    print(f"{"-"*20}\n")
+    matrix = [[0, 25], [-1, 0]]
+    obj.distances_using_floyd(matrix)
+    for row in matrix:
+        print(row)
+    print(f"{"-"*20}\n")
+    matrix = [[0, 1, 43], [1, 0, 6], [-1, -1, 0]]
+    obj.distances_using_floyd(matrix)
+    for row in matrix:
+        print(row)
+    print(f"{"-"*20}\n")
