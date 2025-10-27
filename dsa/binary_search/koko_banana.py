@@ -25,3 +25,33 @@ Constraints:
   n <= h <= 109
   1 <= nums[i] <= 109
 """
+
+import math
+
+
+# TC - O(max * N), where max is the maximum element in the array and N is the size of the array
+# SC - O(1)
+class Solution:
+    def find_rate(self, nums, h):
+        # Idea is to eat within h (lesser works)
+
+        def helper(rate):
+            total = 0
+            for it in nums:
+                total += math.ceil(it / rate)
+            return total
+
+        # We can use linear search or binary search.
+        low = 1
+        high = max(nums)
+        rateOfEating = max(nums)
+
+        while low <= high:
+            mid = (low + high) // 2
+            timeTaken = helper(mid)
+            if timeTaken <= h:
+                rateOfEating = mid
+                high = mid - 1
+            else:
+                low = mid + 1
+        return rateOfEating
