@@ -35,3 +35,53 @@ Constraints:
 1 <= Number of Nodes <= 104
 -103 <= Node.val <= 103
 """
+
+from collections import deque
+
+
+# Definition for a binary tree node.
+class TreeNode(object):
+    def __init__(self, val=0, left=None, right=None):
+        self.data = val
+        self.left = left
+        self.right = right
+
+
+class Solution:
+    def bottom_view(self, root):
+        ans = []
+        mp = {}
+        q = deque([(root, 0)])
+        while q:
+            node, vertical = q.popleft()
+            mp[vertical] = node.data
+            if node.left:
+                q.append((node.left, vertical - 1))
+            if node.right:
+                q.append((node.right, vertical + 1))
+        for _, val in sorted(mp.items()):
+            ans.append(val)
+        return ans
+
+
+if __name__ == "__main__":
+    # Creating a sample binary tree
+    root = TreeNode(1)
+    root.left = TreeNode(2)
+    root.left.left = TreeNode(4)
+    root.left.right = TreeNode(10)
+    root.left.left.right = TreeNode(5)
+    root.left.left.right.right = TreeNode(6)
+    root.right = TreeNode(3)
+    root.right.right = TreeNode(10)
+    root.right.left = TreeNode(9)
+
+    solution = Solution()
+
+    # Get the Bottom View traversal
+    bottom_view = solution.bottom_view(root)
+
+    # Print the result
+    print("Bottom View Traversal: ")
+    for node in bottom_view:
+        print(node, end=" ")
