@@ -23,3 +23,83 @@ All values in tree are unique.
 -108 <= key <= 108
 
 """
+
+
+class TreeNode(object):
+    def __init__(self, data, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+
+
+class Solution:
+    def delete_node(self, root, key):
+        if root is None:
+            return None
+
+        if root.data == key:
+            return self.connector_helper(root)
+
+        node = root
+        while node:
+            if node.data > key:
+                if node.left and node.left.data == key:
+                    node.left = self.connector_helper(node.left)
+                    break
+                else:
+                    node = node.left
+            else:
+                if node.right and node.right.data == key:
+                    node.right = self.connector_helper(node.right)
+                    break
+                else:
+                    node = node.right
+        return root
+
+    def connector_helper(self, root):
+        if not root.left:
+            return root.right
+        elif not root.right:
+            return root.left
+        else:
+            temp = root.left
+            leftMostNode_RST = root.right
+            while leftMostNode_RST.left:
+                leftMostNode_RST = leftMostNode_RST.left
+            leftMostNode_RST.left = temp
+        return root.right
+
+
+if __name__ == "__main__":
+    # Create a sample binary search tree
+    root = TreeNode(5)
+    root.left = TreeNode(3)
+    root.right = TreeNode(8)
+    root.left.left = TreeNode(2)
+    root.left.right = TreeNode(4)
+
+    sol = Solution()
+
+    def inorder(node):
+        if not node:
+            return
+        inorder(node.left)
+        print(node.data, end=" ")
+        inorder(node.right)
+
+    print("Inorder traversal of original tree:")
+    inorder(root)
+    # Delete node with key 3 from the tree
+    root = sol.delete_node(root, 3)
+
+    # Helper function to print tree in-order
+    def inorder(node):
+        if not node:
+            return
+        inorder(node.left)
+        print(node.data, end=" ")
+        inorder(node.right)
+
+    print("\n\nInorder traversal of resulting tree:")
+    inorder(root)
+    print()
