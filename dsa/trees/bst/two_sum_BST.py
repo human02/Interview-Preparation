@@ -33,6 +33,32 @@ class TreeNode(object):
         self.right = right
 
 
+class BSTIterator(object):
+    def __init__(self, root, is_reverse):
+        self.stack = []
+        self.reverse = is_reverse
+        self.pushAll(root)
+
+    # Helper function to push all left or right nodes
+    def pushAll(self, node):
+        while node:
+            self.stack.append(node)
+            node = node.right if self.reverse else node.left
+
+    # Check if there are more elements in the BST
+    def hasNext(self):
+        return len(self.stack) > 0
+
+    # Get the next element in the inorder or reverse inorder traversal
+    def next(self):
+        node = self.stack.pop()
+        if not self.reverse:
+            self.pushAll(node.right)
+        else:
+            self.pushAll(node.left)
+        return node.data
+
+
 class Solution:
     # TC - O(n), SC - O(n)
     def find_two_sum_brute(self, root, k):
@@ -67,6 +93,28 @@ class Solution:
                 right -= 1
         return False
 
+    # TC - O(), SC - O()
+    def find_two_sum_optimal(self, root, k):
+        if not root:
+            return False
+
+        # Initialize two iterators
+        left_iter = BSTIterator(root, False)  # normal inorder
+        right_iter = BSTIterator(root, True)  # reverse inorder
+
+        i = left_iter.next()
+        j = right_iter.next()
+
+        while i < j:
+            if i + j == k:
+                return True
+            elif i + j < k:
+                i = left_iter.next()
+            else:
+                j = right_iter.next()
+
+        return False
+
 
 if __name__ == "__main__":
     # Example tree: [5, 3, 6, 2, 4, None, 7]
@@ -81,3 +129,6 @@ if __name__ == "__main__":
     solution = Solution()
     result = solution.find_two_sum_brute(root, k)
     print(f"\n{result}\n")  # Output: True
+    solution = Solution()
+    result = solution.find_two_sum_optimal(root, k)
+    print(f"\nOptimal : {result}\n")  # Output: True
