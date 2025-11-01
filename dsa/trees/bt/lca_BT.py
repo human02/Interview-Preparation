@@ -20,3 +20,32 @@ Constraints:
 -106 <= node.val <= 106
 All values in tree are unique.
 """
+
+
+class TreeNode(object):
+    def __init__(self, data, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+
+
+"""
+The LCA can be identified as one of the following: it may be located within the left subtree, 
+the right subtree, or it might be the root node itself if the two nodes are distributed across both subtrees. 
+The fundamental idea is that the LCA is the deepest node that serves as an ancestor to both target nodes, 
+representing the point where their paths to the root diverge.
+"""
+
+
+class Solution:
+    def find_LCA(self, root, p, q):
+        if root is None or root == p or root == q:
+            return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        if left is None:
+            return right
+        elif right is None:
+            return left
+        else:
+            return root
