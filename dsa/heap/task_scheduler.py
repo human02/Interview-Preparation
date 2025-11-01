@@ -25,3 +25,50 @@ No idle interval is needed as cooldown = 1.
 
 Input: tasks = ["A","A","A","B","B","B"], n = 3
 """
+
+from collections import Counter, deque
+import heapq
+
+
+# TC - O(n), SC - O(n)
+class Solution:
+    def find_time(self, tasks, n):
+        """
+        -> Finding freq of each task and storing it in a dict for O(1) lookup
+        -> Counter is a dict
+        """
+        tasks_dict = Counter(tasks)
+
+        """
+        -> Max heap will allow us to keep track of the most freq task log(n) = log(26)
+        -> This heap tells us the task available for processing
+        -> Greedy Approach - Start with Max Freq Job
+        -> Add value not the key to the max heap
+        """
+        maxHeap = [-cnt for cnt in tasks_dict.values()]
+        heapq.heapify(maxHeap)  # maxHeap is now a heap
+
+        """
+        -> Queue is used to store (freq,idle_time)
+        -> It keeps track of jobs waiting for idle time completion
+        """
+        q = deque()  # [-cnt,idle_time]
+        time = 0
+
+        while maxHeap or q:
+            time += 1
+            if maxHeap:
+                frq = heapq.heappop(maxHeap)
+                frq += 1  # Reduce count by 1
+                if frq:
+                    q.append([frq, n + time])
+            if q and q[0][1] == time:
+                # put back job to heap for processing
+                heapq.heappush(maxHeap, q.popleft()[0])
+
+        return time
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.find_time(["A", "A", "A", "B", "B", "B"], 2))
