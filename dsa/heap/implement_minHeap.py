@@ -44,3 +44,83 @@ Constraints:
 1 <= n <= 105
 -105 <= nums[i] <= 105
 """
+
+
+# SC - O(n)
+class MinHeap:
+
+    # TC - O(1)
+    def __init__(self):
+        self.arr = []
+        self.count = 0
+
+    # TC - O(log(n))
+    def heapifyUp(self, arr, ind):
+        parent_idx = (ind - 1) // 2
+        if parent_idx > -1 and arr[parent_idx] > arr[ind]:
+            arr[ind], arr[parent_idx] = arr[parent_idx], arr[ind]
+            self.heapifyUp(arr, parent_idx)
+        return
+
+    # TC - O(log(n))
+    def heapifyDown(self, arr, ind):
+        smallest_idx = ind
+        n = len(arr)
+        leftChild_idx = 2 * ind + 1
+        rightChild_idx = 2 * ind + 2
+        if leftChild_idx < n and arr[leftChild_idx] < arr[smallest_idx]:
+            smallest_idx = leftChild_idx
+        if rightChild_idx < n and arr[rightChild_idx] < arr[smallest_idx]:
+            smallest_idx = rightChild_idx
+        if smallest_idx != ind:
+            arr[smallest_idx], arr[ind] = arr[ind], arr[smallest_idx]
+            self.heapifyDown(arr, smallest_idx)
+        return
+
+    # TC - O(log(n))
+    def insert(self, x):
+        self.arr.append(x)
+        self.heapifyUp(self.arr, self.count)
+        self.count += 1
+        return
+
+    # TC - O(1)
+    def getMin(self):
+        if self.isEmpty():
+            return None
+        return self.arr[0]
+
+    # TC - O(log(n))
+    def extractMin(self):
+        ele = self.arr[0]
+        # Swap the top value with the value at last index
+        self.arr[0], self.arr[self.count - 1] = self.arr[self.count - 1], self.arr[0]
+        self.arr.pop()
+        self.count -= 1
+        # Heapify the root value downwards
+        if self.count > 0:
+            self.heapifyDown(self.arr, 0)
+        return ele
+
+    # TC - O(1)
+    def heapSize(self):
+        return self.count
+
+    # TC - O(1)
+    def isEmpty(self):
+        return len(self.arr) == 0
+
+    # TC - O(log(n))
+    def changeKey(self, ind, val):
+        if self.arr[ind] > val:
+            self.arr[ind] = val
+            self.heapifyUp(self.arr, ind)
+        else:
+            self.arr[ind] = val
+            self.heapifyDown(self.arr, ind)
+        return
+
+    # TC - O(1)
+    def initializeHeap(self):
+        self.arr.clear()
+        self.count = 0
