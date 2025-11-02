@@ -27,3 +27,28 @@ Constraints:
 0 <= Cookie.length <= 3*104
 1 <= Student[i] , Cookie[j] <= 231 - 1
 """
+
+
+# TC - O(nlogn + mlogm + min(m,n)), SC - O(1)
+class Solution:
+    def findMaximumCookieStudents(self, Student, Cookie):
+        Student.sort()
+        Cookie.sort()
+        m = len(Student)
+        n = len(Cookie)
+        i, j, count = 0, 0, 0
+        while i < m and j < n:
+            if Cookie[j] >= Student[i]:
+                i += 1
+                j += 1
+                count += 1
+            else:
+                j += 1
+        return count
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findMaximumCookieStudents([1, 2, 3], [1, 1]))
+    print(obj.findMaximumCookieStudents([1, 2], [1, 2, 3]))
+    print(obj.findMaximumCookieStudents([4, 5, 1], [6, 4, 2]))
