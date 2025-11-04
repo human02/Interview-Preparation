@@ -41,3 +41,52 @@ n == number of rows in matrix
 0 <= matrix[i][j] <= 1000
 
 """
+
+
+class Solution:
+    def ninjaTraining_recursive(self, matrix):
+        n = len(matrix)
+
+        def helper(i, prev):
+            # Base Case where wew dont send recursive call
+            if i == 0:
+                maxi = 0
+                for pt in range(3):
+                    if pt != prev:
+                        points = matrix[0][pt]
+                        maxi = max(maxi, points)
+                return maxi
+            maxi = 0
+            for pt in range(3):
+                if pt != prev:
+                    points = matrix[i][pt] + helper(i - 1, pt)
+                    maxi = max(maxi, points)
+            return maxi
+
+        # 3 is not a task as there are only 3 tasks and they are zero indexed
+        return helper(n - 1, 3)
+
+    def ninjaTraining_memoized(self, matrix):
+        n = len(matrix)
+        dp = [[-1 for j in range(4)] for i in range(n)]
+
+        def helper(i, prev, dp):
+            if i == 0:
+                maxi = 0
+                for pt in range(3):
+                    if pt != prev:
+                        points = matrix[0][pt]
+                        maxi = max(maxi, points)
+                return maxi
+            if dp[i][prev] != -1:
+                return dp[i][prev]
+            maxi = 0
+            for pt in range(3):
+                if pt != prev:
+                    points = matrix[i][pt] + helper(i - 1, pt, dp)
+                    maxi = max(maxi, points)
+                    dp[i][prev] = maxi
+            return dp[i][prev]
+
+        # 3 is not a task as there are only 3 tasks and they are zero indexed
+        return helper(n - 1, 3, dp)
