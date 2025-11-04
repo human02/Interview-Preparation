@@ -34,3 +34,29 @@ Output: 3
 Constraints:
 1 ≤ start.length, target.length ≤ 1000
 """
+
+
+class Solution:
+    def editDistance_recur(self, start, target):
+        m = len(start)
+        n = len(target)
+        return self.helper_recur(m - 1, n - 1, start, target)
+
+    def helper_recur(self, i, j, s1, s2):
+        # Base Case (either of the strs run out of indexes)
+        if i < 0:
+            return j + 1  # these many chars will be inserted
+        if j < 0:
+            return i + 1  # these many chars will be deleted
+        # Same chars, hence nothing needs to be done
+        if s1[i] == s2[j]:
+            return 0 + self.helper_recur(i - 1, j - 1, s1, s2)
+        else:
+            return 1 + min(
+                # insert
+                self.helper_recur(i, j - 1, s1, s2),
+                # delete
+                self.helper_recur(i - 1, j, s1, s2),
+                # replace
+                self.helper_recur(i - 1, j - 1, s1, s2),
+            )
