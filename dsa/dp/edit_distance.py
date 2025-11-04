@@ -60,3 +60,31 @@ class Solution:
                 # replace
                 self.helper_recur(i - 1, j - 1, s1, s2),
             )
+
+    def editDistance_memo(self, start, target):
+        m = len(start)
+        n = len(target)
+
+        # i,j are changing params. Both change from i-1 or j-1 to 0 which is n or m values
+        dp = [[-1] * n for _ in range(m)]
+        return self.helper_memo(m - 1, n - 1, start, target, dp)
+
+    def helper_memo(self, i, j, s1, s2, dp):
+        if i < 0:
+            return j + 1
+        if j < 0:
+            return i + 1
+
+        if dp[i][j] != -1:
+            return dp[i][j]
+
+        if s1[i] == s2[j]:
+            dp[i][j] = 0 + self.helper_memo(i - 1, j - 1, s1, s2, dp)
+            return dp[i][j]
+        else:
+            dp[i][j] = 1 + min(
+                self.helper_memo(i, j - 1, s1, s2, dp),
+                self.helper_memo(i - 1, j, s1, s2, dp),
+                self.helper_memo(i - 1, j - 1, s1, s2, dp),
+            )
+            return dp[i][j]
