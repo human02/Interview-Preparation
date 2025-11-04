@@ -28,3 +28,44 @@ Constraints:
     1 <= m, n <= 200
     0 <= grid[i][j] <= 200
 """
+
+
+class Solution:
+    # TC - O(2^m+n), SC - O(m+n)
+    def min_path_sum_recursive(self, grid):
+        m = len(grid)
+        n = len(grid[0])
+
+        def helper(i, j):
+            if i == m - 1 and j == n - 1:
+                return grid[i][j]
+            if i >= m or j >= n:
+                return float("inf")
+
+            right = helper(i, j + 1)
+            down = helper(i + 1, j)
+            return grid[i][j] + min(right, down)
+
+        return helper(0, 0)
+
+    # TC - O(m*n), SC - O(m*n)
+    def min_path_memo(self, grid):
+        m = len(grid)
+        n = len(grid[0])
+        dp = [[-1] * n for _ in range(m)]
+
+        def helper(i, j):
+            if i == m - 1 and j == n - 1:
+                return grid[i][j]
+            if i >= m or j >= n:
+                return float("inf")
+            if dp[i][j] != -1:
+                return dp[i][j]
+
+            right = helper(i, j + 1)
+            down = helper(i + 1, j)
+
+            dp[i][j] = grid[i][j] + min(right, down)
+            return dp[i][j]
+
+        return helper(0, 0)
