@@ -20,3 +20,21 @@ Constraints:
 0 <= Number of Nodes <= 100
 -104 <= Node.val <= 104
 """
+
+
+class TreeNode(object):
+    def __init__(self, data, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+
+
+class Solution:
+    def isIdentical(self, p, q):
+        if not p and not q:
+            return True
+        if not p or not q:
+            return False
+        if p.data != q.data:
+            return False
+        return self.isIdentical(p.left, q.left) and self.isIdentical(p.right, q.right)
