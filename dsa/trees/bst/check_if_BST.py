@@ -23,3 +23,39 @@ Constraints:
 1 <= Number of Nodes <= 104
 -231 <= Node.val <= 231 - 1
 """
+
+
+class TreeNode(object):
+    def __init__(self, data, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+
+
+class Solution:
+    # Value based check of node.data based on its root
+    def isBST(self, root):
+        return self.isValid(root, float("-inf"), float("inf"))
+
+    def isValid(self, node, minV, maxV):
+        if node is None:
+            return True
+        if node.data <= minV or node.data >= maxV:
+            return False
+        return self.isValid(node.left, minV, node.data) and self.isValid(
+            node.right, node.data, maxV
+        )
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    root = TreeNode(7)
+    root.left = TreeNode(5)
+    root.right = TreeNode(10)
+    root.left.left = TreeNode(3)
+    root.left.right = TreeNode(6)
+    root.right.left = TreeNode(4)
+    root.right.right = TreeNode(15)
+
+    solution = Solution()
+    print(solution.isBST(root))  # Output: False
