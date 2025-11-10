@@ -66,6 +66,7 @@ class Solution:
             leftMostNode_RST = root.right
             while leftMostNode_RST.left:
                 leftMostNode_RST = leftMostNode_RST.left
+            # Add the delete node's left to the left of the right's leftmost node
             leftMostNode_RST.left = temp
         return root.right
 
