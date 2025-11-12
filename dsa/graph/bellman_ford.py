@@ -32,7 +32,7 @@ Constraints:
 
 
 # Idea - All nodes will be visited in at max n-1 times of relaxation.
-# TC - O(V*E), O(V)
+# TC - O(V*E), SC - O(V)
 class Solution:
     def distance_using_bellman(self, V, edges, S):
         distances = [int(1e9)] * V
