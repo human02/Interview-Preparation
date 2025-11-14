@@ -24,3 +24,63 @@ Constraints:
     0 <= nums[i] <= 100
 
 """
+
+
+class Solution:
+    # TC - O(2^n), SC - O(n)
+    def findMin_recur(self, nums):
+        n = len(nums)
+
+        def helper(ind):
+            if ind == n - 1:
+                return 0  # nothing to do as we reached the end
+            if ind >= n:  # best value to return for invalid index, finding min
+                return float("inf")
+
+            # max index where from this index, we can reach
+            endJumpInd = ind + nums[ind]
+
+            # As we are finding min, hence default = inf
+            res = float("inf")
+
+            # start from next ind till end Ind
+            for i in range(ind + 1, endJumpInd + 1):
+                res = min(res, 1 + helper(i))
+            return res
+
+        return helper(0)
+
+    # TC - O(n^2), SC - O(n)
+    def findMin_memo(self, nums):
+        n = len(nums)
+        dp = [-1] * n  # As states change from 0 to n-1, n states
+
+        def helper(ind):
+            if ind == n - 1:
+                return 0  # nothing to do as we reached the end
+            if ind >= n:
+                return float(
+                    "inf"
+                )  # best value to return for invalid index as we are finding min
+
+            if dp[ind] != -1:
+                return dp[ind]
+
+            res = float("inf")
+            endJumpInd = ind + nums[ind]
+            # start from next ind till end Ind
+            for i in range(ind + 1, endJumpInd + 1):
+                res = min(res, 1 + helper(i))
+            dp[ind] = res
+
+            return dp[ind]
+
+        return helper(0)
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findMin_recur([2, 4, 1, 1, 1, 1]))
+    print(obj.findMin_memo([2, 4, 1, 1, 1, 1]))
+    print(obj.findMin_recur([2, 1, 2, 1, 0]))
+    print(obj.findMin_memo([2, 1, 2, 1, 0]))
