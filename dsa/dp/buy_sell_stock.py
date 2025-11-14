@@ -24,3 +24,24 @@ Constraints:
     0 <= arr[i] <= 106
 
 """
+
+
+class Solution:
+    # TC - O(n), SC - O(1)
+    def maxProfit(self, prices):
+        # Choose first day as selling day initially.
+        buy_price = prices[0]
+        max_profit = 0
+        for i in range(1, len(prices)):
+            profit = prices[i] - buy_price
+            max_profit = max(max_profit, profit)
+            # Update sell price if current price is lower than chosen sell price
+            if prices[i] < buy_price:
+                buy_price = prices[i]
+        return max_profit
+
+
+if __name__ == "__main__":
+    print(Solution().maxProfit([10, 1, 5, 6, 7, 1]))  # 6
+    print(Solution().maxProfit([10, 8, 7, 5, 2]))  # 0
+    print(Solution().maxProfit([3, 8, 1, 4, 6, 2]))  # 5
