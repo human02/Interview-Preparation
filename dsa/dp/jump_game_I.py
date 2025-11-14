@@ -28,3 +28,22 @@ We use greedy approach here.
 We want to check at each index, what is the max reachabele index from that particular index.
 # If at any index the max reachable index is less than or equal to that index, we cannot reach the end.
 """
+
+
+class Solution:
+    # TC - O(n), SC - O(1)
+    def canJump(self, nums):
+        n = len(nums)
+        maxReach = 0
+        for i in range(n):
+            if i > maxReach:
+                return False
+            maxReach = max(maxReach, i + nums[i])
+        return True
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.canJump([2, 3, 1, 1, 4]))
+    print(obj.canJump([3, 2, 1, 0, 4]))
+    print(obj.canJump([5, 3, 2, 1, 0]))
