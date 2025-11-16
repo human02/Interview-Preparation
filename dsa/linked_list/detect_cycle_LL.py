@@ -23,3 +23,42 @@ Constraints:
     index is -1 or a valid index in the linked list.
 
 """
+
+
+class ListNode:
+    def __init__(self, data, next=None):
+        self.data = data
+        self.next = next
+
+
+class Solution:
+    # TC - O(n), SC - O(1)
+    def hasCycle(self, head):
+        if not head or not head.next:
+            return False
+        slow, fast = head, head
+
+        # fast.next check needed as None.next will throw error
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    arr = [1, 3, 4, 2]
+
+    head1 = ListNode(arr[0])
+    head1.next = ListNode(arr[1])
+    head1.next.next = ListNode(arr[2])
+    head1.next.next.next = ListNode(arr[3])
+    head1.next.next.next.next = head1.next
+    print(obj.hasCycle(head1))
+
+    head = ListNode(arr[0])
+    head.next = ListNode(arr[1])
+    head.next.next = ListNode(arr[2])
+    print(obj.hasCycle(head))
