@@ -84,30 +84,28 @@ class Solution:
         if nums[0] == 0:
             return -1
 
-        maxReach = 0
-        currReach = 0
-        jump = 0
+        maxReach = 0  # Farthest index reachable with one more jump
+        currReach = 0  # Farthest index reachable with current jumps
+        jump = 0  # Number of jumps made
+
         for i in range(n):
+            # Update maxReach: from position i, we can reach i + nums[i]
             maxReach = max(maxReach, i + nums[i])
 
+            # If we can already reach the end, return jumps + 1
             if maxReach >= n - 1:
                 return jump + 1
 
-            # Increment the Jump as we reached the
-            # Current Reachable index
+            # When we reach the end of current jump range
             if i == currReach:
-
-                # If Max reach is same as current index
-                # then we can not jump further
+                # Check if we're stuck (can't jump further)
                 if i == maxReach:
                     return -1
 
-                # If Max reach > current index then increment
-                # jump and update current reachable index
+                # Make a jump: move to the next range
                 else:
                     jump += 1
-                    currReach = maxReach
-
+                    currReach = maxReach  # Update current range to max reachable
         return -1
 
 
