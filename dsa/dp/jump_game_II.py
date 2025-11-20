@@ -77,10 +77,45 @@ class Solution:
 
         return helper(0)
 
+    def findMin_greedy(self, nums):
+        n = len(nums)
+
+        # Check for case if 1st element is zero
+        if nums[0] == 0:
+            return -1
+
+        maxReach = 0
+        currReach = 0
+        jump = 0
+        for i in range(n):
+            maxReach = max(maxReach, i + nums[i])
+
+            if maxReach >= n - 1:
+                return jump + 1
+
+            # Increment the Jump as we reached the
+            # Current Reachable index
+            if i == currReach:
+
+                # If Max reach is same as current index
+                # then we can not jump further
+                if i == maxReach:
+                    return -1
+
+                # If Max reach > current index then increment
+                # jump and update current reachable index
+                else:
+                    jump += 1
+                    currReach = maxReach
+
+        return -1
+
 
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findMin_recur([2, 4, 1, 1, 1, 1]))
     print(obj.findMin_memo([2, 4, 1, 1, 1, 1]))
+    print(obj.findMin_greedy([2, 4, 1, 1, 1, 1]))
     print(obj.findMin_recur([2, 1, 2, 1, 0]))
     print(obj.findMin_memo([2, 1, 2, 1, 0]))
+    print(obj.findMin_greedy([2, 1, 2, 1, 0]))
