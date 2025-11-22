@@ -6,7 +6,7 @@ You are given an array of integers nums, where nums[i] represents the maximum le
 For example, if you are at nums[i], you can jump to any index i + j where:
     j <= nums[i]
     i + j < nums.length
-    You are initially positioned at nums[0].
+You are initially positioned at nums[0].
 Return the minimum number of jumps to reach the last position in the array (index nums.length - 1).
 You may assume there is always a valid answer.
 
@@ -56,12 +56,13 @@ class Solution:
         dp = [-1] * n  # As states change from 0 to n-1, n states
 
         def helper(ind):
+            # nothing to do as we reached the end
             if ind == n - 1:
-                return 0  # nothing to do as we reached the end
+                return 0
+
+            # best value to return for invalid index as we are finding min
             if ind >= n:
-                return float(
-                    "inf"
-                )  # best value to return for invalid index as we are finding min
+                return float("inf")
 
             if dp[ind] != -1:
                 return dp[ind]
@@ -77,6 +78,10 @@ class Solution:
 
         return helper(0)
 
+    """
+    From all positions I can reach with one more jump, which one lets me go farthest?
+    """
+
     def findMin_greedy(self, nums):
         n = len(nums)
 
@@ -85,7 +90,7 @@ class Solution:
             return -1
 
         maxReach = 0  # Farthest index reachable with one more jump
-        currReach = 0  # Farthest index reachable with current jumps
+        currReach = 0  # Farthest index reachable with current jumps, tells when to jump
         jump = 0  # Number of jumps made
 
         for i in range(n):
