@@ -26,6 +26,7 @@ Constraints:
 
 """
 
+
 class Solution:
     def stockBuySell_recur(self, arr):
         n = len(arr)
@@ -46,7 +47,46 @@ class Solution:
             return profit
 
         return helper(0, 1, 2)
+
+    def stockBuySell_memo(self, arr):
+        n = len(arr)
+
+        """
+        3 state change variables are used -> ind,buy,cap
+        ind - n states, buy - 2 states, cap - 3 states (2->1->0)
+        Matrix better than dict way of memo for tabulation
+        """
+        dp = [[[-1] * 3 for _ in range(2)] for _ in range(n)]
+
+        def helper(ind, buy, cap, dp):
+            if ind == n or cap == 0:
+                return 0
+
+            if dp[ind][buy][cap] != -1:
+                return dp[ind][buy][cap]
+
+            profit = 0
+            if buy == 1:
+                profit = max(
+                    0 + helper(ind + 1, 1, cap, dp),
+                    -arr[ind] + helper(ind + 1, 0, cap, dp),
+                )
+            else:
+                profit = max(
+                    0 + helper(ind + 1, 0, cap, dp),
+                    arr[ind] + helper(ind + 1, 1, cap - 1, dp),
+                )
+
+            dp[ind][buy][cap] = profit
+            return dp[ind][buy][cap]
+
+        return helper(0, 1, 2, dp)
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.stockBuySell_recur([4, 2, 7, 1, 11, 5]))
     print(obj.stockBuySell_recur([5, 7, 2, 10, 6, 9]))
+    print(f"\n{"#"*30}\nMemomized answers:")
+    print(obj.stockBuySell_memo([4, 2, 7, 1, 11, 5]))
+    print(obj.stockBuySell_memo([5, 7, 2, 10, 6, 9]))
