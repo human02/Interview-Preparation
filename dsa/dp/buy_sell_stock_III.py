@@ -26,3 +26,27 @@ Constraints:
 
 """
 
+class Solution:
+    def stockBuySell_recur(self, arr):
+        n = len(arr)
+
+        def helper(ind, buy, cap):
+            if ind == n or cap == 0:
+                return 0
+
+            profit = 0
+            if buy == 1:
+                profit = max(
+                    0 + helper(ind + 1, 1, cap), -arr[ind] + helper(ind + 1, 0, cap)
+                )
+            else:
+                profit = max(
+                    0 + helper(ind + 1, 0, cap), arr[ind] + helper(ind + 1, 1, cap - 1)
+                )
+            return profit
+
+        return helper(0, 1, 2)
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.stockBuySell_recur([4, 2, 7, 1, 11, 5]))
+    print(obj.stockBuySell_recur([5, 7, 2, 10, 6, 9]))
