@@ -32,3 +32,33 @@ Constraints:
     0 <= k <= 100
 
 """
+
+
+class Solution:
+    def stockBuySell_recur(self, arr, k):
+        n = len(arr)
+
+        def helper(ind, buy, cap):
+            if ind == n or cap == 0:
+                return 0
+
+            profit = 0
+            if buy == 1:
+                profit = max(
+                    helper(ind + 1, 1, cap), -arr[ind] + helper(ind + 1, 0, cap)
+                )
+            else:
+                profit = max(
+                    helper(ind + 1, 0, cap), arr[ind] + helper(ind + 1, 1, cap - 1)
+                )
+
+            return profit
+
+        return helper(0, 1, k)
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.stockBuySell_recur([3, 2, 6, 5, 0, 3], 2))
+    print(obj.stockBuySell_recur([1, 2, 4, 2, 5, 7, 2, 4, 9, 0], 3))
+    print(obj.stockBuySell_recur([1, 3, 2, 8, 4, 9], 2))
