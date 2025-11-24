@@ -56,9 +56,43 @@ class Solution:
 
         return helper(0, 1, k)
 
+    def stockBuySell_memo(self, arr, k):
+        n = len(arr)
+
+        dp = [[[-1] * (k + 1) for _ in range(2)] for _ in range(n)]
+
+        def helper(ind, buy, cap, dp):
+            if ind == n or cap == 0:
+                return 0
+
+            if dp[ind][buy][cap] != -1:
+                return dp[ind][buy][cap]
+
+            profit = 0
+
+            if buy == 1:
+                profit = max(
+                    0 + helper(ind + 1, 1, cap, dp),
+                    -arr[ind] + helper(ind + 1, 0, cap, dp),
+                )
+            else:
+                profit = max(
+                    0 + helper(ind + 1, 0, cap, dp),
+                    arr[ind] + helper(ind + 1, 1, cap - 1, dp),
+                )
+
+            dp[ind][buy][cap] = profit
+            return dp[ind][buy][cap]
+
+        return helper(0, 1, k, dp)
+
 
 if __name__ == "__main__":
     obj = Solution()
     print(obj.stockBuySell_recur([3, 2, 6, 5, 0, 3], 2))
     print(obj.stockBuySell_recur([1, 2, 4, 2, 5, 7, 2, 4, 9, 0], 3))
     print(obj.stockBuySell_recur([1, 3, 2, 8, 4, 9], 2))
+    print()
+    print(obj.stockBuySell_memo([3, 2, 6, 5, 0, 3], 2))
+    print(obj.stockBuySell_memo([1, 2, 4, 2, 5, 7, 2, 4, 9, 0], 3))
+    print(obj.stockBuySell_memo([1, 3, 2, 8, 4, 9], 2))
