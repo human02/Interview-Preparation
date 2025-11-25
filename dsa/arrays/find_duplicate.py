@@ -25,3 +25,19 @@ Constraints:
     1 <= nums[i] <= n
 
 """
+
+from collections import Counter
+
+
+class Solution:
+    def findDup_brute(self, nums):
+        freq = Counter(nums)
+        for key, val in freq.items():
+            if val > 1:
+                return key
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findDup_brute([1, 2, 3, 2, 2]))
+    print(obj.findDup_brute([1, 2, 3, 4, 4]))
