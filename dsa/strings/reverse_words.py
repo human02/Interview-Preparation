@@ -32,3 +32,23 @@ Constraints:
 Follow-up: If the string data type is mutable in your language, can you solve it in-place with O(1) extra space?
 
 """
+
+
+class Solution:
+    # TC - O(n), SC - O(n)
+    def reverseWords_brute(self, s):
+        rev_s = s[::-1]
+        rev_list = rev_s.split(" ")
+        result = []
+        for wrd in rev_list:
+            if wrd == "":
+                continue
+            result.append(wrd[::-1])
+        return " ".join(result)
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.reverseWords_brute("the sky is blue"))
+    print(obj.reverseWords_brute("  hello world  "))
+    print(obj.reverseWords_brute("a good   example"))
