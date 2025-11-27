@@ -75,6 +75,21 @@ class Solution:
 
         return helper(n - 1, dp)
 
+    # TC - O(n), SC - O(n) (removed O(n) used by stack)
+    def robHouses_tabu(self, nums):
+        n = len(nums)
+        dp = [0] * n
+        dp[0] = nums[0]
+        neg = 0
+
+        for ind in range(1, n):
+            pick = nums[ind]
+            if ind > 1:
+                pick += dp[ind - 2]
+            not_pick = dp[ind - 1]
+            dp[ind] = max(pick, not_pick)
+        return dp[-1]
+
 
 if __name__ == "__main__":
     obj = Solution()
@@ -83,3 +98,6 @@ if __name__ == "__main__":
     print()
     print(obj.robHouses_memo([1, 2, 3, 1]))
     print(obj.robHouses_memo([2, 7, 9, 3, 1]))
+    print()
+    print(obj.robHouses_tabu([1, 2, 3, 1]))
+    print(obj.robHouses_tabu([2, 7, 9, 3, 1]))
