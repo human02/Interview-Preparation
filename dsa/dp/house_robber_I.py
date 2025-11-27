@@ -31,3 +31,25 @@ Constraints:
 
 """
 
+class Solution:
+    # TC - O(2^n), SC - O(n)
+    def robHouses_recur(self, nums):
+        n = len(nums)
+
+        def helper(ind):
+            if ind == 0:
+                return nums[0]
+            if ind < 0:
+                return float("-inf")
+
+            pick, not_pick = 0, 0
+            not_pick = helper(ind - 1)
+            pick = nums[ind] + helper(ind - 2)
+
+            return max(pick, not_pick)
+
+        return helper(n - 1)
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.robHouses_recur([1, 2, 3, 1]))
+    print(obj.robHouses_recur([2, 7, 9, 3, 1]))
