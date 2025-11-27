@@ -31,6 +31,7 @@ Constraints:
 
 """
 
+
 class Solution:
     # TC - O(2^n), SC - O(n)
     def robHouses_recur(self, nums):
@@ -49,7 +50,36 @@ class Solution:
             return max(pick, not_pick)
 
         return helper(n - 1)
+
+    # TC - O(n), SC - O(n)
+    def robHouses_memo(self, nums):
+        n = len(nums)
+        dp = [-1] * n
+
+        def helper(ind, dp):
+            if ind == 0:
+                return nums[0]
+            if ind < 0:
+                return 0
+
+            if dp[ind] != -1:
+                return dp[ind]
+
+            pick, not_pick = 0, 0
+            pick = nums[ind] + helper(ind - 2, dp)
+            not_pick = helper(ind - 1, dp)
+
+            dp[ind] = max(pick, not_pick)
+
+            return dp[ind]
+
+        return helper(n - 1, dp)
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.robHouses_recur([1, 2, 3, 1]))
     print(obj.robHouses_recur([2, 7, 9, 3, 1]))
+    print()
+    print(obj.robHouses_memo([1, 2, 3, 1]))
+    print(obj.robHouses_memo([2, 7, 9, 3, 1]))
