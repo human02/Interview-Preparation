@@ -40,6 +40,8 @@ Constraints:
     intersectVal == listA[skipA] == listB[skipB] if listA and listB intersect.
 
 """
+
+
 class Solution:
     # TC - O(m+n), SC - O(m)
     def findIntersection_brute(self, list1, list2):
@@ -97,3 +99,30 @@ class Solution:
             return collisionPoint(list1, list2, n2 - n1)
         return collisionPoint(list2, list1, n1 - n2)
 
+    # TC - O(m+n), SC - O(1)
+    def findIntersection_optimal(self, list1, list2):
+        """
+        Simultaneously traverse both until list.next is not None
+        If either reaches end, then place it to the head of other list.
+
+        Eventually, both list will correct like in better solution above.
+
+        """
+        if not list1 or not list2:
+            return None
+
+        tmp1, tmp2 = list1, list2
+
+        while tmp1 != tmp2:
+            tmp1 = tmp1.next
+            tmp2 = tmp2.next
+
+            if tmp1 == tmp2:
+                return tmp1
+
+            if tmp1 is None:
+                tmp1 = list2
+            if tmp2 is None:
+                tmp2 = list1
+
+        return tmp1
