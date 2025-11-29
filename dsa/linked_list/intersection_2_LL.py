@@ -40,3 +40,22 @@ Constraints:
     intersectVal == listA[skipA] == listB[skipB] if listA and listB intersect.
 
 """
+class Solution:
+    # TC - O(m+n), SC - O(m)
+    def findIntersection_brute(self, list1, list2):
+        # Store the entire node, it will solve the issue of same value of a node
+        mpp = {}
+
+        tmp1 = list1
+        while tmp1:
+            if tmp1 not in mpp:
+                mpp[tmp1] = 1
+            tmp1 = tmp1.next
+
+        tmp2 = list2
+        while tmp2:
+            if tmp2 in mpp:
+                return tmp2
+            tmp2 = tmp2.next
+
+        return None
