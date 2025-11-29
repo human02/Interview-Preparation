@@ -59,3 +59,41 @@ class Solution:
             tmp2 = tmp2.next
 
         return None
+
+    # TC - O(m+n), SC - O(1)
+    def findIntersection_better(self, list1, list2):
+        """
+        Use the difference in their lengths to align their starting points.
+        Then traverse both lists simultaneously until we find the intersection node.
+        """
+        tmp1, tmp2 = list1, list2
+        n1, n2 = 0, 0
+
+        # Get the length of first linked list
+        while tmp1:
+            n1 += 1
+            tmp1 = tmp1.next
+
+        # Get the length of second linked list
+        while tmp2:
+            n2 += 1
+            tmp2 = tmp2.next
+
+        def collisionPoint(smallerListHead, longerListHead, lengthDiff):
+            temp1, temp2 = smallerListHead, longerListHead
+
+            # Adjust the pointers to same level
+            for _ in range(lengthDiff):
+                temp2 = temp2.next
+
+            while temp1 != temp2:
+                temp1 = temp1.next
+                temp2 = temp2.next
+
+            return temp1
+
+        # Traverse the longer list and bring the pointers to same level
+        if n1 < n2:
+            return collisionPoint(list1, list2, n2 - n1)
+        return collisionPoint(list2, list1, n1 - n2)
+
