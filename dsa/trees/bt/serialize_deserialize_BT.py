@@ -1,4 +1,5 @@
 """
+
 Serialize and Deserialize Binary Tree
 
 Implement an algorithm to serialize and deserialize a binary tree.
@@ -20,8 +21,8 @@ Input: root = []
 Output: []
 
 Constraints:
-0 <= The number of nodes in the tree <= 1000.
--1000 <= Node.val <= 1000
+    0 <= The number of nodes in the tree <= 1000.
+    -1000 <= Node.val <= 1000
 
 """
 
@@ -71,7 +72,7 @@ class Solution:
         :rtype: Binary_TreeNode
         """
         if not data:
-            return None
+            return []
 
         # Use a deque to tokenize the serialized data
         data = deque(data.split(","))
