@@ -1,4 +1,5 @@
 """
+
 Trapping Rainwater
 
 Given an array of non-negative integers, height representing the elevation of ground.
@@ -21,25 +22,28 @@ Constraints:
   n == height.length
   1 <= n <= 105
   0 <= height[i] <= 105
+
 """
 
 
 class Solution:
+    # TC - O(n), SC - O(n)
     def find_trapped_rainwater(self, height):
         n = len(height)
         water = 0
         prefixMax, suffixMax = [0] * n, [0] * n
         prefixMax[0] = height[0]
         suffixMax[n - 1] = height[n - 1]
-        for i in range(1, n):
+        for i in range(1, n):  # O(n)
             prefixMax[i] = max(prefixMax[i - 1], height[i])
-        for i in range(n - 2, -1, -1):
+        for i in range(n - 2, -1, -1):  # O(n)
             suffixMax[i] = max(suffixMax[i + 1], height[i])
 
-        for i in range(n):
+        for i in range(n):  # O(n)
             water += min(prefixMax[i], suffixMax[i]) - height[i]
         return water
 
+    # TC - O(n), SC - O(1)
     def find_trapped_rainwater_optimal(self, height):
         water = 0
         n = len(height)
