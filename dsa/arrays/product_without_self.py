@@ -1,4 +1,7 @@
 """
+
+238. Product of Array Except Self
+
 Given an integer array nums, return an array output where output[i] is the product of all the elements
 of nums except nums[i]. Each product is guaranteed to fit in a 32-bit integer.
 
@@ -12,10 +15,19 @@ Example 2:
 Input: nums = [-1,0,1,2,3]
 Output: [0,-6,0,0,0]
 
+Constraints:
+    2 <= nums.length <= 105
+    -30 <= nums[i] <= 30
+
+The input is generated such that answer[i] is guaranteed to fit in a 32-bit integer.
+Follow up: Can you solve the problem in O(1) extra space complexity?
+(The output array does not count as extra space for space complexity analysis.)
+
 """
 
 
 class Solution:
+    # TC - O(n), SC - O(n)
     def productExceptSelf(self, nums):
         n = len(nums)
         prefix, suffix, res = [1] * n, [1] * n, [1] * n
@@ -31,6 +43,7 @@ class Solution:
 
         return res
 
+    # TC - O(n), SC - O(1)
     def productExceptSelf_optimal(self, nums):
         n = len(nums)
         res = [1] * n
