@@ -30,3 +30,7 @@ class Solution:
             res[i] = prefix[i] * suffix[i]
 
         return res
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.productExceptSelf([1, 2, 4, 6]))
+    print(obj.productExceptSelf_optimal([1, 2, 4, 6]))
