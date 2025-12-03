@@ -30,7 +30,26 @@ class Solution:
             res[i] = prefix[i] * suffix[i]
 
         return res
+
+    def productExceptSelf_optimal(self, nums):
+        n = len(nums)
+        res = [1] * n
+
+        prefix = 1
+        for i in range(n):
+            res[i] *= prefix
+            prefix *= nums[i]
+
+        suffix = 1
+        for i in range(n - 1, -1, -1):
+            res[i] *= suffix
+            suffix *= nums[i]
+        return res
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.productExceptSelf([1, 2, 4, 6]))
     print(obj.productExceptSelf_optimal([1, 2, 4, 6]))
+    print(obj.productExceptSelf([-1, 0, 1, 2, 3]))
+    print(obj.productExceptSelf_optimal([-1, 0, 1, 2, 3]))
