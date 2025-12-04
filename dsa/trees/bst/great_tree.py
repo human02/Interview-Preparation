@@ -29,3 +29,30 @@ Constraints:
     1 <= node value <= 104
 
 """
+
+
+class TreeNode:
+    def __init__(self, data, left=None, right=None):
+        self.left = left
+        self.data = data
+        self.right = right
+
+
+class Solution:
+    def __init__(self):
+        self.runningSum = 0
+
+    # TC - O(n), SC - O(h)
+    def makeGreatTree(self, root):
+        # as fn doesn't return anything and changes inplace.
+        self.reverseInorder(root)
+        return root
+
+    def reverseInorder(self, rt):
+        if not rt:
+            return None
+
+        self.reverseInorder(rt.right)
+        self.runningSum += rt.data
+        rt.data = self.runningSum
+        self.reverseInorder(rt.left)
