@@ -30,6 +30,7 @@ class TreeNode(object):
 
 
 class Solution:
+    # TC - O(n), SC - O(n)
     def isIdentical(self, p, q):
         if not p and not q:
             return True
