@@ -85,6 +85,10 @@ class Solution:
     def findMin_greedy(self, nums):
         n = len(nums)
 
+        # check - If only 1 element in nums
+        if n == 1:
+            return 0
+
         # Check for case if 1st element is zero
         if nums[0] == 0:
             return -1
