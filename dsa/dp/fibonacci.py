@@ -55,11 +55,26 @@ class Solution:
             return dp[ind]
 
         return helper(n, dp)
+
+    # TC - O(n), SC - O(n)
+    def findFibo_tabu(self, n):
+        dp = [-1] * (n + 1)
+
+        dp[0] = 0
+        dp[1] = 1
+
+        for ind in range(2, n + 1):
+            dp[ind] = dp[ind - 1] + dp[ind - 2]
+
+        return dp[-1]
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findFibo_recursive(2))
     print(obj.findFibo__memo(2))
+    print(obj.findFibo_tabu(2))
     print(obj.findFibo_recursive(3))
     print(obj.findFibo__memo(3))
+    print(obj.findFibo_tabu(3))
     print(obj.findFibo_recursive(6))
     print(obj.findFibo__memo(6))
+    print(obj.findFibo_tabu(6))
