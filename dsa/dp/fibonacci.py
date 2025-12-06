@@ -67,14 +67,34 @@ class Solution:
             dp[ind] = dp[ind - 1] + dp[ind - 2]
 
         return dp[-1]
+
+    # TC - O(n), SC - O(1)
+    def findFibo_spaceOP(self, n):
+
+        prev2 = 0
+        prev = 1
+
+        for ind in range(2, n + 1):
+            curr = prev + prev2
+            prev2 = prev
+            prev = curr
+
+        return prev
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findFibo_recursive(2))
     print(obj.findFibo__memo(2))
     print(obj.findFibo_tabu(2))
+    print(obj.findFibo_spaceOP(2))
+    print()
     print(obj.findFibo_recursive(3))
     print(obj.findFibo__memo(3))
     print(obj.findFibo_tabu(3))
+    print(obj.findFibo_spaceOP(3))
+    print()
     print(obj.findFibo_recursive(6))
     print(obj.findFibo__memo(6))
     print(obj.findFibo_tabu(6))
+    print(obj.findFibo_spaceOP(6))
