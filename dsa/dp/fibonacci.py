@@ -39,8 +39,27 @@ class Solution:
 
         return helper(n)
 
+    # TC - O(n), SC - O(n) + O(n) = O(n)
+    def findFibo__memo(self, n):
+        dp = [-1] * (n + 1)
+
+        def helper(ind, dp):
+            if ind == 0:
+                return 0
+            if ind == 1:
+                return 1
+            if dp[ind] != -1:
+                return dp[ind]
+
+            dp[ind] = helper(ind - 1, dp) + helper(ind - 2, dp)
+            return dp[ind]
+
+        return helper(n, dp)
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findFibo_recursive(2))
+    print(obj.findFibo__memo(2))
     print(obj.findFibo_recursive(3))
+    print(obj.findFibo__memo(3))
     print(obj.findFibo_recursive(6))
+    print(obj.findFibo__memo(6))
