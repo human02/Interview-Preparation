@@ -24,3 +24,23 @@ Constraints:
     0 <= n <= 20
 
 """
+
+
+class Solution:
+    # TC - O(2^n), SC - O(n)
+    def findFibo_recursive(self, n):
+
+        def helper(ind):
+            if ind == 0:
+                return 0
+            if ind == 1:
+                return 1
+            return helper(ind - 1) + helper(ind - 2)
+
+        return helper(n)
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findFibo_recursive(2))
+    print(obj.findFibo_recursive(3))
+    print(obj.findFibo_recursive(6))
