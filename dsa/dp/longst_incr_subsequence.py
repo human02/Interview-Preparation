@@ -24,3 +24,33 @@ Constraints:
     -106 <= nums[i] <= 106
 
 """
+
+
+class Solution:
+    # TC - O(2^n), SC - O(n)
+    def LIS_recursive(self, nums):
+        n = len(nums)
+
+        def helper(i, prevInd):
+
+            # Base case: reached beyond the array
+            if i == len(nums):
+                return 0
+
+            # Not take current element
+            notTake = helper(i + 1, prevInd)
+
+            # Take current element if valid
+            take = 0
+            if prevInd == -1 or nums[i] > nums[prevInd]:
+                take = 1 + helper(i + 1, i)
+
+            return max(take, notTake)
+
+        return helper(0, -1)
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.LIS_recursive([10, 9, 2, 5, 3, 7, 101, 18]))
+    print(obj.LIS_recursive([0, 1, 0, 3, 2, 3]))
+    print(obj.LIS_recursive([7, 7, 7, 7, 7, 7, 7]))
