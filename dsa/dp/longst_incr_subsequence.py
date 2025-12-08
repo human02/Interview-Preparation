@@ -49,8 +49,50 @@ class Solution:
 
         return helper(0, -1)
 
+    # TC - O(n^2), SC - O(n^2) + O(n)
+    def LIS_memoized(self, nums):
+        n = len(nums)
+
+        """
+        States for ind => 0 to n-1, 
+        prevInd => -1 to n-1, but -1 cnt be index as it points to last index
+        hence n+1
+        """
+        dp = [[-1] * (n + 1) for _ in range(n)]
+
+        # Helper function to find the length of LIS
+        def helper(i, prevInd):
+
+            # -> Base case: reached beyond the array
+            if i == len(nums):
+                return 0
+
+            if dp[i][prevInd] != -1:
+                return dp[i][prevInd]
+
+            # Not Take case
+            notTake = helper(i + 1, prevInd)
+
+            take = 0  # Take case
+
+            # If no element is chosen till now
+            if prevInd == -1 or nums[i] > nums[prevInd]:
+                take = 1 + helper(i + 1, i)
+
+            dp[i][prevInd] = max(take, notTake)
+
+            # Return the maximum length obtained from both cases
+            return dp[i][prevInd]
+
+        return helper(0, -1)
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.LIS_recursive([10, 9, 2, 5, 3, 7, 101, 18]))
     print(obj.LIS_recursive([0, 1, 0, 3, 2, 3]))
     print(obj.LIS_recursive([7, 7, 7, 7, 7, 7, 7]))
+    print()
+    print(obj.LIS_memoized([10, 9, 2, 5, 3, 7, 101, 18]))
+    print(obj.LIS_memoized([0, 1, 0, 3, 2, 3]))
+    print(obj.LIS_memoized([7, 7, 7, 7, 7, 7, 7]))
