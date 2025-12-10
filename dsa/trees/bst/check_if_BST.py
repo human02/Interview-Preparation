@@ -1,4 +1,5 @@
 """
+
 Check if a tree is a BST or not
 
 Given the root node of a binary tree. Return true if the given binary tree is a binary search tree(BST) else false.
@@ -20,8 +21,9 @@ Input : root = [2, 1, 3]
 Output: true
 
 Constraints:
-1 <= Number of Nodes <= 104
--231 <= Node.val <= 231 - 1
+    1 <= Number of Nodes <= 104
+    -231 <= Node.val <= 231 - 1
+
 """
 
 
@@ -33,7 +35,7 @@ class TreeNode(object):
 
 
 class Solution:
-    # Value based check of node.data based on its root
+    # TC - O(n), SC - O(n)
     def isBST(self, root):
         return self.isValid(root, float("-inf"), float("inf"))
 
