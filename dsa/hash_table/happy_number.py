@@ -27,3 +27,32 @@ Constraints:
     0 <= n <= 231 - 1
 
 """
+
+
+class Solution:
+    # TC - O(n), SC - O(n)
+    def isHappy_brute(self, n: int) -> bool:
+        visited = set()
+
+        if n == 0:
+            return False
+
+        while n not in visited:
+            visited.add(n)
+            n = self.helper_calSum(n)
+            if n == 1:
+                return True
+        return False
+
+    def helper_calSum(self, num: int) -> int:
+        total = 0
+        while num:
+            digit = num % 10
+            total += digit**2
+            num //= 10
+        return total
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.isHappy_brute(19))
+    print(obj.isHappy_brute(2))
