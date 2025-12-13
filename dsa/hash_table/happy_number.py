@@ -52,7 +52,32 @@ class Solution:
             num //= 10
         return total
 
+    def isHappy_optimal(self, n):
+        """
+        Idea is that we need to detect cycle using slow and fast pointer.
+        """
+
+        slow = n
+        fast = n
+
+        while True:
+            slow = self.helper_calSum(slow)
+            fast = self.helper_calSum(self.helper_calSum(fast))
+
+            # Found 1, it's happy!
+            if fast == 1:
+                return True
+            # Cycle detected, not happy!
+            if slow == fast:
+                return False
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.isHappy_brute(19))
     print(obj.isHappy_brute(2))
+    print(obj.isHappy_brute(0))
+    print()
+    print(obj.isHappy_optimal(19))
+    print(obj.isHappy_optimal(2))
+    print(obj.isHappy_brute(0))
