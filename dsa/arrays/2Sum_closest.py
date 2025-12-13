@@ -22,3 +22,41 @@ Output: []
 Explanation: As the input array has only 1 element, return an empty array.
 
 """
+
+class Solution:
+    #  TC - O(n^2), SC - O(1)
+    def findPair_brute(self, arr, target):
+        n = len(arr)
+
+        # Edge Case
+        if n < 2:
+            return []
+
+        minDiff = float("inf")
+        result = None
+        maxAbsDiff = -1
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                curr_sum = arr[i] + arr[j]
+                curr_diff = abs(target - curr_sum)
+                curr_abs_diff = abs(arr[i] - arr[j])
+
+                # Found a closer sum
+                if curr_diff < minDiff:
+                    minDiff = curr_diff
+                    maxAbsDiff = curr_abs_diff
+                    result = sorted([arr[i], arr[j]])
+
+                # Same closest sum, check if this pair has larger absolute difference
+                elif curr_diff == minDiff and curr_abs_diff > maxAbsDiff:
+                    maxAbsDiff = curr_abs_diff
+                    result = sorted([arr[i], arr[j]])
+
+        return result if result else []
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findPair_brute(arr=[10, 30, 20, 5], target=25))
+    print(obj.findPair_brute(arr=[5, 2, 7, 1, 4], target=10))
+    print(obj.findPair_brute(arr=[10], target=10))
