@@ -23,6 +23,7 @@ Explanation: As the input array has only 1 element, return an empty array.
 
 """
 
+
 class Solution:
     #  TC - O(n^2), SC - O(1)
     def findPair_brute(self, arr, target):
@@ -55,8 +56,48 @@ class Solution:
 
         return result if result else []
 
+    #  TC - O(nlog(n)), SC - O(1)
+    def findPair_optimal(self, arr, target):
+        n = len(arr)
+        if n < 2:
+            return []
+
+        arr.sort()
+        l = 0
+        r = n - 1
+        minDiff = float("inf")
+        result = None
+        maxAbsDiff = -1
+
+        while l < r:
+            curr_sum = arr[l] + arr[r]
+            curr_diff = abs(target - curr_sum)
+            curr_abs_diff = arr[r] - arr[l]  # as already in sorted order
+
+            if curr_diff < minDiff:
+                minDiff = curr_diff
+                maxAbsDiff = curr_abs_diff
+                result = sorted([arr[l], arr[r]])
+
+            # Same closest sum, check if this pair has larger absolute difference
+            elif curr_diff == minDiff and curr_abs_diff > maxAbsDiff:
+                maxAbsDiff = curr_abs_diff
+                result = sorted([arr[l], arr[r]])
+
+            if curr_sum < target:
+                l += 1
+            else:
+                r -= 1
+
+        return result
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findPair_brute(arr=[10, 30, 20, 5], target=25))
     print(obj.findPair_brute(arr=[5, 2, 7, 1, 4], target=10))
     print(obj.findPair_brute(arr=[10], target=10))
+    print()
+    print(obj.findPair_optimal(arr=[10, 30, 20, 5], target=25))
+    print(obj.findPair_optimal(arr=[5, 2, 7, 1, 4], target=10))
+    print(obj.findPair_optimal(arr=[10], target=10))
