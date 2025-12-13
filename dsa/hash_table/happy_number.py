@@ -37,12 +37,15 @@ class Solution:
         if n == 0:
             return False
 
-        while n not in visited:
-            visited.add(n)
-            n = self.helper_calSum(n)
+        while True:
+            # Found 1, it's happy!
             if n == 1:
                 return True
-        return False
+            # Already seen, Cycle detected, not Happy!
+            if n in visited:
+                return False
+            visited.add(n)
+            n = self.helper_calSum(n)
 
     def helper_calSum(self, num: int) -> int:
         total = 0
