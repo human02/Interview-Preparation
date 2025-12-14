@@ -1,5 +1,6 @@
 """
-3 Sum
+
+15. 3 Sum
 
 Given an integer array nums, return all the triplets:
 - [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k
@@ -23,8 +24,12 @@ But we have not used the -1 at index 4 as that would create a duplicate triplet
 
 Input: nums = [8, -6, 5, 4]
 (Give answer with the output and triplets sorted in ascending order)
-Output:
-[]
+Output:[]
+
+Constraints:
+    3 <= nums.length <= 3000
+    -105 <= nums[i] <= 105
+
 """
 
 
@@ -73,8 +78,9 @@ class Solution:
 
     def threeSum_optimal(self, nums):
         n = len(nums)
-        triplets = []
         nums.sort()
+        triplets = []
+
         for i in range(n):
             fixed = nums[i]
 
@@ -85,15 +91,18 @@ class Solution:
             l, r = i + 1, n - 1
             while l < r:
                 total = fixed + nums[l] + nums[r]
+
                 if total == 0:
                     triplets.append([fixed, nums[l], nums[r]])
                     l += 1
                     r -= 1
-                    # skip duplicates for l and r
+                    # Skip duplicate - l
                     while l < r and nums[l] == nums[l - 1]:
                         l += 1
+                    # Skip duplicate - r
                     while l < r and nums[r] == nums[r + 1]:
                         r -= 1
+
                 elif total > 0:
                     r -= 1
                 else:
