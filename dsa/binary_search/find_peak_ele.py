@@ -34,3 +34,33 @@ Constraints:
     For arr[n-1], its right element can be considered as -∞
 
 """
+
+
+class Solution:
+    # TC - O(n), SC - O(1)
+    def findPeak_brute(self, nums):
+        n = len(nums)
+
+        # Edge case: single element
+        if n == 1:
+            return 0
+
+        # Check first element
+        if nums[0] > nums[1]:
+            return 0
+
+        # Check last element
+        if nums[n - 1] > nums[n - 2]:
+            return n - 1
+
+        for i in range(1, n - 1):
+            if nums[i] > nums[i - 1] and nums[i] > nums[i + 1]:
+                return i
+
+        return -1
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findPeak_brute([1, 2, 3, 4, 5, 6, 7, 8, 5, 1]))
+    print(obj.findPeak_brute([1, 2, 1, 3, 5, 6, 4]))
+    print(obj.findPeak_brute([-2, -1, 3, 4, 5]))
