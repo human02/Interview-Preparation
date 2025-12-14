@@ -59,8 +59,38 @@ class Solution:
 
         return -1
 
+    # TC - O(log n), SC - O(1)
+    def findPeak_optimal(self, nums):
+        """
+        Idea: Move toward the higher neighbor, which guarantees we'll reach a peak.
+        - If nums[mid] < nums[mid+1], peak must be on the right
+        - If nums[mid] > nums[mid+1], peak must be on/to the left
+        - We're guaranteed to find a peak because nums[-1] = nums[n] = -∞
+        """
+        n = len(nums)
+        left, right = 0, n - 1
+
+        while left < right:
+            mid = left + (right - left) // 2
+
+            # Ascending slope - Peak MUST be on the right (including mid+1)
+            if nums[mid] < nums[mid + 1]:
+                left = mid + 1
+
+            # nums[mid] >= nums[mid + 1]
+            # Descending slope or at a peak - Peak MUST be on the left (including mid)
+            else:
+                right = mid
+
+        return left
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findPeak_brute([1, 2, 3, 4, 5, 6, 7, 8, 5, 1]))
     print(obj.findPeak_brute([1, 2, 1, 3, 5, 6, 4]))
     print(obj.findPeak_brute([-2, -1, 3, 4, 5]))
+    print()
+    print(obj.findPeak_optimal([1, 2, 3, 4, 5, 6, 7, 8, 5, 1]))
+    print(obj.findPeak_optimal([1, 2, 1, 3, 5, 6, 4]))
+    print(obj.findPeak_optimal([-2, -1, 3, 4, 5]))
