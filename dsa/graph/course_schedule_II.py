@@ -31,3 +31,48 @@ Constraints:
   All the pairs arr[i] are unique.
 
 """
+
+from collections import deque
+
+
+# TC - O(V+E), SC - O(V+E)
+class Solution:
+    def courseOrder(self, n, arr):  # O(V) + O(E) + O(V + E) = O(V + E)
+        adj_list = [[] for _ in range(n)]  # O(V)
+        for it in arr:  # O(E)
+            adj_list[it[1]].append(it[0])
+
+        return self.topoSort(adj_list, len(adj_list))
+
+    def topoSort(self, adjL, V):  # TC - O(V+E)
+        indeg = [0 for _ in range(V)]
+        q = deque()
+
+        for i in range(V):  # O(V)
+            for it in adjL[i]:  # Total O(E) across all iterations
+                indeg[it] += 1
+
+        for i in range(V):  # O(V)
+            if indeg[i] == 0:
+                q.append(i)
+
+        result = []
+        while q:  # O(V)
+            node = q.popleft()
+            result.append(node)
+            for nei in adjL[node]:  # Total O(E) across all iterations
+                indeg[nei] -= 1
+                if indeg[nei] == 0:
+                    q.append(nei)
+
+        if len(result) == V:
+            return result
+        else:
+            return []
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.courseOrder(4, [[1, 0], [2, 1], [3, 2]]))
+    print(obj.courseOrder(4, [[0, 1], [3, 2], [1, 3], [3, 0]]))
+    print(obj.courseOrder(2, [[1, 0]]))
