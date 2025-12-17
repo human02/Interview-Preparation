@@ -20,3 +20,38 @@ Constraints:
     0 <= edges.length <= n * (n - 1) / 2
 
 """
+
+from collections import deque
+
+
+class Solution:
+    # TC - O(V+E), SC - O(V+E)
+    def connected_components(self, n, edges):
+        adjL = [[] for i in range(n)]
+        vis = [0] * n
+        for u, v in edges:
+            adjL[u].append(v)
+            adjL[v].append(u)
+
+        def bfs(root):
+            q = deque([root])
+            while q:
+                node = q.popleft()
+                vis[node] = 1
+                for neighbor in adjL[node]:
+                    if not vis[neighbor]:
+                        q.append(neighbor)
+                        vis[neighbor] = 1
+
+        res = 0
+        for i in range(n):
+            if not vis[i]:
+                bfs(i)
+                res += 1
+        return res
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    assert obj.connected_components(3, [[0, 1], [0, 2]]) == 1
+    print(obj.connected_components(3, [[0, 1], [0, 2]]))
