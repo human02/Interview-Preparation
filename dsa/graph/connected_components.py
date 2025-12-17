@@ -43,10 +43,16 @@ class Solution:
                         q.append(neighbor)
                         vis[neighbor] = 1
 
+        def dfs(node):
+            vis[node] = 1
+            for it in adjL[node]:
+                if not vis[it]:
+                    dfs(it)
+
         res = 0
         for i in range(n):
             if not vis[i]:
-                bfs(i)
+                dfs(i)  # or use -> bfs(i)
                 res += 1
         return res
 
@@ -55,3 +61,4 @@ if __name__ == "__main__":
     obj = Solution()
     assert obj.connected_components(3, [[0, 1], [0, 2]]) == 1
     print(obj.connected_components(3, [[0, 1], [0, 2]]))
+    print(obj.connected_components(6, [[0, 1], [1, 2], [2, 3], [4, 5]]))
