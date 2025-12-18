@@ -66,7 +66,65 @@ class Solution:
         else:
             return float(merged_nums[len(merged_nums) // 2])
 
+    # TC - O(m+n), SC - O(1)
+    def findMedian_better(self, nums1, nums2):
+        """
+        Idea:
+            - We dont need the whole new merged list.
+            - Just need the values, based on total count of elements
+        """
+
+        n1 = len(nums1)
+        n2 = len(nums2)
+        n = n1 + n2
+        ind2 = n // 2
+        ind1 = ind2 - 1
+        ind2_ele, ind1_ele = -1, -1
+        count = 0
+
+        i, j = 0, 0
+        while i < n1 and j < n2:
+            if nums1[i] < nums2[j]:
+                if count == ind1:
+                    ind1_ele = nums1[i]
+                if count == ind2:
+                    ind2_ele = nums1[i]
+                count += 1
+                i += 1
+
+            else:
+                if count == ind1:
+                    ind1_ele = nums2[j]
+                if count == ind2:
+                    ind2_ele = nums2[j]
+                count += 1
+                j += 1
+
+        while i < n1:
+            if count == ind1:
+                ind1_ele = nums1[i]
+            if count == ind2:
+                ind2_ele = nums1[i]
+            count += 1
+            i += 1
+
+        while j < n2:
+            if count == ind1:
+                ind1_ele = nums2[j]
+            if count == ind2:
+                ind2_ele = nums2[j]
+            count += 1
+            j += 1
+
+        if n % 2 == 1:
+            return float(ind2_ele)
+        else:
+            return (ind1_ele + ind2_ele) / 2
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findMedian_brute([1, 3], [2]))
     print(obj.findMedian_brute([1, 2], [3, 4]))
+    print()
+    print(obj.findMedian_better([1, 3], [2]))
+    print(obj.findMedian_better([1, 2], [3, 4]))
