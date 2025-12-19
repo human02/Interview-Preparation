@@ -2,9 +2,9 @@
 Cheapest flight within K stops
 
 There are n cities and m edges connected by some number of flights.
-Given an array of flights where flights[i] = [ fromi, toi, pricei] indicates that there is a flight from city fromi to city toi with cost pricei.
-Given three integers src, dst, and k, and return the cheapest price from src to dst with at most k stops.
-If there is no such route, return -1.
+Given an array of flights where flights[i] = [ fromi, toi, pricei] indicates that there is a flight from city from
+i to city toi with cost pricei. Given three integers src, dst, and k, and return the cheapest price from src to dst
+with at most k stops. If there is no such route, return -1.
 
 Examples:
 Input: n = 4, flights = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], src = 0, dst = 3, k = 1
