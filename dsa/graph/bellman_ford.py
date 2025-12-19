@@ -1,4 +1,5 @@
 """
+
 Bellman ford algorithm
 
 Given a weighted and directed graph of V vertices and E edges. An edge is represented as [ai, bi, wi], meaning there is a
@@ -24,10 +25,11 @@ Input: V=3, Edges = [[0,1,5],[1,0,3],[1,2,-1],[2,0,1]], S = 2
 Output: 1 6 0
 
 Constraints:
-1 ≤ V ≤ 500
-1 ≤ E ≤ V*(V-1)
--1000 ≤ edges[i][3] ≤ 1000
-0 ≤ S < V
+    1 ≤ V ≤ 500
+    1 ≤ E ≤ V*(V-1)
+    -1000 ≤ edges[i][3] ≤ 1000
+    0 ≤ S < V
+
 """
 
 
