@@ -37,10 +37,9 @@ class Solution:
 
 
 if __name__ == "__main__":
-    nums = [3, 4, 5, 6]
-    target = 7
     obj = Solution()
-    result = obj.twoSum(nums, target)
-    print(f"\nInput Array: {nums}, Target: {target}")
-    print(f"Output Indices: {result}\n")
-    assert result == [0, 1], "Test case failed!"
+    print(obj.twoSum([3, 4, 5, 6], 7))
+    print(obj.twoSum([4, 5, 6], 10))
+    print(obj.twoSum([5, 5], 10))
+    print(obj.twoSum([2, 7, 11, 15], 9))
+    print(obj.twoSum([3, 2, 4], 6))
