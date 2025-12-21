@@ -26,3 +26,34 @@ Constraints:
     The answer is guaranteed to be unique.
 
 """
+
+from collections import Counter
+import heapq
+
+
+class Solution:
+    # TC - O(nlogk) , SC - O(n)
+    def findKMost(self, nums, k):
+        """
+        Idea:
+            - Find out the frequency of each element using Counter
+            - Use heap to store the -freq, key from Counter - MaxHeap
+            - Pop out k-1 times from heap and store in a new list
+            - Return this list
+        """
+        freq = Counter(nums)
+
+        pq = []
+        for key, val in freq.items():
+            heapq.heappush(pq, (-1 * val, key))
+
+        result = []
+        for _ in range(k):
+            result.append(heapq.heappop(pq)[1])
+        return result
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(f"{obj.findKMost([1, 1, 1, 2, 2, 3], 2)}")
+    print(f"{obj.findKMost([4,4,6,6,7], 2)}")
+    print(f"{obj.findKMost([-1,-1,-2,-2,-2,-3], 1)}")
