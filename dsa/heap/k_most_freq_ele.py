@@ -52,8 +52,42 @@ class Solution:
             result.append(heapq.heappop(pq)[1])
         return result
 
+    # TC - O(n) , SC - O(n)
+    def findKMost_optimal(self, nums, k):
+        """
+        Idea:
+            - Find out the frequency of each element using Counter
+            - Use heap to store the -freq, key from Counter - MaxHeap
+            - Pop out k-1 times from heap and store in a new list
+            - Return this list
+        """
+
+        freq_map = Counter(nums)
+
+        # BUCKET SORT - Create buckets (index = frequency)
+        buckets = [[] for _ in range(len(nums) + 1)]
+
+        # Populate bucket with freq and num
+        for num, freq in freq_map.items():
+            buckets[freq].append(num)
+
+        # Collect top k from highest frequency
+        result = []
+        for i in range(len(buckets) - 1, 0, -1):
+            for num in buckets[i]:
+                result.append(num)
+                if len(result) == k:
+                    return result
+
+        return result
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(f"{obj.findKMost([1, 1, 1, 2, 2, 3], 2)}")
     print(f"{obj.findKMost([4,4,6,6,7], 2)}")
     print(f"{obj.findKMost([-1,-1,-2,-2,-2,-3], 1)}")
+    print()
+    print(f"{obj.findKMost_optimal([1, 1, 1, 2, 2, 3], 2)}")
+    print(f"{obj.findKMost_optimal([4,4,6,6,7], 2)}")
+    print(f"{obj.findKMost_optimal([-1,-1,-2,-2,-2,-3], 1)}")
