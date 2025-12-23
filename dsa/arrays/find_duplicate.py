@@ -30,14 +30,37 @@ from collections import Counter
 
 
 class Solution:
+    # TC - O(), SC - O()
     def findDup_brute(self, nums):
         freq = Counter(nums)
         for key, val in freq.items():
             if val > 1:
                 return key
 
+    # TC - O(), SC - O()
+    def findDup_optimal(self, nums):
+        """
+        Cycle detection from LL used here
+        """
+        slow, fast = 0, 0
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if slow == fast:
+                break
+
+        slow2 = 0
+        while True:
+            slow = nums[slow]
+            slow2 = nums[slow2]
+            if slow == slow2:
+                return slow
+
 
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findDup_brute([1, 2, 3, 2, 2]))
     print(obj.findDup_brute([1, 2, 3, 4, 4]))
+    print()
+    print(obj.findDup_optimal([1, 2, 3, 2, 2]))
+    print(obj.findDup_optimal([1, 2, 3, 4, 4]))
