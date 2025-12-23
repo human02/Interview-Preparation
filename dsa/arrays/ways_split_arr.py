@@ -36,3 +36,36 @@ Constraints:
     -105 <= nums[i] <= 105
 
 """
+
+
+class Solution:
+    # TC - O(n), SC - O(n)
+    def findTotalWays(self, nums) -> int:
+        """
+        Idea:
+          Find suffix sum - doesnt include the current element in the sum.
+          Find Prefix sum - does include the current element in the sum.
+        """
+        n = len(nums)
+        prefixSum = [0] * n
+        prefixSum[0] = nums[0]
+        for i in range(1, n):
+            prefixSum[i] = prefixSum[i - 1] + nums[i]
+
+        suffixSum = [0] * n
+        for i in range(n - 2, -1, -1):
+            suffixSum[i] = suffixSum[i + 1] + nums[i + 1]
+
+        c = 0
+        for i in range(n - 1):
+            if prefixSum[i] >= suffixSum[i]:
+                c += 1
+
+        return c
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findTotalWays([10, 4, -8, 7]))
+    print()
+    print(obj.findTotalWays([2, 3, 1, 0]))
