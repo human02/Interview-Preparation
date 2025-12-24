@@ -22,3 +22,18 @@ Constraints:
 -104 <= ListNode.val <= 104
 
 """
+
+
+class ListNode:
+    def __init__(self, value=0, next=None):
+        self.val = value
+        self.next = next
+
+
+class Solution:
+    def find_middle(self, head):
+        slow, fast = head, head
+        while fast != None and fast.next != None:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
