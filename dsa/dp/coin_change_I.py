@@ -69,6 +69,27 @@ class Solution:
 
         ans = helper(0, amount)
         return -1 if ans == float("inf") else ans
+
+    # TC - , SC -
+    def coinChange_tab(self, coins, amount):
+        n = len(coins)
+        dp = [
+            [0 if j == 0 else float("inf") for j in range(amount + 1)]
+            for i in range(n + 1)
+        ]
+
+        for i in range(1, n + 1):
+            for j in range(1, amount + 1):
+                if coins[i - 1] <= j:
+                    pick = 1 + dp[i][j - coins[i - 1]]
+                    not_pick = dp[i - 1][j]
+                    dp[i][j] = min(pick, not_pick)
+                else:
+                    dp[i][j] = dp[i - 1][j]
+
+        return -1 if dp[n][amount] == float("inf") else dp[n][amount]
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.coinChange_recursive([1, 5, 10], 12))
@@ -76,3 +97,6 @@ if __name__ == "__main__":
     print()
     print(obj.coinChange_memo([1, 5, 10], 12))
     print(obj.coinChange_memo([2], 3))
+    print()
+    print(obj.coinChange_tab([1, 5, 10], 12))
+    print(obj.coinChange_tab([2], 3))
