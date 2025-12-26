@@ -45,7 +45,34 @@ class Solution:
         ans = helper(0, amount)
         return -1 if ans == float("inf") else ans
 
+    # TC - O(n*amount), SC - O(n*amount) + O(n)
+    def coinChange_memo(self, coins, amount):
+        n = len(coins)
+        dp = [[-1 for _ in range(amount + 1)] for _ in range(n)]
+
+        def helper(i, target):
+            if target == 0:
+                return 0
+
+            if i == n or target < 0:
+                return float("inf")
+
+            if dp[i][target] != -1:
+                return dp[i][target]
+
+            pick = 1 + helper(i, target - coins[i])
+            not_pick = helper(i + 1, target)
+
+            dp[i][target] = min(pick, not_pick)
+
+            return dp[i][target]
+
+        ans = helper(0, amount)
+        return -1 if ans == float("inf") else ans
 if __name__ == "__main__":
     obj = Solution()
     print(obj.coinChange_recursive([1, 5, 10], 12))
     print(obj.coinChange_recursive([2], 3))
+    print()
+    print(obj.coinChange_memo([1, 5, 10], 12))
+    print(obj.coinChange_memo([2], 3))
