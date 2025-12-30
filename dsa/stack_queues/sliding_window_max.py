@@ -36,3 +36,26 @@ Constraints
 
 """
 
+from collections import deque
+
+
+class Solution:
+    # TC - O((N-K)*K), SC - O(N-K)
+    def findMaxs_brute(self, arr, k):
+        n = len(arr)
+        ans = []
+        for i in range(n - k + 1):
+            maxi = arr[i]
+
+            # Traverse the window
+            for j in range(i, i + k):
+                maxi = max(maxi, arr[j])
+
+            ans.append(maxi)
+        return ans
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findMaxs_brute([4, 0, -1, 3, 5, 3, 6, 8], 3))
+    print(obj.findMaxs_brute([20, 25], 2))
+    print(obj.findMaxs_brute([1, 3, -1, -3, 5, 3, 6, 7], 3))
