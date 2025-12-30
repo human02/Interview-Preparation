@@ -54,8 +54,46 @@ class Solution:
             ans.append(maxi)
         return ans
 
+    def findMaxs_optimal(self, arr, k):
+        """
+        Idea:
+        - As the need is to get max in constant time, hence monotonic stack used.
+        - monotonic stack is used when constant time min or max value is needed.
+        - Keep indexes in the deque
+        - keep checking the window
+        - remove any element not in decreasing monotonic stack (as max needed)
+        - add curr element to deque
+        - Confirm if index >=k-1 to create the list
+        """
+        n = len(arr)
+        ans = []
+        dq = deque()
+
+        for i in range(n):
+            # Update deque to maintain current window
+            if dq and dq[0] <= (i - k):
+                dq.popleft()
+
+            # Maintain the monotonic (decreasing) order of elements in deque
+            while dq and arr[dq[-1]] <= arr[i]:
+                dq.pop()
+
+            # Add current element's index to the deque
+            dq.append(i)
+
+            # Store the maximum element from the first window possible
+            if i >= (k - 1):
+                ans.append(arr[dq[0]])
+
+        return ans
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findMaxs_brute([4, 0, -1, 3, 5, 3, 6, 8], 3))
     print(obj.findMaxs_brute([20, 25], 2))
     print(obj.findMaxs_brute([1, 3, -1, -3, 5, 3, 6, 7], 3))
+    print()
+    print(obj.findMaxs_optimal([4, 0, -1, 3, 5, 3, 6, 8], 3))
+    print(obj.findMaxs_optimal([20, 25], 2))
+    print(obj.findMaxs_optimal([1, 3, -1, -3, 5, 3, 6, 7], 3))
