@@ -26,3 +26,35 @@ Constraints:
   -104 <= k <= 104
 
 """
+
+
+class Solution:
+    # TC - O(logn), SC - O(1)
+    def findElement(self, nums, target):
+        """
+        Idea:
+        - The idea is that even rotated, 1 part will be sorted.
+        - Use it, to eliminate the part and check other parts.
+        """
+
+        low, high = 0, len(nums) - 1
+        while low <= high:
+            mid = (low + high) // 2
+
+            # Return when element found
+            if nums[mid] == target:
+                return mid
+
+            # Check if left part is sorted
+            if nums[low] <= nums[mid]:
+                if nums[low] <= target <= nums[mid]:
+                    high = mid - 1
+                else:
+                    low = mid + 1
+            # Else, right part is sorted
+            else:
+                if nums[mid] <= target <= nums[high]:
+                    low = mid + 1
+                else:
+                    high = mid - 1
+        return -1
