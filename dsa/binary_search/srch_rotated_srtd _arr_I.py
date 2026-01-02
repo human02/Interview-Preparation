@@ -58,3 +58,10 @@ class Solution:
                 else:
                     high = mid - 1
         return -1
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findElement([4, 5, 6, 7, 0, 1, 2], 0))
+    print(obj.findElement([4, 5, 6, 7, 0, 1, 2], 3))
+    print(obj.findElement([4, 5, 6, 7, 0, 1, 2], 5))
