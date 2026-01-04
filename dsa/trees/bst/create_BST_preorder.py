@@ -34,3 +34,57 @@ Constraints
     All the values of preorder are unique.
 
 """
+
+
+class TreeNode:
+    def __init__(self, data, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+
+
+class Solution:
+    # TC - O(n^2)in worst case - skew tree, SC - O(1)
+    def createBST_brute(self, preorder):
+        """
+        Idea:
+        - first node is root
+        - any node < root, is in left subtree
+        - any node > root, is in right subtree
+        """
+        if not preorder:
+            return preorder
+
+        def helper(nodes):
+            if not nodes:
+                return None
+
+            root_val = nodes[0]
+            root_node = TreeNode(root_val)
+
+            # Find the first element greater than root_val
+            # Start from index 1 to avoid infinite recursion
+            split_idx = 1
+            while split_idx < len(nodes) and nodes[split_idx] < root_val:
+                split_idx += 1
+
+            root_node.left = helper(nodes[1:split_idx])
+            root_node.right = helper(nodes[split_idx:])
+            return root_node
+
+        return helper(preorder)
+
+
+# Function to print the tree in-order for testing
+def inorderTraversal(self, root):
+    if root:
+        self.inorderTraversal(root.left)
+        print(root.data, end=" ")
+        self.inorderTraversal(root.right)
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.createBST_brute([8, 5, 1, 7, 10, 12]))
+    print(obj.createBST_brute([1, 3]))
+    print(obj.createBST_brute([5, 3, 2, 4, 6, 7]))
