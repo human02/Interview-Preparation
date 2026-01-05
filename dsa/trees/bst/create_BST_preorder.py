@@ -98,6 +98,46 @@ class Solution:
 
         return helper(0, len(preorder) - 1, 0, len(inorder) - 1)
 
+    # TC - O(n), SC - O(h) due to recursive stack
+    def createBST_optimal(self, preorder):
+        """
+        Idea:
+        - Eliminate need for sorting
+        - a tree BT or BST concept, using only Upper bound concept
+        - At each node, left/right nodes can only have values < upper bound
+        - When no case fufilled, we go to right or back up based on upper bound checks:
+            - Left -> node.val is upperbound
+            - Right -> root.val is upperbound / transfer the upperbound
+        - Check until preorder runs out or when we cant place any element in the tree.
+        """
+
+        def helper(pre, bound, index):
+            # If all elements are used or the next element
+            # is greater than the bound, return None
+            if index[0] == len(pre) or pre[index[0]] > bound:
+                return None
+
+            root = TreeNode(pre[index[0]])
+            index[0] += 1
+
+            root.left = helper(pre, root.data, index)
+            root.right = helper(pre, bound, index)
+
+            # Return the constructed subtree's root
+            return root
+
+        """
+        Integers are immutable, meaning a function receives a local copy of the reference; 
+        incrementing it only reassigns that local name to a new object, leaving the parent's 
+        value unchanged.
+
+        By wrapping the value in a mutable object like a list (e.g., index = [0]), you pass a 
+        reference to the same container. When any recursive call modifies index[0], it alters 
+        the contents of that shared container in memory, allowing all calls to track a single, 
+        synchronized state 
+        """
+        return helper(preorder, float("inf"), [0])
+
 
 # Function to print the tree in-order for testing
 def inorderTraversal(self, root):
