@@ -74,6 +74,30 @@ class Solution:
 
         return helper(preorder)
 
+    # TC - O(nlogn) + O(n), SC - O(n)
+    def createBST_better(self, preorder):
+        """
+        Idea:
+        - Inorder traversal of BST gives sorted list of all BST nodes
+        - Sort the list of nodes given as input, it will be BST inorder
+        - Create Tree same using pre and inorder like in BT
+        """
+        inorder = reversed(preorder, reverse=False)
+        inMap = {val: idx for idx, val in enumerate(inorder)}
+
+        def helper(preStr, preEnd, inStr, inEnd):
+            if preStr > preEnd or inStr > inEnd:
+                return None
+            rootVal = preorder[preStr]
+            rootNode = TreeNode(rootVal)
+            inRoot = inMap[rootVal]
+            nums_left = inRoot - inStr
+            rootNode.left = helper(preStr + 1, preStr + nums_left, inStr, inRoot - 1)
+            rootNode.right = helper(preStr + nums_left + 1, preEnd, inRoot + 1, inEnd)
+            return rootNode
+
+        return helper(0, len(preorder) - 1, 0, len(inorder) - 1)
+
 
 # Function to print the tree in-order for testing
 def inorderTraversal(self, root):
