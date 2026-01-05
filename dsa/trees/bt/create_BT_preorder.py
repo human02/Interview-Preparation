@@ -29,6 +29,7 @@ class TreeNode:
 
 
 class Solution:
+    # TC - O(n) as each node visited once, SC - O(n) for hashmap
     def buildTree(self, preorder, inorder):
         # inorder = left, root, right
         # preorder = root left right
