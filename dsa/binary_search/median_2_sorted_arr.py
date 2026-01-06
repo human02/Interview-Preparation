@@ -34,7 +34,7 @@ class Solution:
         Idea:
             - merge both arrays to a new array and find the median
             - total even elements -> (nums[n//2]+nums[n//2-1])//2
-            - total odd elements -> (nums[n//2]+nums[n//2-1])//2
+            - total odd elements -> nums[n//2]
         """
 
         merged_nums = []
@@ -72,6 +72,8 @@ class Solution:
         Idea:
             - We dont need the whole new merged list.
             - Just need the values, based on total count of elements
+            - Find necessary indexes of the values, and have a counter.
+            - Keep iterating and insert values only when count==required indexes
         """
 
         n1 = len(nums1)
