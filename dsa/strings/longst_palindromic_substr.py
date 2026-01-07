@@ -53,7 +53,49 @@ class Solution:
 
         return result
 
+    # TC - O(n^2), SC - O(1)
+    def findPalinSubStr_optimal(self, s):
+        """
+        Idea:
+        - Every palindrome mirrors around its center. So instead of checking every substring, we:
+            - Pick each possible center
+            - Expand outward while characters match
+            - Track the longest palindrome found
+        - There are 2 types of centers:
+            - Odd length (Center is a single character)
+            - Even length (Center is between 2 characters)
+        """
+
+        if not s:
+            return ""
+
+        # Helper function to expand from center
+        def expandAroundCenter(left, right):
+            # Start from center, expand while characters match
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            # Return the valid palindrome (left+1 to right-1)
+            return s[left + 1 : right]
+
+        result = ""
+
+        for i in range(len(s)):
+            # Odd length palindromes (center is a single character)
+            palindrome1 = expandAroundCenter(i, i)
+            # Even length palindromes (center is between two characters)
+            palindrome2 = expandAroundCenter(i, i + 1)
+
+            # Keep the longest palindrome found
+            result = max(result, palindrome1, palindrome2, key=len)
+
+        return result
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findPalinSubStr_brute("babad"))
     print(obj.findPalinSubStr_brute("cbbd"))
+    print()
+    print(obj.findPalinSubStr_optimal("babad"))
+    print(obj.findPalinSubStr_optimal("cbbd"))
