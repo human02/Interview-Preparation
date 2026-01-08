@@ -76,3 +76,5 @@ class Solution:
 if __name__ == "__main__":
     obj = Solution()
     print(obj.find_time(["A", "A", "A", "B", "B", "B"], 2))
+    print(obj.find_time(["A", "A", "A", "B", "B", "B"], 1))
+    print(obj.find_time(["A", "A", "A", "B", "B", "B"], 3))
