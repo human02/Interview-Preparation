@@ -1,8 +1,10 @@
 """
+
 Task Scheduler
 
 You are given a list of tasks represented by uppercase English letters ('A' to 'Z'),
-and an integer n representing a cooldown interval between two same tasks. Each task takes exactly 1 CPU interval to complete.
+and an integer n representing a cooldown interval between two same tasks.
+Each task takes exactly 1 CPU interval to complete.
 
 Tasks can be executed in any order, but identical tasks must be separated by at least n intervals,
 during which the CPU may remain idle or execute other tasks.
@@ -24,6 +26,8 @@ A -> B -> C -> D -> A -> B
 No idle interval is needed as cooldown = 1.
 
 Input: tasks = ["A","A","A","B","B","B"], n = 3
+Output: 10
+
 """
 
 from collections import Counter, deque
@@ -46,10 +50,10 @@ class Solution:
         -> Add value not the key to the max heap
         """
         maxHeap = [-cnt for cnt in tasks_dict.values()]
-        heapq.heapify(maxHeap)  # maxHeap is now a heap
+        heapq.heapify(maxHeap)  # maxHeap is now a heap O(n), heappush - O(nlogn)
 
         """
-        -> Queue is used to store (freq,idle_time)
+        -> Queue is used to store (freq,idle_time) jobs in wait before execute ready.
         -> It keeps track of jobs waiting for idle time completion
         """
         q = deque()  # [-cnt,idle_time]
