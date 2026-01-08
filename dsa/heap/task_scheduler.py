@@ -11,7 +11,6 @@ during which the CPU may remain idle or execute other tasks.
 
 Return the minimum number of CPU intervals required to complete all the tasks.
 
-
 Examples:
 Input: tasks = ["A","A","A","B","B","B"], n = 2
 Output: 8
