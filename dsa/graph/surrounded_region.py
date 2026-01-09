@@ -30,3 +30,70 @@ Constraints:
     board[i][j] is 'X' or 'O'.
 
 """
+
+from collections import deque
+
+
+class Solution:
+
+    def fill(self, mat):
+        m = len(mat)
+        n = len(mat[0])
+        delRow = [0, 1, 0, -1]
+        delCol = [1, 0, -1, 0]
+        vis = [[False] * (n) for _ in range(m)]
+
+        def isValid(r, c):
+            if r < 0 or r >= m or c < 0 or c >= n:
+                return False
+            else:
+                return True
+
+        def bfs(i, j):
+
+            vis[i][j] = True
+            q = deque([(i, j)])
+
+            while q:
+                row, col = q.popleft()
+
+                for k in range(4):
+                    newRow = row + delRow[k]
+                    newCol = col + delCol[k]
+                    if (
+                        isValid(newRow, newCol)
+                        and not vis[newRow][newCol]
+                        and mat[newRow][newCol] == "O"
+                    ):
+                        q.append((newRow, newCol))
+                        vis[newRow][newCol] = True
+        for i in range(n):
+            if mat[0][i] == "O":
+                bfs(0, i)
+            if mat[m - 1][i] == "O":
+                bfs(m - 1, i)
+        for i in range(m):
+            if mat[i][0] == "O":
+                bfs(i, 0)
+            if mat[i][n - 1] == "O":
+                bfs(i, n - 1)
+        for i in range(m):
+            for j in range(n):
+                if mat[i][j] == "O" and not vis[i][j]:
+                    mat[i][j] = "X"
+
+        return mat
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(
+        obj.fill(
+            [
+                ["X", "X", "X", "X"],
+                ["X", "O", "O", "X"],
+                ["X", "X", "O", "X"],
+                ["X", "O", "X", "X"],
+            ]
+        )
+    )
