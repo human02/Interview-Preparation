@@ -36,7 +36,14 @@ from collections import deque
 
 class Solution:
 
+    # TC - O(m*n), SC - O(m*n)
     def fill(self, mat):
+        """
+        Idea:
+        - Use BFS to traverse and mark "O" nodes connected with border "0".
+        - During these BFS we mark these nodes as visited.
+        - At last check if any node is "O" and not visited previously, then mark it as "X".
+        """
         m = len(mat)
         n = len(mat[0])
         delRow = [0, 1, 0, -1]
@@ -67,16 +74,22 @@ class Solution:
                     ):
                         q.append((newRow, newCol))
                         vis[newRow][newCol] = True
+
+        # first row, last row
         for i in range(n):
             if mat[0][i] == "O":
                 bfs(0, i)
             if mat[m - 1][i] == "O":
                 bfs(m - 1, i)
+
+        # first col, last col
         for i in range(m):
             if mat[i][0] == "O":
                 bfs(i, 0)
             if mat[i][n - 1] == "O":
                 bfs(i, n - 1)
+
+        # Flip unvisited "O" to "X"
         for i in range(m):
             for j in range(n):
                 if mat[i][j] == "O" and not vis[i][j]:
