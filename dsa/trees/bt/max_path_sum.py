@@ -32,3 +32,49 @@ Constraints
 
 """
 
+
+class TreeNode:
+    def __init__(self, data, left=None, right=None):
+        self.left = left
+        self.right = right
+        self.data = data
+
+
+class Solution:
+    """
+    Idea:
+    - Comprehensive exploration of every potential path is required.
+    - At each node, we check the max sum
+        - Sum @ each node = Node_val + (maxLft_ST+maxRgt_ST)
+    - We find the max of these sums
+    """
+
+    def maxPathSum(self, root):
+
+        self.maxi = float("-inf")
+
+        def helper(node):
+            if not node:
+                return 0
+
+            lh = max(0, helper(node.left))
+            rh = max(0, helper(node.right))
+            self.maxi = max(self.maxi, node.data + lh + rh)
+
+            return node.data + max(lh, rh)
+
+        helper(root)
+        return self.maxi
+
+
+if __name__ == "__main__":
+    root = TreeNode(1)
+    root.left = TreeNode(2)
+    root.right = TreeNode(3)
+    root.left.left = TreeNode(4)
+    root.left.right = TreeNode(5)
+    root.left.right.right = TreeNode(6)
+    root.left.right.right.right = TreeNode(7)
+
+    obj = Solution()
+    print(obj.maxPathSum(root))
