@@ -32,3 +32,55 @@ Constraints
     The source and destination cells are always inside the given matrix.
 
 """
+
+from collections import deque
+
+
+class Solution:
+    delRow = [0, 1, 0, -1]
+    delCol = [1, 0, -1, 0]
+
+    def shortestPath(self, grid, source, destination):
+        m = len(grid)
+        n = len(grid[0])
+
+        if source == destination:
+            return 0
+
+        if grid[source[0]][source[1]] == 0 or grid[destination[0]][destination[1]] == 0:
+            return -1
+
+        vis = [[0] * n for _ in range(m)]
+        q = deque([(source[0], source[1], 0)])
+        vis[source[0]][source[1]] = 1
+
+        while q:
+            r, c, dist = q.popleft()
+
+            for i in range(4):
+                newR = r + self.delRow[i]
+                newC = c + self.delCol[i]
+
+                if (
+                    0 <= newR < m
+                    and 0 <= newC < n
+                    and grid[newR][newC] == 1
+                    and not vis[newR][newC]
+                ):
+                    if newR == destination[0] and newC == destination[1]:
+                        return dist + 1
+
+                    q.append((newR, newC, dist + 1))
+                    vis[newR][newC] = 1
+        return -1
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(
+        obj.shortestPath(
+            [[1, 1, 1, 1], [1, 1, 0, 1], [1, 1, 1, 1], [1, 1, 0, 0], [1, 0, 0, 1]],
+            [0, 0],
+            [3, 4],
+        )
+    )
