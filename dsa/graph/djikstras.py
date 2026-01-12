@@ -1,4 +1,5 @@
 """
+
 Dijkstra's algorithm
 
 Given a weighted, undirected graph of V vertices, numbered from 0 to V-1, and an adjacency list
@@ -43,7 +44,7 @@ class Solution:
         distances = [int(1e9)] * V
         distances[src] = 0
         pq = []
-        heapq.heappush(pq, [0, src])
+        heapq.heappush(pq, [0, src])  # distance,node
         while pq:
             dist, node = heapq.heappop(pq)
             for neighbor, weight in adj[node]:
