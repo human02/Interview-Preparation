@@ -48,3 +48,41 @@ Constraints
     0 <= k <= 10**6
 
 """
+
+
+class Solution:
+    # TC - O(k*n)+O(n), SC - O(n-1)
+    def minimiseDist_brute(self, stations, k):
+        """
+        Idea:
+        - Observe that (n-1) places to be considered for insertion
+        - We insert each station one by one
+        - Keep track of sections and the insertions per section
+        - Find the max section and insert there in between the range
+        - Find max space to return
+        """
+        n = len(stations)
+        howMany_per_sec = [0] * (n - 1)
+
+        # Putting each station 1 by 1
+        for i in range(1, k + 1):
+            maxVal, maxIdx = -1, -1
+
+            for j in range(n - 1):
+                diff = stations[j + 1] - stations[j]
+                sectionLen = diff / (howMany_per_sec[j] + 1)
+
+                if sectionLen > maxVal:
+                    maxVal = sectionLen
+                    maxIdx = j
+
+                howMany_per_sec[maxIdx] += 1
+
+        # Find the maximum distance i.e. the answer
+        maxAns = -1
+        for i in range(n - 1):
+            diff = stations[i + 1] - stations[i]
+            sectionLength = diff / (howMany_per_sec[i] + 1)
+            maxAns = max(maxAns, sectionLength)
+
+        return maxAns
