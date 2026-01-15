@@ -50,3 +50,61 @@ Constraints
   The number of edges in the graph will be in the range [1, 4 * 104].
 
 """
+
+from collections import deque
+
+
+class Solution:
+    # TC - O(V+E)+O(VlogV), SC - O(V+E)
+    def findSafeStates(self, V, adj):
+        """
+        Idea:
+        - Use toposort to solve the problem.
+        - We need to reverse the AdjL and then do toposort.
+        - After topoSort on reveresed AdjL, the output are the safe nodes.
+        """
+
+        # helper function for Topological Sorting
+        def toposort(V, adj):
+            indeg = [0] * V
+
+            for i in range(V):
+                for it in adj[i]:
+                    indeg[it] += 1
+
+            q = deque()
+            for i in range(V):
+                if indeg[i] == 0:
+                    q.append(i)
+
+            result = []
+            while q:
+                node = q.popleft()
+                result.append(node)
+
+                for nei in adj[node]:
+                    indeg[nei] -= 1
+                    if indeg[nei] == 0:
+                        q.append(nei)
+            return result
+
+        # Reverse the Adjacency List
+        adjRev = [[] for _ in range(V)]
+        for i in range(V):
+            for it in adj[i]:
+                adjRev[it].append(i)
+
+        # Do Topological Sorting
+        result = toposort(V, adjRev)
+
+        # Question needs sorted answer
+        result.sort()
+
+        return result
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findSafeStates(7, [[1, 2], [2, 3], [5], [0], [5], [], []]))
+    print(obj.findSafeStates(4, [[1], [2], [0, 3], []]))
+    print(obj.findSafeStates(4, [[1], [2], [0], []]))
