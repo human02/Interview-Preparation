@@ -39,36 +39,37 @@ from collections import deque
 # TC - O(V+E), SC - O(V+E)
 class Solution:
     def isPossible(self, n, arr):
+
+        # create adjacency list from the input
         adj_list = [[] for _ in range(n)]
         for it in arr:
             adj_list[it[1]].append(it[0])
 
-        return self.topoSort(adj_list, len(adj_list))
+        def topoSort(adjL, V):
+            indeg = [0] * V
+            q = deque()
 
-    def topoSort(self, adjL, V):
-        indeg = [0 for _ in range(V)]
-        q = deque()
+            for i in range(V):
+                for it in adjL[i]:
+                    indeg[it] += 1
 
-        for i in range(V):
-            for it in adjL[i]:
-                indeg[it] += 1
+            for i in range(V):
+                if indeg[i] == 0:
+                    q.append(i)
 
-        for i in range(V):
-            if indeg[i] == 0:
-                q.append(i)
+            result = []
+            while q:
+                node = q.popleft()
+                result.append(node)
 
-        result = []
-        while q:
-            node = q.popleft()
-            result.append(node)
-            for nei in adjL[node]:
-                indeg[nei] -= 1
-                if indeg[nei] == 0:
-                    q.append(nei)
+                for nei in adjL[node]:
+                    indeg[nei] -= 1
+                    if indeg[nei] == 0:
+                        q.append(nei)
 
-        if len(result) == V:
-            return True
-        return False
+            return len(result) == V
+
+        return topoSort(adj_list, len(adj_list))
 
 
 if __name__ == "__main__":
