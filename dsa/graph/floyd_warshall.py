@@ -1,4 +1,5 @@
 """
+
 Floyd warshall algorithm
 
 Given a graph of V vertices numbered from 0 to V-1. Find the shortest distances between every pair of vertices
@@ -19,14 +20,23 @@ Input: matrix = [[0,1,43],[1,0,6],[-1,-1,0]]
 Output: [[0, 1, 7], [1, 0, 6], [-1, -1, 0]]
 
 Constraints:
-1 <= n <= 100
--1 <= matrix[ i ][ j ] <= 1000
+    1 <= n <= 100
+    -1 <= matrix[ i ][ j ] <= 1000
+
 """
 
 
-# Idea - visit VIA each node
-# TC - O(n^3), SC - O(n^2)
 class Solution:
+    """
+    Idea:
+    - Dijkstra's and Bellman Ford are for single-source shortest path.
+    - Floyd Warshall is for multi source shortest path.
+    - It works effectively for both directed and undirected graphs.
+    - It also handles negative weights.
+    - It main idea is "visit VIA each node".
+    """
+
+    # TC - O(n^3), SC - O(n^2)
     def distances_using_floyd(self, matrix):
         n = len(matrix)
         for k in range(n):
