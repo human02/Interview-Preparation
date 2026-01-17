@@ -34,3 +34,95 @@ Constraints
     0<=edges[i][j]<=n-1
 
 """
+
+from collections import deque
+
+
+class Solution:
+    # TC - O(V+E), SC - O(V+E)
+    def findShortestPath(self, n, m, edges):
+        """
+        Idea:
+        - Already solved DAG version of the problem
+            - Brute way -  convert undirect to directed (expensive)
+        - BFS will solve this problem
+            - BFS ensures shortest path to visit a node for the 1st time.
+            - IMPORTANT - all edges are of unit weight
+            - dist arr used as visited array
+
+        """
+
+        adj = [[] for _ in range(n)]
+
+        # undirected hence both ways
+        for it in edges:  # O(E)
+            u = it[0]
+            v = it[1]
+
+            adj[u].append((v))
+            adj[v].append((u))
+
+        dist = [float("inf")] * n
+
+        def bfs_helper(src):  # O(V+E)
+            dist[src] = 0
+            q = deque()
+            q.append(src)
+
+            while q:
+                node = q.popleft()
+
+                for nei in adj[node]:
+                    if dist[node] + 1 < dist[nei]:
+                        dist[nei] = dist[node] + 1
+                        q.append(nei)
+
+        bfs_helper(0)  # start bfs from src node
+
+        # update node dist for unreachable nodes
+        for i in range(n):  # O(n)
+            if dist[i] == float("inf"):
+                dist[i] = -1
+
+        return dist
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(
+        obj.findShortestPath(
+            9,
+            10,
+            [
+                [0, 1],
+                [0, 3],
+                [3, 4],
+                [4, 5],
+                [5, 6],
+                [1, 2],
+                [2, 6],
+                [6, 7],
+                [7, 8],
+                [6, 8],
+            ],
+        )
+    )
+    print(
+        obj.findShortestPath(
+            8,
+            10,
+            [
+                [1, 0],
+                [2, 1],
+                [0, 3],
+                [3, 7],
+                [3, 4],
+                [7, 4],
+                [7, 6],
+                [4, 5],
+                [4, 6],
+                [6, 5],
+            ],
+        )
+    )
+    print(obj.findShortestPath(3, 1, [[1, 2]]))
