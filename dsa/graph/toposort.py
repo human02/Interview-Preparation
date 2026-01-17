@@ -39,3 +39,37 @@ Constraints
 
 """
 
+from collections import deque
+
+
+class Solution:
+    # TC - O(V+E), SC - O(V)
+    def topoSort(self, V, adj):
+        q = deque()
+        indeg = [0] * V
+
+        for i in range(V):
+            for it in adj[i]:
+                indeg[it] += 1
+
+        for i in range(V):
+            if indeg[i] == 0:
+                q.append(i)
+
+        result = []
+        while q:
+            node = q.popleft()
+            result.append(node)
+            for nei in adj[node]:
+                indeg[nei] -= 1
+                if indeg[nei] == 0:
+                    q.append(nei)
+
+        return result
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.topoSort(6, [[], [], [3], [1], [0, 1], [0, 2]]))
+    print(obj.topoSort(4, [[], [0], [0], [0]]))
+    print(obj.topoSort(3, [[1], [2], []]))
