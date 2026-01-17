@@ -3,10 +3,10 @@
 Dijkstra's algorithm
 
 Given a weighted, undirected graph of V vertices, numbered from 0 to V-1, and an adjacency list
-adj where adj[i] represents all edges from vertex i. Each entry in adj[i] is of the form [to, weight], where:
-
-to → the neighboring vertex connected to i,
-weight → the weight of the edge between i and to.
+adj where adj[i] represents all edges from vertex i.
+Each entry in adj[i] is of the form [to, weight], where:
+    to → the neighboring vertex connected to i,
+    weight → the weight of the edge between i and to.
 
 Given a source node S. Find the shortest distance of all the vertex from the source vertex S.
 Return a list of integers denoting shortest distance between each node and source vertex S.
@@ -41,16 +41,30 @@ import heapq
 class Solution:
     # TC - O((V+E)*logV), SC - O(V)
     def distance_using_djikstra(self, V, adj, src):
+        """
+        Idea:
+        - Djikstras used in connected graphs:
+            - both unidrirected and directed
+            - from src to evry other node
+            - graph must only have NON-Negative edge wt.
+
+        """
+        # initialize dist arr
         distances = [int(1e9)] * V
-        distances[src] = 0
+
+        distances[src] = 0  # src node set to 0
+
         pq = []
         heapq.heappush(pq, [0, src])  # distance,node
+
         while pq:
             dist, node = heapq.heappop(pq)
+
             for neighbor, weight in adj[node]:
                 if dist + weight < distances[neighbor]:
                     distances[neighbor] = dist + weight
                     heapq.heappush(pq, [distances[neighbor], neighbor])
+
         return distances
 
 
