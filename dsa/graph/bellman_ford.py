@@ -36,6 +36,14 @@ Constraints:
 # Idea - All nodes will be visited in at max n-1 times of relaxation.
 # TC - O(V*E), SC - O(V)
 class Solution:
+    """
+    Idea:
+    - Djikstra's algo fails for negative weights
+    - Bellman Ford to the rescue.
+    - It finds the min distance to reach any node by performing N-1 times Edge Relaxation.
+    - It works for both directed and undirected graphs.
+    """
+
     def distance_using_bellman(self, V, edges, S):
         distances = [int(1e9)] * V
         distances[S] = 0
