@@ -44,7 +44,7 @@ class Solution:
         """
         Idea:
         - Djikstras used in connected graphs:
-            - both unidrirected and directed
+            - both undirected and directed
             - from src to evry other node
             - graph must only have NON-Negative edge wt.
 
