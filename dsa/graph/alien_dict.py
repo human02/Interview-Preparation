@@ -33,3 +33,71 @@ Constraints:
     1 ≤ dict[i].length ≤ 50
 
 """
+
+from collections import deque
+
+
+class Solution:
+    # TC - O(V+E), SC - O(V+E)
+    def findOrder(self, n, k, dic):
+        adjL = [[] for _ in range(k)]
+
+        # finding which char order, create Adj List
+        for i in range(n - 1):
+            word1 = dic[i]
+            word2 = dic[i + 1]
+            char_len = min(len(word1), len(word2))
+            j = 0
+            while j < char_len:
+                if word1[j] != word2[j]:
+                    # make sure to use int value as its index
+                    u = ord(word1[j]) - ord("a")
+                    v = ord(word2[j]) - ord("a")
+                    adjL[u].append(v)
+                    break
+                j += 1
+
+        topo_result = self.topoSort(adjL, k)
+
+        if topo_result:
+            return " ".join(topo_result)
+        else:
+            return []
+
+    # topological sorting - O(V+E), O(V)
+    def topoSort(self, adjL, V):
+        indeg = [0] * V
+        q = deque()
+
+        # calculate indeg
+        for i in range(V):
+            for it in adjL[i]:
+                indeg[it] += 1
+
+        # all with indeg 0 added to q
+        for i in range(V):
+            if indeg[i] == 0:
+                q.append(i)
+
+        result = []
+        while q:
+            node = q.popleft()
+            result.append(node)
+            for nei in adjL[node]:
+                indeg[nei] -= 1
+                if indeg[nei] == 0:
+                    q.append(nei)
+
+        if len(result) == V:
+            # converting index values to chars
+            for i in range(len(result)):
+                result[i] = chr(result[i] + ord("a"))
+            return result
+        return []
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findOrder(5, 4, ["baa", "abcd", "abca", "cab", "cad"]))
+    print(obj.findOrder(3, 3, ["caa", "aaa", "aab"]))
+    print(obj.findOrder(3, 3, ["abc", "bca", "cab"]))
