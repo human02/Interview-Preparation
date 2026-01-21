@@ -29,3 +29,33 @@ Constraints:
     1 <= stones[i] <= 100
 
 """
+
+import heapq
+
+
+class Solution:
+    # TC - O(nlogn) + O(n), SC - O(n)
+    def findLastStone(self, stones):
+
+        # creating max-heap of stones
+        stones = [-x for x in stones]  # O(n)
+        heapq.heapify(stones)  # O(n)
+
+        while len(stones) > 1:  # O(n-1)
+            # choosing heaviest and 2nd heaviest stones
+            first = heapq.heappop(stones)  # O(log(n))
+            second = heapq.heappop(stones)  # O(log(n))
+
+            # Handles all 3 cases, 1st < 2nd not possible as its max PQ
+            if second > first:
+                heapq.heappush(stones, first - second)  # O(log(n))
+
+        stones.append(0)
+
+        return abs(stones[0])
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findLastStone([2, 3, 6, 2, 4]))
+    print(obj.findLastStone([1, 2]))
