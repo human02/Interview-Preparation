@@ -1,4 +1,5 @@
 """
+
 Cheapest flight within K stops
 
 There are n cities and m edges connected by some number of flights.
@@ -37,6 +38,7 @@ from collections import deque
 class Solution:
     def cheapest_flight_within_k_stop(self, n, flights, src, dst, K):
         adjL = [[] for i in range(n)]
+
         for flight in flights:
             adjL[flight[0]].append((flight[1], flight[2]))
 
@@ -46,12 +48,15 @@ class Solution:
 
         while q:
             stops, node, distance = q.popleft()
+
             if stops > K:
                 continue
+
             for neighbor, cost in adjL[node]:
                 if cost + distance < distances[neighbor] and stops <= K:
                     distances[neighbor] = cost + distance
                     q.append((stops + 1, neighbor, distances[neighbor]))
+
         if distances[dst] == float("inf"):
             return -1
         return distances[dst]
