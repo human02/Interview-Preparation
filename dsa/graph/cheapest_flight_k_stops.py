@@ -49,6 +49,7 @@ class Solution:
         while q:
             stops, node, distance = q.popleft()
 
+            # keep skippping if k limit reached, cant use break
             if stops > K:
                 continue
 
