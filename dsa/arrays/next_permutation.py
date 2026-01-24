@@ -1,8 +1,11 @@
 """
+
+31. Next Permutation
+
 A permutation of an array of integers is an arrangement of its members into a sequence or linear order.
 
 For example, for arr = [1,2,3], the following are all the permutations of arr:
-[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1].
+    [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1].
 
 The next permutation of an array of integers is the next lexicographically greater permutation of its integers.
 More formally, if all the permutations of the array are sorted in lexicographical order, then the next permutation
