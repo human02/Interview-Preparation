@@ -49,9 +49,34 @@ class Solution:
 
         return helper(len(s) - 1, len(s) - 1)
 
+    def findLPS_memo(self, s):
+        rev_s = s[::-1]
+        n = len(s)
+        dp = [[-1] * (n + 1) for i in range(n + 1)]
+
+        def helper(idx1, idx2):
+            if idx1 < 0 or idx2 < 0:
+                return 0
+
+            if dp[idx1][idx2] != -1:
+                return dp[idx1][idx2]
+
+            if s[idx1] == rev_s[idx2]:
+                dp[idx1][idx2] = 1 + helper(idx1 - 1, idx2 - 1)
+            else:
+                dp[idx1][idx2] = max(helper(idx1 - 1, idx2), helper(idx1, idx2 - 1))
+
+            return dp[idx1][idx2]
+
+        return helper(n - 1, n - 1)
+
 
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findLPS_brute("eeeme"))
     print(obj.findLPS_brute("annb"))
     print(obj.findLPS_brute("s"))
+    print()
+    print(obj.findLPS_memo("eeeme"))
+    print(obj.findLPS_memo("annb"))
+    print(obj.findLPS_memo("s"))
