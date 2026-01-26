@@ -12,6 +12,10 @@ Example 2:
 Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
 Output: [1,2,3,4,8,12,11,10,9,5,6,7]
 
+Example 3:
+Input: matrix = [[1,2],[3,4]]
+Output: [1,2,4,3]
+
 
 Constraints:
     m == matrix.length
@@ -72,3 +76,4 @@ if __name__ == "__main__":
     obj = Solution()
     print(obj.spriralTraverse([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
     print(obj.spriralTraverse([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))
+    print(obj.spriralTraverse([[1, 2], [3, 4]]))
