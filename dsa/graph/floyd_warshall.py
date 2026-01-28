@@ -36,6 +36,8 @@ class Solution:
     - It works effectively for both directed and undirected graphs.
     - It also handles negative weights.
     - It main idea is "visit VIA each node".
+    - It uses Adjacency Matrix - Distance Matrix that:
+        - Store weight to reach from i to j as matrix[i][j] value
     """
 
     # TC - O(n^3), SC - O(n^2)
