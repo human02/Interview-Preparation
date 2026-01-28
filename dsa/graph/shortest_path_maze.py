@@ -41,6 +41,14 @@ class Solution:
     delCol = [1, 0, -1, 0]
 
     def shortestPath(self, grid, source, destination):
+        """
+        Idea:
+        - BFS is the best candidate as its unweighted, undirected.
+        - Check edge cases:
+            - Src and Dest is same value
+            - Src or Dest is on a 0, can only move through 1s
+        - Visited array used as well
+        """
         m = len(grid)
         n = len(grid[0])
 
