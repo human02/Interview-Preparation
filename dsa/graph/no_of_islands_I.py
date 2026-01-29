@@ -1,0 +1,42 @@
+"""
+
+Number of islands
+
+Given a grid of size M x N (M is the number of rows and N is the number of columns in the grid)
+consisting of '0's (Water) and ‘1's(Land). Find the number of islands.
+
+An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically
+or diagonally i.e., in all 8 directions.
+
+Example 1:
+Input: grid = [ ["1", "1", "1", "0", "1"],
+                ["1", "0", "0", "0", "0"],
+                ["1", "1", "1", "0", "1"],
+                ["0", "0", "0", "1", "1"] ]
+Output: 2
+Explanation: This grid contains 2 islands. Each '1' represents a piece of land, and the islands are formed
+by connecting adjacent lands horizontally or vertically. Despite some islands having a common edge, they are
+considered separate islands because there is no land connectivity in any of the eight directions between them.
+Therefore, the grid contains 2 islands.
+
+Example 2:
+Input: grid = [ ["1", "0", "0", "0", "1"],
+                ["0", "1", "0", "1", "0"],
+                ["0", "0", "1", "0", "0"],
+                ["0", "1", "0", "1"," 0"] ]
+Output: 1
+
+Example 3:
+Input: grid = [ ["1", "1", "1", "1", "0"],
+                ["1", "1", "0", "1", "0"],
+                ["1", "1", "0", "0", "0"],
+                ["0", "0", "0", "0", "0"] ]
+Output: 1
+
+Constraints:
+    M == grid.length
+    N == grid[i].length
+    1 <= M, N <= 300
+    grid[i][j] is '0' or '1'.
+
+"""
