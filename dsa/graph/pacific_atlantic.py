@@ -37,6 +37,14 @@ class Solution:
 
     # TC - O(m*n), SC - O(m*n)
     def pacificAtlantic(self, heights):
+        """
+        Idea:
+        - DFS/BFS Traversal from each border side.
+        - We track cells visited by either corner in diff vis arr.
+        - all 4 boundary cells as starting cells for traverse
+        - Add nodes visited by each in respective visited arrays.
+        - Ans = common nodes in both the visited sets(PAC/ATL)
+        """
         m = len(heights)
         n = len(heights[0])
 
