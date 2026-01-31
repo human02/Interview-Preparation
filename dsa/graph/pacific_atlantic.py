@@ -28,3 +28,55 @@ Constraints:
     0 <= heights[r][c] <= 105
 
 """
+
+
+class Solution:
+
+    delRow = [0, 1, 0, -1]
+    delCol = [1, 0, -1, 0]
+
+    # TC - O(m*n), SC - O(m*n)
+    def pacificAtlantic(self, heights):
+        m = len(heights)
+        n = len(heights[0])
+
+        def isValid(r, c):
+            if r < 0 or c < 0 or r >= m or c >= n:
+                return False
+            return True
+
+        # visiting arr for each type
+        pac, atl = set(), set()
+
+        def dfs(r, c, vis, prevheight):
+            if not isValid(r, c) or (r, c) in vis or heights[r][c] < prevheight:
+                return
+
+            vis.add((r, c))
+
+            for i in range(4):
+                newRow = r + self.delRow[i]
+                newCol = c + self.delCol[i]
+                dfs(newRow, newCol, vis, heights[r][c])
+
+        # top row, last row
+        for i in range(n):
+            dfs(0, i, pac, heights[0][i])  # Pacific
+            dfs(m - 1, i, atl, heights[m - 1][i])  # Atlantic
+
+        # first col, last col
+        for i in range(m):
+            dfs(i, 0, pac, heights[i][0])  # Pacific
+            dfs(i, n - 1, atl, heights[i][n - 1])  # Atlantic
+
+        res = []  # store indexes that are in both visited sets
+        for i in range(m):
+            for j in range(n):
+                if (i, j) in pac and (i, j) in atl:
+                    res.append([i, j])
+        return res
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.pacificAtlantic([[4, 2, 7, 3, 4], [7, 4, 6, 4, 7], [6, 3, 5, 3, 6]]))
