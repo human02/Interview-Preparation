@@ -27,3 +27,87 @@ Constraints:
     -10^4 <= xi, yi <= 10^4
 
 """
+
+import heapq, math
+
+
+class Solution:
+    # TC - O(nlogn), SC - O(n)
+    def findKclosest_brute(self, points, target, k):
+        """
+        Idea:
+        - Calculate distace from all points to the target and store in a min heap.
+        - Pop out k top elements from the heap
+        """
+        pq = []
+
+        # helper to calculate Euclidean distance
+        def calDist(pt):
+            x1 = pt[0]
+            y1 = pt[1]
+
+            x2 = target[0]
+            y2 = target[1]
+
+            return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+        for point in points:
+            pq.append((calDist(point), point))
+
+        # arrange as min-heap
+        heapq.heapify(pq)
+
+        result = []
+        for _ in range(k):
+            dist, curr_pt = heapq.heappop(pq)
+            result.append(curr_pt)
+
+        return result
+
+    # # TC - O(nlogk), SC - O(k)
+    def findKclosest_better(self, points, target, k):
+        """
+        Idea:
+        - Above, we maintained a min heap of n size, which is wasteful.
+        - Instead, use a min heap of k size
+        - Push first k distance(putting them in negative) and points in the k max heap
+        - Calc distance from remaining points and compare with the top of the max heap.
+            - If -top < curr_distance then:
+                 - Pop the top element from heap and push this to dist,points to the heap
+                 - Else, continue and do nothing in this iteration
+        - Reduces complexity as by having a heap of size k, we reduce the log factor from n to k.
+        """
+        pq = []
+
+        # helper to calculate Euclidean distance
+        def calDist(pt):
+            x1 = pt[0]
+            y1 = pt[1]
+            x2 = target[0]
+            y2 = target[1]
+
+            return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+        for i in range(k):
+            pq.append((-1 * calDist(points[i]), points[i]))
+
+        heapq.heapify(pq)
+
+        for i in range(k, len(points)):
+            curr_dist = calDist(points[i])
+            # handling (-)ve value for max-heap
+            if -pq[0][0] > curr_dist:
+                heapq.heappop(pq)
+                heapq.heappush(pq, (-1 * curr_dist, points[i]))
+
+        result = []
+        for _ in range(k):
+            dist, curr_pt = heapq.heappop(pq)
+            result.append(curr_pt)
+
+        return result
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findKclosest_brute([[1, 3], [-2, 2]], (0, 0), 1))
+    print(obj.findKclosest_better([[1, 3], [-2, 2]], (0, 0), 1))
