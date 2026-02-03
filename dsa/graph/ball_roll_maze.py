@@ -41,3 +41,95 @@ Constraints:
     The maze contains at least 2 empty spaces.
 
 """
+
+from collections import deque
+
+
+class Solution:
+    delRow = [0, 1, 0, -1]
+    delCol = [1, 0, -1, 0]
+
+    # TC - O(m*n(m+n)), SC - O(m*n)
+    def ballRollMaze(self, maze, strt, dest):
+        """
+        Idea:
+        - Can use Djikstras - Shortest path with weight
+        - BFS is best for unweighted with unit weight
+
+        """
+        m = len(maze)
+        n = len(maze[0])
+
+        q = deque([strt])
+
+        visit = [[0] * n for _ in range(m)]
+        visit[strt[0]][strt[1]] = 1
+
+        while q:
+            row, col = q.popleft()
+            visit[row][col] = 1
+
+            if row == dest[0] and col == dest[1]:
+                return True
+
+            for i in range(4):
+                nrow = row + self.delRow[i]
+                ncol = col + self.delCol[i]
+
+                # To keep it rolling in the same direction
+                while 0 <= nrow < m and 0 <= ncol < n and not maze[nrow][ncol]:
+                    nrow += self.delRow[i]
+                    ncol += self.delCol[i]
+
+                # retrack to prev coordinates before the wall
+                nrow -= self.delRow[i]
+                ncol -= self.delCol[i]
+
+                if not visit[nrow][ncol]:
+                    visit[nrow][ncol] = 1
+                    q.append([nrow, ncol])
+
+        return False
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(
+        obj.ballRollMaze(
+            [
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0],
+                [1, 1, 0, 1, 1],
+                [0, 0, 0, 0, 0],
+            ],
+            [0, 4],
+            [4, 4],
+        )
+    )
+    print(
+        obj.ballRollMaze(
+            [
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0],
+                [1, 1, 0, 1, 1],
+                [0, 0, 0, 0, 0],
+            ],
+            [0, 4],
+            [3, 2],
+        )
+    )
+    print(
+        obj.ballRollMaze(
+            [
+                [0, 0, 0, 0, 0],
+                [1, 1, 0, 0, 1],
+                [0, 0, 0, 0, 0],
+                [0, 1, 0, 0, 1],
+                [0, 1, 0, 0, 0],
+            ],
+            [4, 3],
+            [0, 1],
+        )
+    )
