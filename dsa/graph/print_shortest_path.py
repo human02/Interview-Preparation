@@ -37,3 +37,71 @@ Constraints
     1 <= w <= 105
 
 """
+
+import heapq
+
+
+class Solution:
+    # TC - O((N+M)*logN) for heap operations, SC - O(N)
+    def printShortestPath(self, n, m, edges):
+        """
+        Idea:
+        - Make Adjacency List from the edges
+        - Also, keep Parent array and initiatize it to each node as parent
+        - perform Djiktras algorithm, also make Parent changes in this part
+        - Dist[n] will be total weight
+        - To find the path:
+            - We loop from node=destination until parent[node] is not node itself
+            - Keep appending the 'node' to a list
+            - In the end, append the source node
+            - Reverse this to get out shortest path
+        """
+        adj = [[] for i in range(n + 1)]
+        for edge in edges:
+            adj[edge[0]].append((edge[1], edge[2]))
+            adj[edge[1]].append((edge[0], edge[2]))
+
+        dist = [float("inf")] * (n + 1)
+        dist[1] = 0
+
+        parent = [i for i in range(n + 1)]
+
+        pq = []
+        heapq.heappush(pq, (0, 1))
+
+        while pq:
+            curr_dist, node = heapq.heappop(pq)
+
+            for nei, wt in adj[node]:
+                if dist[node] + wt < dist[nei]:
+                    dist[nei] = dist[node] + wt
+                    parent[nei] = node
+                    heapq.heappush(pq, (dist[nei], nei))
+
+        if dist[n] == float("inf"):
+            return [-1]
+
+        # generate path
+        node = n  # destination = n here
+        path = []
+        while parent[node] != node:
+            path.append(node)
+            node = parent[node]
+
+        path.append(1)  # src = 1 here
+        # add shortest path value
+        path.append(dist[n])
+        path = path[::-1]
+
+        return path
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(
+        obj.printShortestPath(
+            5, 6, [[1, 2, 2], [2, 5, 5], [2, 3, 4], [1, 4, 1], [4, 3, 3], [3, 5, 1]]
+        )
+    )
+    print(obj.printShortestPath(4, 4, [[1, 2, 2], [2, 3, 4], [1, 4, 1], [4, 3, 3]]))
+    print(obj.printShortestPath(3, 1, [[1, 2, 2]]))
