@@ -47,6 +47,10 @@ from collections import deque
 # TC - O(m*n), SC - O(m*n)
 class Solution:
     def findIslands(self, grid):
+        """
+        Idea:
+        - BFS traversal to the rescue.
+        """
         m = len(grid)
         n = len(grid[0])
 
