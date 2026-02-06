@@ -42,3 +42,20 @@ class Solution:
 
         return pq[0] * -1
 
+    # TC - O(n log k), SC - O(log k)
+    def findKthLargest_heap_OP(self, nums, k):
+        pq = []
+
+        # Push first k elements
+        for i in range(k):
+            heapq.heappush(pq, nums[i])
+
+        # For remaining elements, if larger than min, replace min
+        for i in range(k, len(nums)):
+            if nums[i] > pq[0]:
+                heapq.heappop(pq)
+                heapq.heappush(pq, nums[i])
+
+        # The root of min-heap is the kth largest
+        return pq[0]
+
