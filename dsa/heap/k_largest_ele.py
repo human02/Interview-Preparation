@@ -59,3 +59,23 @@ class Solution:
         # The root of min-heap is the kth largest
         return pq[0]
 
+    # TC - O(n + range), SC - O(range)
+    def findKthLargest_optimal(self, nums, k):
+        """
+        Count Sort idea
+        """
+        minV = min(nums)
+        maxV = max(nums)
+
+        count_buckets = maxV - minV + 1
+        freq = [0] * count_buckets
+
+        for num in nums:
+            freq[num - minV] += 1
+
+        for i in range(count_buckets - 1, -1, -1):
+            if k > freq[i]:
+                k -= freq[i]
+            else:
+                return i + minV
+        return -1
