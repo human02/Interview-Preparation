@@ -19,3 +19,26 @@ Constraints:
     -104 <= nums[i] <= 104
 
 """
+
+import heapq
+
+
+class Solution:
+    # TC -  O(nlogn), SC - O(1)
+    def findKthLargest_brute(self, nums, k):
+        n = len(nums)
+        nums.sort()
+        return nums[n - k]
+
+    # TC -  O(nlogn), SC - O(n)
+    def findKthLargest_better(self, nums, k):
+        pq = []
+
+        for num in nums:
+            heapq.heappush(pq, -1 * num)
+
+        for _ in range(k - 1):
+            heapq.heappop(pq)
+
+        return pq[0] * -1
+
