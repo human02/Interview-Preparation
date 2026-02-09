@@ -26,3 +26,35 @@ Constraints:
     It is guaranteed that the list represents a number that does not have leading zeros.
 
 """
+
+
+class ListNode:
+    def __init__(self, value, next=None):
+        self.value = value
+        self.next = next
+
+
+class Solution:
+    def addNums(self, l1, l2):
+        head1 = l1
+        head2 = l2
+
+        carry = 0
+        # for new list
+        dummyHead = ListNode(-1)
+        curr = dummyHead
+        while head1 or head2 or carry:  # if either of these are true
+            val1 = head1.value if head1 else 0
+            val2 = head2.value if head2 else 0
+
+            curr_sum = val1 + val2 + carry
+
+            carry = curr_sum // 10
+            newNode = ListNode(curr_sum % 10)
+
+            curr.next = newNode
+            curr = curr.next  # move to the next node
+            head1 = head1.next if head1 else None
+            head2 = head2.next if head2 else None
+
+        return dummyHead.next
