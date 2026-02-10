@@ -79,8 +79,10 @@ class Solution:
         n1 = len(nums1)
         n2 = len(nums2)
         n = n1 + n2
+
         ind2 = n // 2
         ind1 = ind2 - 1
+
         ind2_ele, ind1_ele = -1, -1
         count = 0
 
@@ -102,7 +104,7 @@ class Solution:
                 count += 1
                 j += 1
 
-        while i < n1:
+        while i < n1 and (ind1_ele == -1 or ind2_ele == -1):
             if count == ind1:
                 ind1_ele = nums1[i]
             if count == ind2:
@@ -110,7 +112,7 @@ class Solution:
             count += 1
             i += 1
 
-        while j < n2:
+        while j < n2 and (ind1_ele == -1 or ind2_ele == -1):
             if count == ind1:
                 ind1_ele = nums2[j]
             if count == ind2:
