@@ -125,6 +125,81 @@ class Solution:
         else:
             return (ind1_ele + ind2_ele) / 2
 
+    # TC - O(log(min(m,n)), SC - O()
+    def findMedian_optimal(self, nums1, nums2):
+        """
+        Idea:
+        arr1 = [1,3,4,7,10,12], 6 elements
+        arr2 = [2,3,6,15], 4 elements
+
+        - Calculate mid index -> 6+4=10, 10/2=5
+        - As both arrays are sorted, we need to find left part only
+        - We start by taking 0 elements from arr1 and continue increasing arr1 elements
+        - At each time we check if the resultant arr is sorted or not
+        - To check sorted:
+            - using * as the divider
+                           l1   r1
+                            |   |
+                arr1 =  1 3 4 * 7 10 12
+                arr2 =    2 3 * 6 15
+                            |   |
+                           l2   r2
+            - l1 < r2
+            - l2 < r1
+                - Note:
+                    - If l1 or l2 dont exist, then take them as float(-inf)
+                    - If r1 or r2 dont exist, then take it as float(inf)
+        - No point in linear search but we dont see a BS pattern as only 1 valid pattern
+        - We still use Binary Search:
+            - high = mid-1 when l1>r2
+            - low = mid+1 when l2>r1
+        - Once we form a valid symmetric pattern is formed, calc median
+            - even -> (max(l1,l2)+max(r1,r2))/2
+            - odd -> max(l1,l2)
+        - For Odd case, we will have (n1+n2+1)//2 as partition elements = on left elements
+        """
+
+        n1, n2 = len(nums1), len(nums2)
+
+        # Binary Search on smaller array
+        if n1 > n2:
+            return self.findMedian_optimal(nums2, nums1)
+
+        n = n1 + n2
+        # Length of left half
+        left = (n1 + n2 + 1) // 2
+
+        # Apply binary search
+        low, high = 0, n1
+        while low <= high:
+            # Calculate mid index for nums1
+            mid1 = (low + high) // 2
+
+            # Calculate mid index for nums2
+            mid2 = left - mid1
+
+            # Calculate l1, l2, r1, and r2
+            l1 = nums1[mid1 - 1] if mid1 > 0 else float("-inf")
+            r1 = nums1[mid1] if mid1 < n1 else float("inf")
+            l2 = nums2[mid2 - 1] if mid2 > 0 else float("-inf")
+            r2 = nums2[mid2] if mid2 < n2 else float("inf")
+
+            if l1 <= r2 and l2 <= r1:
+                # If condition for finding median is satisfied
+                if n % 2 == 1:
+                    return max(l1, l2)
+                else:
+                    return (max(l1, l2) + min(r1, r2)) / 2.0
+            elif l1 > r2:
+                # Eliminate the right half of nums1
+                high = mid1 - 1
+            else:
+                # Eliminate the left half of nums1
+                low = mid1 + 1
+        # Dummy statement
+        return 0
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findMedian_brute([1, 3], [2]))
@@ -132,3 +207,7 @@ if __name__ == "__main__":
     print()
     print(obj.findMedian_better([1, 3], [2]))
     print(obj.findMedian_better([1, 2], [3, 4]))
+    print()
+    print(obj.findMedian_optimal([1, 4, 7, 10, 12], [2, 3, 6, 15]))
+    print(obj.findMedian_optimal([1, 3], [2]))
+    print(obj.findMedian_optimal([1, 2], [3, 4]))
