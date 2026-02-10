@@ -57,6 +57,9 @@ class Solution:
         Idea:
         - Have a map with stored values
         - Use WHILE loop to traverse as changing index values dont work in for loop
+            - while loop is needed as we have to control loop execution
+            - essential to traverse till < n, else last value wont be added
+                - addtional check for i+1<n as we are running till n-1
         - if lesser symbol comes before a bigger symbol then reduce it from bigger
         - also, move 2 index for this case.
         """
