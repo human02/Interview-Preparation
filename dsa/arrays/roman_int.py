@@ -48,3 +48,35 @@ Constraints:
     It is guaranteed that s is a valid roman numeral in the range [1, 3999].
 
 """
+
+
+class Solution:
+    # TC - O(1) as there is a finite set of roman numerals, SC - O(1)
+    def romanToInt(self, s):
+        """
+        Idea:
+        - Have a map with stored values
+        - Use WHILE loop to traverse as changing index values dont work in for loop
+        - if lesser symbol comes before a bigger symbol then reduce it from bigger
+        - also, move 2 index for this case.
+        """
+        mp = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+        n = len(s)
+        int_res = 0
+        i = 0
+
+        while i < n:
+            if i + 1 < n and mp[s[i]] < mp[s[i + 1]]:
+                int_res += mp[s[i + 1]] - mp[s[i]]
+                i += 2
+            else:
+                int_res += mp[s[i]]
+                i += 1
+        return int_res
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(f"III = {obj.romanToInt('III')}")
+    print(f"LVIII = {obj.romanToInt('LVIII')}")
+    print(f"MCMXCIV = {obj.romanToInt('MCMXCIV')}")
