@@ -1,4 +1,5 @@
 """
+
 LRU Cache
 
 Design a data structure that follows the constraints of Least Recently Used (LRU) cache.
@@ -57,10 +58,11 @@ Output:
 [null, null, null, 1, null, null, -1, 4]
 
 Constraints:
-1 <= capacity <= 1000
-0 <= key <= 104
-0 <= value <= 105
-At most 105 calls will be made to get and put.
+    1 <= capacity <= 1000
+    0 <= key <= 104
+    0 <= value <= 105
+    At most 105 calls will be made to get and put.
+
 """
 
 
