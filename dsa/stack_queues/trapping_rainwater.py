@@ -5,7 +5,6 @@ Trapping Rainwater
 Given an array of non-negative integers, height representing the elevation of ground.
 Calculate the amount of water that can be trapped after rain.
 
-
 Examples:
 Input: height= [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
 Output: 6
@@ -48,24 +47,24 @@ class Solution:
     # TC - O(n), SC - O(1)
     def find_trapped_rainwater_optimal(self, height):
         n = len(height)
-        l, r = 0, n - 1
+        left, right = 0, n - 1
 
         leftMax, rightMax = -1, -1
 
         water = 0
-        while l < r:
-            if height[l] < height[r]:
-                if leftMax > height[l]:
-                    water += leftMax - height[l]
+        while left < right:
+            if height[left] < height[right]:
+                if leftMax > height[left]:
+                    water += leftMax - height[left]
                 else:
-                    leftMax = height[l]
-                l += 1
+                    leftMax = height[left]
+                left += 1
             else:
-                if rightMax > height[r]:
-                    water += rightMax - height[r]
+                if rightMax > height[right]:
+                    water += rightMax - height[right]
                 else:
-                    rightMax = height[r]
-                r -= 1
+                    rightMax = height[right]
+                right -= 1
         return water
 
 
@@ -74,7 +73,7 @@ if __name__ == "__main__":
     print(obj.find_trapped_rainwater([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
     print(obj.find_trapped_rainwater([4, 2, 0, 3, 2, 5]))
     print(obj.find_trapped_rainwater([7, 4, 0, 9]))
-    print(f"{"-"*20}")
+    print(f"{'-' * 20}")
     print(obj.find_trapped_rainwater_optimal([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
     print(obj.find_trapped_rainwater_optimal([4, 2, 0, 3, 2, 5]))
     print(obj.find_trapped_rainwater_optimal([7, 4, 0, 9]))
