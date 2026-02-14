@@ -28,6 +28,12 @@ Constraints:
 class Solution:
     # TC - O(n), SC - O(n)
     def find_trapped_rainwater(self, height):
+        """
+        Idea:
+        - At any index we need to check max height on left and right of the index
+        - We take the min of these two and calculate the water level
+        - Using prefix and suffix array is ideal here
+        """
         n = len(height)
         water = 0
         prefixMax, suffixMax = [0] * n, [0] * n
@@ -46,6 +52,13 @@ class Solution:
 
     # TC - O(n), SC - O(1)
     def find_trapped_rainwater_optimal(self, height):
+        """
+        Idea:
+        - Use 2 pointer and keep track of leftmax and rightMax
+        - first check the lowest value between the left and right index
+        - if at an index, we have leftMax and rightMax then calc the height
+        - if not then make the current value at the respective max
+        """
         n = len(height)
         left, right = 0, n - 1
 
