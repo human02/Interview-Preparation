@@ -19,7 +19,7 @@ Explanation:
     [1, 3, 2]: (3-1) x 3 = 6 > 2 (Invalid)
     Total valid: 4
 
-Constraints
+Constraints:
     1 <= nums.length <= 10^5
     0 <= nums[i] <= 10^5
     0 <= k <=10^14
@@ -49,7 +49,41 @@ class Solution:
                     count += 1
         return count
 
+    # TC - O(n^2), SC - O(1)
+    def findCount_better(self, nums, k):
+        """
+        Idea:
+        - Use Sliding Window/2-Pointers, left and right.
+            - once, at a length the cost is invalid, then higher length check is waste.
+            - no point expanding the subarray and we can shrink it from left.
+            - Its due to monotonicity of length and (max-min) both
+
+        - We traverese right < n
+            - Dont make it a valid check as it will not consider INTRA valid subarrays
+            - In sliding window, when you find a valid window, from left to right
+                - num of new valid subarrays = Window size = (r-l+1)
+            - Instead, make it 'while its invalid, move left'
+            -
+        """
+        n = len(nums)
+        left, right = 0, 0
+
+        def helper(subarr):
+            n_subarr = len(subarr)
+            return ((max(subarr) - min(subarr)) * n_subarr) <= k
+
+        count = 0
+        while right < n:
+            while left <= right and not helper(nums[left : right + 1]):
+                left += 1
+            count += right - left + 1
+            right += 1
+
+        return count
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findCount_brute([1, 3, 2], 2))
     print(obj.findCount_brute([99999], 1))
+    print(obj.findCount_better([1, 3, 2], 2))
+    print(obj.findCount_better([99999], 1))
