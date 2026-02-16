@@ -25,3 +25,31 @@ Constraints
     0 <= k <=10^14
 
 """
+
+
+class Solution:
+    # TC - O(n^3), SC - O(1)
+    def findCount_brute(self, nums, k):
+        """
+        Idea:
+        - Create all subarray and write helper function to find the cost
+        - Keep count of the subarrays satisfying the condition
+        """
+        n = len(nums)
+
+        def helper(subarr):
+            n_subarr = len(subarr)
+            return ((max(subarr) - min(subarr)) * n_subarr) <= k
+
+        count = 0
+        for i in range(n):
+            for j in range(i, n):
+                curr_subarr = nums[i : j + 1]
+                if helper(curr_subarr):
+                    count += 1
+        return count
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findCount_brute([1, 3, 2], 2))
+    print(obj.findCount_brute([99999], 1))
