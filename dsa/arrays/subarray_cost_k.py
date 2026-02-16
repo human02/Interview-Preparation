@@ -26,6 +26,8 @@ Constraints:
 
 """
 
+from collections import deque
+
 
 class Solution:
     # TC - O(n^3), SC - O(1)
@@ -81,9 +83,67 @@ class Solution:
 
         return count
 
+    # TC - O(n), SC - O(n)
+    def findCount_optimal(self, nums, k):
+        """
+        Idea:
+        - We still need to work on improving the max/min finding.
+        - Helper fn is the bottleneck as it rescans the whole subarray.
+        - Just changing the inner while to if wont work, it works only for maximum subarray finding.
+        - MONOTONIC DEQUE to the rescue
+            - It allows for O(1) to find maximum and minimum of a sliding window instead of O(1)
+            - Maintain 2 deque - MAXQ and MINQ to store indices for checking if present in window.
+            - maxQ:
+                - Instead of storing every num, only store potential candidates for curr or future windows.
+                - When adding a new number:
+                    - If num > maxQ[-1], these can never be max hence pop them.
+                - When window shrinking:
+                    - if index at front of dequeis the one that was moved past, pop it off.
+                - Constant work due to move from front and back.
+        - When right is moved forward, add the num to both deque.
+        - cost = (nums[maxQ[0]] - nums[minQ[0]]) * (j - i + 1)
+        """
+        n = len(nums)
+        left, right = 0, 0
+        maxQ = deque()
+        minQ = deque()
+
+        count = 0
+        while right < n:
+            while maxQ and nums[maxQ[-1]] <= nums[right]:
+                maxQ.pop()
+            maxQ.append(right)
+
+            while minQ and nums[minQ[-1]] >= nums[right]:
+                minQ.pop()
+            minQ.append(right)
+
+            while left <= right:  # we need to check intra subarrays
+                curr_max = nums[maxQ[0]]
+                curr_min = nums[minQ[0]]
+                window_len = right - left + 1
+
+                if (curr_max - curr_min) * window_len > k:
+                    if maxQ[0] == left:
+                        maxQ.popleft()
+                    if minQ[0] == left:
+                        minQ.popleft()
+                    left += 1
+
+                else:  # Valid window
+                    break
+
+            count += right - left + 1
+            right += 1
+
+        return count
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findCount_brute([1, 3, 2], 2))
     print(obj.findCount_brute([99999], 1))
     print(obj.findCount_better([1, 3, 2], 2))
     print(obj.findCount_better([99999], 1))
+    print(obj.findCount_optimal([1, 3, 2], 2))
+    print(obj.findCount_optimal([99999], 1))
