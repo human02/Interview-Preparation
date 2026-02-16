@@ -69,3 +69,52 @@ Constraints:
     s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+', '-', and '.'.
 
 """
+
+
+class Solution:
+    # TC - O(n), SC - O(1)
+    def atoi(self, s):
+        """
+        Idea:
+        - Just follow the rules.
+            - lstrip() to remove left whitespace
+            - check for empty string
+            -
+        """
+        s = s.lstrip()
+        if not s:
+            return 0
+
+        isNegative = False
+        i = 0
+        if s[0] == "-":
+            isNegative = True
+            i = 1
+        elif s[0] == "+":
+            isNegative = False
+            i = 1
+
+        result = 0
+        while i < len(s) and s[i].isdigit():
+            result = result * 10 + int(s[i])
+            i += 1
+
+        if isNegative:
+            result = -result
+
+        if result < -(2**31):
+            result = -(2**31)
+        elif result > (2**31) - 1:
+            result = 2**31 - 1
+
+        return result
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.atoi("42"))
+    print(obj.atoi(" -042"))
+    print(obj.atoi("1337c0d3"))
+    print(obj.atoi("0-1"))
+    print(obj.atoi("words and 987"))
+    print(obj.atoi(""))
