@@ -40,8 +40,25 @@ class Solution:
             if val == 1:
                 return key
 
+    # TC - O(n), SC - O(1)
+    def findSingleNum_optimal(self, nums):
+        """
+        Idea:
+        - Bit Manipulation:
+            - a ⊕ 0 = a
+            - a ⊕ a = 0
+        """
+        result = 0
+        for val in nums:
+            result ^= val
+        return result
+
+
 if __name__ == "__main__":
     obj = Solution()
     print(obj.findSingleNum_brute([2, 2, 1]))
     print(obj.findSingleNum_brute([4, 1, 2, 1, 2]))
     print(obj.findSingleNum_brute([1]))
+    print(obj.findSingleNum_optimal([2, 2, 1]))
+    print(obj.findSingleNum_optimal([4, 1, 2, 1, 2]))
+    print(obj.findSingleNum_optimal([1]))
