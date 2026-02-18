@@ -23,3 +23,25 @@ Constraints:
     Each element in the array appears twice except for one element which appears only once.
 
 """
+
+from collections import Counter
+
+
+class Solution:
+    # TC - O(n), SC - O(n)
+    def findSingleNum_brute(self, nums):
+        """
+        Idea:
+        - Use hastable to store counts of each element
+        - Find the index with freq as 1
+        """
+        freqMpp = Counter(nums)
+        for key, val in freqMpp.items():
+            if val == 1:
+                return key
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findSingleNum_brute([2, 2, 1]))
+    print(obj.findSingleNum_brute([4, 1, 2, 1, 2]))
+    print(obj.findSingleNum_brute([1]))
