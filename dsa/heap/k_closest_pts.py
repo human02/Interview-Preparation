@@ -32,7 +32,7 @@ import heapq, math
 
 
 class Solution:
-    # TC - O(nlogn), SC - O(n)
+    # TC - O(n) + O(klogn), SC - O(n)
     def findKclosest_brute(self, points, target, k):
         """
         Idea:
