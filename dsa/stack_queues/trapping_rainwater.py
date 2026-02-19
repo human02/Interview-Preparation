@@ -30,9 +30,10 @@ class Solution:
     def find_trapped_rainwater(self, height):
         """
         Idea:
-        - At any index we need to check max height on left and right of the index
-        - We take the min of these two and calculate the water level
-        - Using prefix and suffix array is ideal here
+        - At any index we need to check max height on left and right of the index.
+        - We take the min of these two and calculate the water level.
+        - Using prefix and suffix array is ideal here.
+        - Store prefixMax and suffixMax for each index.
         """
         n = len(height)
         water = 0
@@ -54,10 +55,10 @@ class Solution:
     def find_trapped_rainwater_optimal(self, height):
         """
         Idea:
-        - Use 2 pointer and keep track of leftmax and rightMax
-        - first check the lowest value between the left and right index
-        - if at an index, we have leftMax and rightMax then calc the height
-        - if not then make the current value at the respective max
+        - Use 2 pointer and keep track of leftmax and rightMax.
+        - first check the lowest value between the left and right index and work with it.
+            - if at an index, we have leftMax and rightMax then calc the height.
+            - else make the current value at the respective max.
         """
         n = len(height)
         left, right = 0, n - 1
