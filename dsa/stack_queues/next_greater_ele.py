@@ -1,4 +1,5 @@
 """
+
 Next Greater Element
 
 Given an array arr of size n containing elements, find the next greater element for each element in the array
@@ -23,6 +24,7 @@ Output: [3, -1, -1]
 Constraints:
   1 ≤ n ≤ 105
   0 ≤ arr[i] ≤ 109
+
 """
 
 
