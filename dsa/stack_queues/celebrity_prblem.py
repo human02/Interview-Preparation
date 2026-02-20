@@ -50,8 +50,62 @@ class Solution:
 
         # Return -1 if no celebrity is found
         return -1
+
+    # TC - O(n), SC - O(1)
+    def celebrity_optimal(self, M):
+        """
+        Idea:
+        - We use elimination method in finding who is not the celebrity.
+        - Min 0 celebrity or at max there can be 1 celebrity
+        - We have 2 pointer, top and down and we compare these values (pair wise)
+            - we check if either of the two know each other
+                - we eliminate the one that knows and update that pointer
+                    - +1 for top or -1 for down
+                - in the end top and down will reach 1 element
+            - if both dont know each other or know each other then both are not celebrity
+                - as celebrity needs to be known by all
+                - top doesnt know down
+                - down doesnt know top
+                - hence eliminate both
+            - we then check this complete row to confirm if this person is celebrity
+        """
+        n = len(M)
+
+        top, down = 0, n - 1
+
+        while top < down:
+            if M[top][down] == 1:
+                top += 1
+
+            elif M[down][top] == 1:
+                down -= 1
+
+            else:
+                top += 1
+                down -= 1
+
+        # Return -1 if no celebrity is found - important check
+        if top > down:
+            return -1
+
+        # Checking top(remaning)
+        for i in range(n):
+            if i == top:  # skip checking itself
+                continue
+
+            # Check if it is not a celebrity
+            if M[top][i] == 1 or M[i][top] == 0:
+                return -1
+
+        return top
+
+
 if __name__ == "__main__":
     obj = Solution()
 
     print(obj.celebrity_brute([[0, 1, 1, 0], [0, 0, 0, 0], [1, 1, 0, 0], [0, 1, 1, 0]]))
     print(obj.celebrity_brute([[0, 1], [1, 0]]))
+    print(
+        obj.celebrity_optimal([[0, 1, 1, 0], [0, 0, 0, 0], [1, 1, 0, 0], [0, 1, 1, 0]])
+    )
+    print(obj.celebrity_optimal([[0, 1], [1, 0]]))
