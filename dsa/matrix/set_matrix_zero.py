@@ -27,3 +27,63 @@ Follow up:
     Could you devise a constant space solution?
 
 """
+
+
+class Solution:
+    def setZeroes(self, matrix) -> None:
+        """
+        Idea: In place changes required
+        - Navigate through the array and check
+        -
+        """
+        m = len(matrix)
+        n = len(matrix[0])
+
+        vis = [[False] * n for _ in range(m)]
+
+        def helper(r, c):
+            for i in range(n):
+                if not vis[r][i] and matrix[r][i] != 0:
+                    vis[r][i] = True
+                    matrix[r][i] = 0
+
+            for i in range(m):
+                if not vis[i][c] and matrix[i][c] != 0:
+                    vis[i][c] = True
+                    matrix[i][c] = 0
+
+        for i in range(m):
+            for j in range(n):
+                if not vis[i][j] and matrix[i][j] == 0:
+                    helper(i, j)
+
+    def setZeroes_optimal(self, matrix):
+        m = len(matrix)
+        n = len(matrix[0])
+
+        # Check if first row and first column originally have zeros
+        first_row_has_zero = any(matrix[0][j] == 0 for j in range(n))
+        first_col_has_zero = any(matrix[i][0] == 0 for i in range(m))
+
+        # Use first row and column as markers for the rest of the matrix
+        for i in range(1, m):
+            for j in range(1, n):
+                if matrix[i][j] == 0:
+                    matrix[i][0] = 0
+                    matrix[0][j] = 0
+
+        # Zero out cells based on markers (skip first row/column)
+        for i in range(1, m):
+            for j in range(1, n):
+                if matrix[i][0] == 0 or matrix[0][j] == 0:
+                    matrix[i][j] = 0
+
+        # Handle first row
+        if first_row_has_zero:
+            for j in range(n):
+                matrix[0][j] = 0
+
+        # Handle first column
+        if first_col_has_zero:
+            for i in range(m):
+                matrix[i][0] = 0
