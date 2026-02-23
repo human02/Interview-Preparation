@@ -13,3 +13,18 @@ Input: nums = [1, 2, 3, 4]
 Output: false
 
 """
+
+
+class Solution:
+    # TC - O(n), SC - O(n)
+    def containsDuplicate_optimal(self, nums):
+        hashSet = set(nums)
+        if len(hashSet) < len(nums):
+            return True
+        return False
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(f"\nAnswer = {obj.containsDuplicate_optimal([1, 2, 3, 3])}\n")
+    print(f"\nAnswer = {obj.containsDuplicate_optimal([1, 2, 3, 4])}\n")
