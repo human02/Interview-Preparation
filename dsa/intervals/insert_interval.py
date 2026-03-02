@@ -27,3 +27,48 @@ Constraints:
     0 <= start <= end <= 1000
 
 """
+
+
+class Solution:
+    # TC - O(n), SC - O(n)
+    def insertInterval(self, intervals, newInterval):
+        # Sorting incase the list is not sorted
+        intervals.sort(key=lambda x: x[0])
+
+        res = []
+        n = len(intervals)
+        i = 0
+
+        # Find & Add the intervals before the newInterval
+        while i < n and intervals[i][1] < newInterval[0]:
+            res.append(intervals[i])
+            i += 1
+
+        """
+        Check OVERLAP with `newInterval` if:
+        - It starts before or when `newInterval` ends: `intervals[i][0] <= newInterval[1]`
+        - It ends after or when `newInterval` starts: `intervals[i][1] >= newInterval[0]`
+
+        Since you already processed all intervals where `intervals[i][1] < newInterval[0]`, 
+        you know that any remaining interval satisfies the second condition automatically.
+
+        So you only need to check: **does this interval start before newInterval ends?
+        """
+        while i < n and intervals[i][0] <= newInterval[1]:
+            newInterval[0] = min(intervals[i][0], newInterval[0])
+            newInterval[1] = max(intervals[i][1], newInterval[1])
+            i += 1
+        res.append(newInterval)
+
+        # Add any remiaing intervals
+        while i < n:
+            res.append(intervals[i])
+            i += 1
+
+        return res
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    assert obj.insertInterval([[1, 3], [4, 6]], [2, 5]) == [[1, 6]]
+    print(obj.insertInterval([[1, 3], [4, 6]], [2, 5]))
