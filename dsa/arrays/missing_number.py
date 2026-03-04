@@ -21,3 +21,21 @@ Constraints:
     1 <= nums.length <= 1000
 
 """
+
+
+class Solution:
+    def missingNumber(self, nums):
+        n = len(nums)
+        sum_n = n * (n + 1) // 2
+        sum_list = 0
+        for num in nums:
+            sum_list += num
+        return sum_n - sum_list
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    assert obj.missingNumber([1, 2, 3]) == 0
+    print(obj.missingNumber([1, 2, 3]))
+    assert obj.missingNumber([0, 2]) == 1
+    print(obj.missingNumber([0, 2]))
