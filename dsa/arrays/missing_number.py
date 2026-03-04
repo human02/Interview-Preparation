@@ -24,6 +24,7 @@ Constraints:
 
 
 class Solution:
+    # TC - O(n), SC - O(1)
     def missingNumber(self, nums):
         n = len(nums)
         sum_n = n * (n + 1) // 2
