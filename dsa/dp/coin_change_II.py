@@ -80,3 +80,7 @@ if __name__ == "__main__":
     print(obj.change_recursive([2, 4, 10], 10))
     print(obj.change_recursive([5], 5))
     print(obj.change_recursive([1, 2, 3, 5], 5))
+    print()
+    print(obj.change_memo([2, 4, 10], 10))
+    print(obj.change_memo([5], 5))
+    print(obj.change_memo([1, 2, 3, 5], 5))
