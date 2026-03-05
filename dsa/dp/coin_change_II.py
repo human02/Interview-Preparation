@@ -52,6 +52,29 @@ class Solution:
 
         return helper(0, amount) % (10**9 + 7)
 
+    # TC - O(n*amount), SC - O(n*amount) + O(n)
+    def change_memo(self, coins, amount):
+        n = len(coins)
+        dp = [[-1 for _ in range(amount + 1)] for _ in range(n)]
+
+        def helper(ind, target, dp):
+
+            if target == 0:
+                return 1
+
+            if ind == n or target < 0:
+                return 0
+
+            if dp[ind][target] != -1:
+                return dp[ind][target]
+
+            pick = helper(ind, target - coins[ind], dp)
+            not_pick = helper(ind + 1, target, dp)
+
+            dp[ind][target] = pick + not_pick
+            return dp[ind][target]
+
+        return helper(0, amount, dp) % (10**9 + 7)
 if __name__ == "__main__":
     obj = Solution()
     print(obj.change_recursive([2, 4, 10], 10))
