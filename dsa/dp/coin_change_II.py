@@ -30,3 +30,30 @@ Constraints:
     All the values of coins are unique.
 
 """
+
+
+class Solution:
+    # TC - O(2^n), SC - O(n)
+    def change_recursive(self, coins, amount):
+        n = len(coins)
+
+        def helper(ind, target):
+
+            if target == 0:
+                return 1  # as finding distinct ways
+
+            if ind == n or target < 0:
+                return 0
+
+            pick = helper(ind, target - coins[ind])
+            not_pick = helper(ind + 1, target)
+
+            return pick + not_pick  # as finding distinct ways
+
+        return helper(0, amount) % (10**9 + 7)
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.change_recursive([2, 4, 10], 10))
+    print(obj.change_recursive([5], 5))
+    print(obj.change_recursive([1, 2, 3, 5], 5))
