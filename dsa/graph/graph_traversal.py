@@ -34,3 +34,37 @@ Constraints
     1 ≤ V, E ≤ 104
 
 """
+
+from collections import deque
+
+
+class Solution:
+    # TC - O(), SC - O()
+    def bfs(self, V, adj):
+        vis = [0] * V
+        ans = []  # stores the answer
+
+        def bfs_helper(src):
+            q = deque()
+            q.append(src)
+            vis[src] = 1
+
+            while q:
+                node = q.popleft()
+                ans.append(node)
+
+                for it in adj[node]:
+                    if not vis[it]:
+                        vis[it] = 1
+                        q.append(it)
+
+        for i in range(V):
+            if not vis[i]:
+                bfs_helper(i)
+
+        return ans
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.bfs(5, [[2, 3, 1], [0], [0, 4], [0], [2]]))
+    print(obj.bfs(4, [[1, 3], [2, 0], [1], [0]]))
+    print(obj.bfs(3, [[1, 2], [0], [0]]))
