@@ -30,3 +30,69 @@ Constraints
     There is atleast one 1 in the grid
 
 """
+
+from collections import deque
+
+
+class Solution:
+    delRow = [0, 1, 0, -1]
+    delCol = [1, 0, -1, 0]
+
+    # TC - O(m*n), SC - O(m*n)
+    def findNearest(self, grid):
+        """
+        Idea:
+        - BFS ensures that the 1st time we reach a cell, its via the shortest path.
+        - Multi-Source BFS needed here.
+        - We start from all locations of 1s in the grid.
+        - As per the question, only 4 way movement allowed.
+
+        """
+        m = len(grid)
+        n = len(grid[0])
+
+        def isValid(r, c):
+            if r < 0 or c < 0 or r >= m or c >= n:
+                return False
+            return True
+
+        q = deque()
+        # Multi Source BFS
+
+        vis = [[0] * n for _ in range(m)]
+
+        # For storing distance from closest 1
+        dist = [[0] * n for _ in range(m)]
+
+        # Start traversals from 1s
+        for i in range(m):
+            for j in range(n):
+                if not vis[i][j] and grid[i][j] == 1:
+                    q.append(((i, j), 0))  # ((row,col),distance)
+                    vis[i][j] = 1
+
+        # BFS
+        while q:
+            topVals = q.popleft()
+            row, col = topVals[0]
+            step_dist = topVals[1]
+
+            # update the distance matrix
+            dist[row][col] = step_dist
+
+            for i in range(4):
+                newR = row + self.delRow[i]
+                newC = col + self.delCol[i]
+
+                if isValid(newR, newC) and not vis[newR][newC]:
+                    vis[newR][newC] = 1
+                    q.append(((newR, newC), step_dist + 1))
+
+        return dist
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findNearest([[0, 1, 1, 0], [1, 1, 0, 0], [0, 0, 1, 1]]))
+    print(obj.findNearest([[1, 0, 1], [1, 1, 0], [1, 0, 0]]))
+    print(obj.findNearest([[0, 1], [1, 0]]))
