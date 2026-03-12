@@ -35,3 +35,47 @@ Constraints:
     There will be at least one element in the data structure when getRandom is called.
 
 """
+
+import random
+
+
+# TC - O(1) for all 3 operations
+class RandomizedSet:
+    """
+    Just 1 dict was enough for insert and delete.
+    Random needs only list for random.choice(), hence list is needed.
+    List can pop from last hence extra steps for it.
+    """
+
+    def __init__(self):
+        self.mpp = {}
+        self.values = []  # for random fn as dict wont do it in O(n)
+
+    def insert(self, val: int) -> bool:
+        if not val in self.mpp:
+            self.mpp[val] = len(self.values)
+            self.values.append(val)
+            return True
+
+        return False
+
+    def remove(self, val: int) -> bool:
+        if val in self.mpp:
+            idx = self.mpp[val]
+            lastEle = self.values[-1]
+
+            # Swap ele with last element
+            self.values[idx] = lastEle
+            # Update its index in map
+            self.mpp[lastEle] = idx
+
+            # Removing last element from list
+            self.values.pop()
+            # Removing from map
+            self.mpp.pop(val)
+            return True
+
+        return False
+
+    def getRandom(self) -> int:
+        return random.choice(self.values)
