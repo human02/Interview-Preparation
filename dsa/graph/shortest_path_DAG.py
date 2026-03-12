@@ -36,3 +36,91 @@ Constraints
     1 ≤ edge[i][2] < 104
 
 """
+
+from collections import deque
+
+
+class Solution:
+    # TC - O(V+E), SC - O(V+E) due to adj list storage
+    def findShortestPath(self, n, m, edge):
+        """
+        Idea:
+        - Its a directed graph w/o unit weighted edges.
+        - We cant use BFS here
+        - We need to create Adjacency List but diff from normal:
+            - We store from -> to,weight like:
+                - 6 -> {4,2},{5,3} in pairs
+        - Start with toposort on the graph
+        - take each node and relax the edges
+            - distance array needed, default val = 'inf'
+            - Src node distance is set to 0
+            - process each node from topo order
+        - if a node is unreachable, update distance to -1
+
+        """
+        adj = [[] for _ in range(n)]
+
+        # create adjacency list(tweaked)
+        for u, v, wt in edge:
+            adj[u].append((v, wt))
+
+        def topoSort(V, adj):
+            indeg = [0] * V
+            q = deque()
+
+            for i in range(V):
+                for nei, wei in adj[i]:
+                    indeg[nei] += 1
+
+            for i in range(V):
+                if indeg[i] == 0:
+                    q.append(i)
+
+            result = []
+            while q:
+                node = q.popleft()
+                result.append(node)
+
+                for nei, wt in adj[node]:
+                    indeg[nei] -= 1
+                    if indeg[nei] == 0:
+                        q.append(nei)
+            return result
+
+        topoOrder = topoSort(n, adj)
+
+        dist = [float("inf")] * n
+        dist[0] = 0  # As src node = 0
+
+        for node in topoOrder:
+            for v, wt in adj[node]:
+                # relaxing the edges
+                if dist[node] + wt < dist[v]:
+                    dist[v] = dist[node] + wt
+
+        for i in range(n):
+            if dist[i] == float("inf"):
+                dist[i] = -1
+
+        return dist
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findShortestPath(4, 2, [[0, 1, 2], [0, 2, 1]]))
+    print(
+        obj.findShortestPath(
+            6,
+            7,
+            [
+                [0, 1, 2],
+                [0, 4, 1],
+                [4, 5, 4],
+                [4, 2, 2],
+                [1, 2, 3],
+                [2, 3, 6],
+                [5, 3, 1],
+            ],
+        )
+    )
+    print(obj.findShortestPath(3, 3, [[0, 1, 4], [0, 2, 2], [1, 2, 5]]))
