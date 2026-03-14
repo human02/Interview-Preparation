@@ -31,3 +31,56 @@ Constraints
     -1000 <= Node.val <= 1000
 
 """
+
+from collections import deque
+
+
+class TreeNode:
+    def __init__(self, data, left=None, right=None):
+        self.left = left
+        self.right = right
+        self.data = data
+
+
+class Solution:
+
+    # TC - O(n), SC - O(n)
+    def findMaxWidth(self, root):
+        if not root:
+            return 0
+
+        q = deque([(root, 0)])
+        maxWidth = float("-inf")
+        while q:
+            tnodes = len(q)
+            currLevel = []
+            _, leftPos = q[0]
+            for i in range(tnodes):
+                node, pos = q.popleft()
+                currLevel.append(node)
+                if node.left:
+                    q.append((node.left, 2 * pos + 1))
+                if node.right:
+                    q.append((node.right, 2 * pos + 2))
+
+                # Check to find rightmost at curr level
+                if i == tnodes - 1:
+                    rightPos = pos
+            maxWidth = max(maxWidth, rightPos - leftPos + 1)
+
+        return maxWidth
+
+
+if __name__ == "__main__":
+    root = TreeNode(3)
+    root.left = TreeNode(5)
+    root.right = TreeNode(1)
+    root.left.left = TreeNode(6)
+    root.left.right = TreeNode(2)
+    root.right.left = TreeNode(0)
+    root.right.right = TreeNode(8)
+    root.left.right.left = TreeNode(7)
+    root.left.right.right = TreeNode(4)
+
+    obj = Solution()
+    print(obj.findMaxWidth(root))
