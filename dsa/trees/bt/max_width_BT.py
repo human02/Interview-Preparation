@@ -43,6 +43,34 @@ class TreeNode:
 
 
 class Solution:
+    """
+        Idea:
+        - Width of BT = distance between the leftmost and rightmost nodes at any level 
+            (including null gaps in between).
+            Input:
+                    1
+                  /   \
+                 2      3
+               /   \       \
+              4     5       8 
+                          /   \
+                         6     7
+            Output:  max width of BT = 3
+            Explanation: For the above tree:
+                - width of level 1 is 1, 
+                - width of level 2 is 2, 
+                - width of level 3 is 3 
+                - width of level 4 is 2. 
+                - So the maximum width of the tree is 3.
+
+        - Level Order traversal with position assignment, and get the max length at any level.
+            - Root at position 0
+            - For node at position i:
+            - Left child at position 2*i + 1
+            - Right child at position 2*i + 2
+        - Put node,position in deque
+        - Keep track of leftPos and rightPos
+    """
 
     # TC - O(n), SC - O(n)
     def findMaxWidth(self, root):
