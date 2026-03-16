@@ -1,4 +1,5 @@
 """
+
 LCA in BT
 
 Given a root of binary tree, find the lowest common ancestor (LCA) of two given nodes (p, q) in the tree.
@@ -16,9 +17,10 @@ Input : root = [7, 1, 2, 8, 10, 4, 5, null, 6], p = 6, q = 10
 Output: 1
 
 Constraints:
-2 <= Number of Nodes <= 105
--106 <= node.val <= 106
-All values in tree are unique.
+    2 <= Number of Nodes <= 105
+    -106 <= node.val <= 106
+    All values in tree are unique.
+
 """
 
 
