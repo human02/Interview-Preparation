@@ -29,3 +29,37 @@ Constraints:
     str[i] contains only lowercase English letters.
 
 """
+
+from typing import List
+
+
+class Solution:
+    """
+    Idea:
+    When a list of strings is sorted lexicographically, 1st str and last str
+    in this sorted list will differ the most. The common prefix of these two strs
+    is guaranteed to be the longest common prefix across all strings in the array.
+    """
+
+    def findLCP(self, strs: List[str]) -> str:
+        strs.sort()  # In-Place sorting
+        first_str = strs[0]
+        last_str = strs[-1]
+
+        n = min(len(first_str), len(last_str))
+        i = 0
+        while i < n:
+            if first_str[i] == last_str[i]:
+                i += 1
+            else:
+                break
+
+        return first_str[:i]
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.findLCP(["flowers", "flow", "fly", "flight"]))
+    print(obj.findLCP(["dog", "cat", "animal", "monkey"]))
+    print(obj.findLCP(["lady", "lazy"]))
+    print(obj.findLCP(["dog", "racecar", "car"]))
