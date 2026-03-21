@@ -17,7 +17,7 @@ Input: s = "jar", t = "jam"
 Output: false
 
 Constraints:
-s and t doesn't only consist of lowercase English letters.
+    s and t doesn't only consist of lowercase English letters.
 """
 
 
