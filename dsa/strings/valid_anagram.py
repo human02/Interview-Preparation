@@ -20,6 +20,8 @@ Constraints:
     s and t doesn't only consist of lowercase English letters.
 """
 
+from collections import Counter
+
 
 # TC - O(n+n) = O(n)
 # SC - O(n)
@@ -41,3 +43,15 @@ class Solution:
                 return False
 
         return all(count == 0 for count in freq.values())
+
+    def isAnagram_Counter(self, s: str, t: str) -> bool:
+        return Counter(s) == Counter(t)
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.isAnagram("racecar", "carrace"))
+    print(obj.isAnagram("jar", "jam"))
+    print()
+    print(obj.isAnagram_Counter("racecar", "carrace"))
+    print(obj.isAnagram_Counter("jar", "jam"))
