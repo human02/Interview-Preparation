@@ -26,6 +26,7 @@ from collections import Counter
 # TC - O(n+n) = O(n)
 # SC - O(n)
 class Solution:
+    # TC - O(n+n) = O(n), SC - O(n)
     def isAnagram(self, s: str, t: str) -> bool:
         # not anagram is not same length
         if len(s) != len(t):
