@@ -12,10 +12,6 @@ Example 2:
 Input: s = "jar", t = "jam"
 Output: false
 
-Example 2:
-Input: s = "jar", t = "jam"
-Output: false
-
 Constraints:
     s and t doesn't only consist of lowercase English letters.
 """
@@ -23,8 +19,6 @@ Constraints:
 from collections import Counter
 
 
-# TC - O(n+n) = O(n)
-# SC - O(n)
 class Solution:
     # TC - O(n+n) = O(n), SC - O(n)
     def isAnagram(self, s: str, t: str) -> bool:
