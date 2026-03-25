@@ -25,3 +25,31 @@ Constraints:
     s will be a valid string such that mapping is always possible.
 
 """
+
+
+class Solution:
+    # TC - O(n), SC - O(n)
+    def freqAlphabets_optimal(self, s: str) -> str:
+        """
+        Reverse traversal - process from right to left
+        Key Insight: Process from right to left to easily identify '#' patterns
+        """
+        result = []
+        i = len(s) - 1
+
+        while i >= 0:
+            # Check if current position has '#' (two positions ahead)
+            if i >= 2 and s[i] == "#":
+                # Extract two digits before '#'
+                num = int(s[i - 2 : i])
+                # Convert to character: 10 -> 'j', 26 -> 'z'
+                result.append(chr(ord("a") + num - 1))
+                i -= 3  # Skip the two digits and '#'
+            else:
+                # Single digit: 1-9 -> 'a'-'i'
+                num = int(s[i])
+                result.append(chr(ord("a") + num - 1))
+                i -= 1
+
+        # Reverse because we built it backwards
+        return "".join(result[::-1])
