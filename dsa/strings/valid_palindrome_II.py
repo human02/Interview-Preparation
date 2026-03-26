@@ -22,3 +22,9 @@ Constraints:
     s consists of lowercase English letters.
 
 """
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.isPalindrome("A man, a plan, a canal: Panama"))
+    print(obj.isPalindrome("race a car"))
+    print(obj.isPalindrome(" "))
