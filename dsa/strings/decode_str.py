@@ -32,3 +32,34 @@ Constraints:
     All the integers in s are in the range [1, 300].
 
 """
+
+
+class Solution:
+    def decodeString(self, s: str) -> str:
+        st = []
+        n = len(s)
+        for i in range(n):
+            if s[i] != "]":
+                st.append(s[i])
+            else:
+                tmpStr = ""
+                while st and st[-1] != "[":
+                    tmpStr = st.pop() + tmpStr
+
+                st.pop()
+
+                freqK = ""
+                while st and st[-1].isdigit():
+                    freqK = st.pop() + freqK
+
+                # Can resuse the stack
+                st.append(int(freqK) * tmpStr)
+
+        return "".join(st)
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    print(obj.decodeString("3[a]2[bc]"))
+    print(obj.decodeString("3[a2[c]]"))
+    print(obj.decodeString("2[abc]3[cd]ef"))
