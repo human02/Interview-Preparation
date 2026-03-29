@@ -35,3 +35,25 @@ class Solution:
                     count += 1
 
         return count
+
+    # TC -  O(n), SC - O(n)
+    def subaaraySum_optimal(self, nums, k):
+        """
+        Idea -  Can't use sliding window as (-)ve value are in nums.
+        Use Prefix sum and 'x-k' idea here.
+            - map starts with base case 0:1 to tell there exists a subarray with sum 0.
+            - if there exists entry of diff('x-k') in mpp, then add that freq to count
+            - update mpp by 1 + existing mpp[currSum]
+            - return count
+        """
+        prefixMpp = {0: 1}
+        count = currSum = 0
+        for num in nums:
+            # 'x'
+            currSum += num
+            # 'x-k'
+            diff = currSum - k
+
+            count += prefixMpp.get(diff, 0)
+            prefixMpp[currSum] = 1 + prefixMpp.get(currSum, 0)
+        return count
