@@ -20,3 +20,18 @@ Constraints:
     -107 <= k <= 107
 
 """
+
+
+class Solution:
+    # TC - O(n^2), SC - O(1)
+    def subarraySum_brute(self, nums, k) -> int:
+        n = len(nums)
+        count = 0
+        for i in range(n):
+            curr_sum = 0
+            for j in range(i, n):
+                curr_sum += nums[j]
+                if curr_sum == k:
+                    count += 1
+
+        return count
