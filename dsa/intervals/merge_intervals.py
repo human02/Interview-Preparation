@@ -26,3 +26,23 @@ Constraints:
     0 <= starti <= endi <= 104
 
 """
+
+
+class Solution:
+    # TC - O(nlogn), SC - O(n)
+    def mergeIntervals(self, intervals):
+        intervals.sort(key=lambda x: [x[0], x[1]])
+        result = []
+        result.append(intervals[0])
+
+        for i in range(len(intervals)):
+            start = intervals[i][0]
+            end = intervals[i][1]
+            lastEnd = result[-1][1]
+
+            if start <= lastEnd:
+                result[-1][1] = max(lastEnd, end)
+            else:
+                result.append([start, end])
+
+        return result
