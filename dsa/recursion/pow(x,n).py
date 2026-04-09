@@ -25,3 +25,25 @@ Constraints:
     -104 <= xn <= 104
 
 """
+
+
+class Solution:
+    def power(self, x, n):
+
+        def helper(x, n):
+            if n == 0 or x == 1:
+                return 1.0
+
+            if n == 1:
+                return x
+
+            if n % 2 == 0:
+                return helper(x * x, n // 2)
+
+            return x * helper(x, n - 1)
+
+        if n < 0:
+            x = 1 / x
+            return helper(x, -n)
+        else:
+            return helper(x, n)
