@@ -34,3 +34,30 @@ Constraints:
     s is a special binary string.
 
 """
+
+
+class Solution:
+    # TC - O(n!), SC - O(n!)
+    def findlargestStr_brute(self, s):
+        """
+        Idea:
+        - Generate all permuutation of the input str
+        - Check which of them are special binary string
+        - Sort the valid ones lexicographically
+        """
+
+        def find_special_substrings(strng):
+            """
+            Find all consecutive pairs of special substrings that can be swapped
+            """
+            balance = 0
+            start = 0
+            substrings = []
+
+            for i in range(len(strng)):
+                balance += 1 if strng[i] == "1" else -1
+                if balance == 0:
+                    substrings.append((start, i + 1))
+                    start = i + 1
+
+            return substrings
