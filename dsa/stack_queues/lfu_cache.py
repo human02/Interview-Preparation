@@ -33,6 +33,7 @@ Input:
 [[3], [5, 7], [4, 6], [3, 5], [2, 4], [1, 3], [1], [2], [3], [4], [5]]
 Output:
 [null, null, null, null, null, null, 3, 4, 5, -1, -1]
+
 Example 3
 Input:
 ["LFUCache", "put", "get", "put", "get", "get"]
@@ -42,6 +43,7 @@ Output:
 [null, null, 10, null, -1, 20]
 [null, null, 10, null, -1, -1]
 [null, null, -1, null, 10, 20]
+
 Constraints
     - 1 <= capacity <= 103
     - 0 <= key <= 104
